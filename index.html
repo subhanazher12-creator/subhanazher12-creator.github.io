@@ -1,13 +1,20 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>SUBHAN AI</title>
+
+<!-- Google AdSense -->
+<script async
+  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7988076392393976"
+  crossorigin="anonymous"></script>
 
 <style>
 
@@ -29,52 +36,35 @@ body {
   overflow-x: hidden;
 }
 
-/* BACKGROUND */
-
 body::before {
   content: "";
   position: fixed;
-
   width: 500px;
   height: 500px;
-
   background: #743cff;
-
   filter: blur(180px);
-
   opacity: .25;
-
   top: -200px;
   left: -200px;
-
   z-index: -2;
-
   animation: glow1 8s infinite alternate;
 }
 
 body::after {
   content: "";
   position: fixed;
-
   width: 500px;
   height: 500px;
-
   background: #00bfff;
-
   filter: blur(180px);
-
   opacity: .18;
-
   bottom: -200px;
   right: -200px;
-
   z-index: -2;
-
   animation: glow2 10s infinite alternate;
 }
 
 @keyframes glow1 {
-
   from {
     transform: translate(0, 0);
   }
@@ -82,11 +72,9 @@ body::after {
   to {
     transform: translate(250px, 200px);
   }
-
 }
 
 @keyframes glow2 {
-
   from {
     transform: translate(0, 0);
   }
@@ -94,49 +82,39 @@ body::after {
   to {
     transform: translate(-250px, -200px);
   }
-
 }
 
 
 /* NAVIGATION */
 
 nav {
-
   position: sticky;
   top: 0;
-
   z-index: 100;
 
   min-height: 75px;
 
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   padding: 10px 7%;
 
-  background:
-    rgba(5, 5, 16, .78);
+  background: rgba(5, 5, 16, .78);
 
   backdrop-filter: blur(20px);
 
   border-bottom:
     1px solid rgba(255,255,255,.08);
-
 }
 
 .logo {
-
   font-size: 24px;
-
   font-weight: 900;
-
   letter-spacing: 2px;
 
-  animation: waveLogo 2s infinite ease-in-out;
-
+  animation:
+    waveLogo 2s infinite ease-in-out;
 }
 
 @keyframes waveLogo {
@@ -155,17 +133,12 @@ nav {
 /* CREDIT AREA */
 
 .creditArea {
-
   display: flex;
-
   flex-direction: column;
-
   align-items: flex-end;
-
 }
 
 .credits {
-
   padding: 9px 15px;
 
   border-radius: 13px;
@@ -179,11 +152,9 @@ nav {
   color: #ffd84d;
 
   font-weight: bold;
-
 }
 
 .watchAd {
-
   margin-top: 7px;
 
   padding: 8px 12px;
@@ -206,25 +177,20 @@ nav {
     );
 
   transition: .25s;
-
 }
 
 .watchAd:hover {
-
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
   box-shadow:
     0 8px 20px
     rgba(255,80,100,.3);
-
 }
 
 
 /* HERO */
 
 .hero {
-
   min-height: 75vh;
 
   display: flex;
@@ -236,17 +202,13 @@ nav {
   text-align: center;
 
   padding: 70px 20px;
-
 }
 
 .heroContent {
-
   max-width: 900px;
-
 }
 
 .welcome {
-
   color: #aaa;
 
   letter-spacing: 7px;
@@ -255,8 +217,8 @@ nav {
 
   margin-bottom: 20px;
 
-  animation: welcome 2s infinite ease-in-out;
-
+  animation:
+    welcome 2s infinite ease-in-out;
 }
 
 @keyframes welcome {
@@ -299,7 +261,6 @@ nav {
 
   animation:
     gradientText 5s linear infinite;
-
 }
 
 @keyframes gradientText {
@@ -323,7 +284,6 @@ nav {
   font-size: 19px;
 
   line-height: 1.6;
-
 }
 
 .startButton {
@@ -352,7 +312,6 @@ nav {
   cursor: pointer;
 
   transition: .3s;
-
 }
 
 .startButton:hover {
@@ -364,11 +323,10 @@ nav {
   box-shadow:
     0 15px 40px
     rgba(80,90,255,.4);
-
 }
 
 
-/* CONTAINER */
+/* CONTENT */
 
 .container {
 
@@ -376,7 +334,6 @@ nav {
     min(1000px, 92%);
 
   margin: auto;
-
 }
 
 .card {
@@ -398,13 +355,10 @@ nav {
   box-shadow:
     0 20px 60px
     rgba(0,0,0,.25);
-
 }
 
 .card h2 {
-
   margin-bottom: 10px;
-
 }
 
 .description {
@@ -414,7 +368,6 @@ nav {
   line-height: 1.6;
 
   margin-bottom: 20px;
-
 }
 
 
@@ -443,7 +396,6 @@ textarea {
   color: white;
 
   font-size: 16px;
-
 }
 
 textarea:focus {
@@ -453,11 +405,10 @@ textarea:focus {
   box-shadow:
     0 0 25px
     rgba(128,92,255,.2);
-
 }
 
 
-/* GENERATE BUTTON */
+/* GENERATE */
 
 .generateButton {
 
@@ -487,7 +438,6 @@ textarea:focus {
   cursor: pointer;
 
   transition: .3s;
-
 }
 
 .generateButton:hover {
@@ -498,7 +448,6 @@ textarea:focus {
   box-shadow:
     0 12px 35px
     rgba(80,90,255,.4);
-
 }
 
 .generateButton:disabled {
@@ -506,7 +455,6 @@ textarea:focus {
   opacity: .5;
 
   cursor: wait;
-
 }
 
 
@@ -521,11 +469,10 @@ textarea:focus {
   margin-top: 15px;
 
   min-height: 25px;
-
 }
 
 
-/* IMAGE RESULT */
+/* IMAGE */
 
 #result {
 
@@ -534,7 +481,6 @@ textarea:focus {
   margin-top: 25px;
 
   text-align: center;
-
 }
 
 #generatedImage {
@@ -552,7 +498,6 @@ textarea:focus {
   box-shadow:
     0 20px 60px
     rgba(0,0,0,.5);
-
 }
 
 .downloadButton {
@@ -572,7 +517,6 @@ textarea:focus {
   text-decoration: none;
 
   font-weight: bold;
-
 }
 
 
@@ -586,7 +530,6 @@ textarea:focus {
     repeat(3, 1fr);
 
   gap: 15px;
-
 }
 
 .tool {
@@ -602,20 +545,16 @@ textarea:focus {
     1px solid rgba(255,255,255,.08);
 
   transition: .3s;
-
 }
 
 .tool:hover {
 
   transform:
     translateY(-5px);
-
 }
 
 .tool h3 {
-
   margin-bottom: 10px;
-
 }
 
 .tool p {
@@ -625,7 +564,29 @@ textarea:focus {
   font-size: 14px;
 
   line-height: 1.5;
+}
 
+
+/* AD AREA */
+
+.adBox {
+
+  min-height: 100px;
+
+  margin: 25px 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: #666;
+
+  border-radius: 15px;
+
+  background:
+    rgba(255,255,255,.025);
 }
 
 
@@ -638,7 +599,6 @@ footer {
   color: #666;
 
   padding: 50px 20px;
-
 }
 
 
@@ -651,21 +611,15 @@ footer {
   }
 
   .tools {
-
     grid-template-columns: 1fr;
-
   }
 
   .card {
-
     padding: 22px;
-
   }
 
   .logo {
-
     font-size: 20px;
-
   }
 
 }
@@ -767,7 +721,6 @@ footer {
     🖼️ AI Image Generator
   </h2>
 
-
   <p class="description">
 
     Create an AI image for
@@ -819,6 +772,30 @@ footer {
 </section>
 
 
+<!-- AD SPACE -->
+
+<section class="card">
+
+  <h2>
+    📢 Support SUBHAN AI
+  </h2>
+
+  <p class="description">
+
+    Ads help us keep SUBHAN AI
+    available and improve the service.
+
+  </p>
+
+  <div class="adBox">
+
+    Advertisement
+
+  </div>
+
+</section>
+
+
 <!-- TOOLS -->
 
 <section class="card">
@@ -826,7 +803,6 @@ footer {
   <h2>
     🚀 SUBHAN AI Tools
   </h2>
-
 
   <p class="description">
 
@@ -898,7 +874,6 @@ footer {
     ℹ️ About SUBHAN AI
   </h2>
 
-
   <p class="description">
 
     SUBHAN AI is a creative artificial
@@ -918,7 +893,6 @@ footer {
   <h2>
     📧 Contact
   </h2>
-
 
   <p class="description">
 
@@ -950,7 +924,6 @@ footer {
     🔒 Privacy Policy
   </h2>
 
-
   <p class="description">
 
     SUBHAN AI does not intentionally
@@ -974,6 +947,26 @@ footer {
 </section>
 
 
+<!-- TERMS -->
+
+<section class="card">
+
+  <h2>
+    📜 Terms of Service
+  </h2>
+
+  <p class="description">
+
+    By using SUBHAN AI, you agree to use
+    the service responsibly and not abuse,
+    attack, or attempt to bypass the
+    service's security systems.
+
+  </p>
+
+</section>
+
+
 <!-- VIDEO -->
 
 <section class="card">
@@ -981,7 +974,6 @@ footer {
   <h2>
     🎬 Video Generation
   </h2>
-
 
   <p class="description">
 
@@ -1092,7 +1084,7 @@ async function loadCredits() {
 
 
 /* ==========================================
-   IMAGE GENERATION
+   GENERATE IMAGE
 ========================================== */
 
 async function generateImage() {
@@ -1285,15 +1277,15 @@ function watchAd() {
 
   alert(
     "📺 Rewarded ads are not connected yet.\n\n" +
-    "Once the real rewarded-ad system is connected, " +
-    "you will receive 50 credits after completing the ad."
+    "The real rewarded-ad system will be connected " +
+    "after AdSense finishes verifying your website."
   );
 
 }
 
 
 /* ==========================================
-   SCROLL TO GENERATOR
+   SCROLL
 ========================================== */
 
 function scrollToGenerator() {
