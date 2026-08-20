@@ -9,7 +9,9 @@
       content="width=device-width, initial-scale=1.0">
 
 <title>SUBHAN AI — Free Premium AI Image Generator</title>
-<meta name="description" content="SUBHAN AI — Free Premium AI Image Generator. Create beautiful AI-generated images from your ideas.">
+
+<meta name="description"
+      content="SUBHAN AI — Free Premium AI Image Generator. Create beautiful AI-generated images and chat with an AI assistant.">
 
 <!-- Google AdSense — KEEP THIS -->
 <script async
@@ -27,7 +29,9 @@
   box-sizing: border-box;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -49,6 +53,7 @@ body::before {
   left: -200px;
   z-index: -2;
   animation: glow1 8s infinite alternate;
+  pointer-events: none;
 }
 
 body::after {
@@ -63,19 +68,32 @@ body::after {
   right: -200px;
   z-index: -2;
   animation: glow2 10s infinite alternate;
+  pointer-events: none;
 }
 
 @keyframes glow1 {
-  from { transform: translate(0, 0); }
-  to { transform: translate(250px, 200px); }
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(250px, 200px);
+  }
 }
 
 @keyframes glow2 {
-  from { transform: translate(0, 0); }
-  to { transform: translate(-250px, -200px); }
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(-250px, -200px);
+  }
 }
 
-/* NAVIGATION */
+/* =========================
+   NAVIGATION
+========================= */
 
 nav {
   position: sticky;
@@ -99,11 +117,20 @@ nav {
 }
 
 @keyframes waveLogo {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
 }
 
-/* ACCOUNT */
+/* =========================
+   ACCOUNT
+========================= */
 
 .accountArea {
   display: flex;
@@ -119,6 +146,7 @@ nav {
   color: white;
   cursor: pointer;
   font-weight: bold;
+  transition: .25s;
 }
 
 .authButton:hover {
@@ -135,7 +163,9 @@ nav {
   white-space: nowrap;
 }
 
-/* CREDIT AREA */
+/* =========================
+   CREDIT AREA
+========================= */
 
 .creditArea {
   display: flex;
@@ -169,7 +199,9 @@ nav {
   box-shadow: 0 8px 20px rgba(255,80,100,.3);
 }
 
-/* AUTH MODAL */
+/* =========================
+   AUTH MODAL
+========================= */
 
 .authOverlay {
   position: fixed;
@@ -261,7 +293,9 @@ nav {
   font-size: 14px;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero {
   min-height: 75vh;
@@ -272,7 +306,9 @@ nav {
   padding: 70px 20px;
 }
 
-.heroContent { max-width: 900px; }
+.heroContent {
+  max-width: 900px;
+}
 
 .welcome {
   color: #aaa;
@@ -283,15 +319,28 @@ nav {
 }
 
 @keyframes welcome {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+
 }
 
 .hero h1 {
   font-size: clamp(55px, 10vw, 120px);
   font-weight: 1000;
   letter-spacing: -5px;
-  background: linear-gradient(90deg, white, #8b5cff, #00d9ff, white);
+  background: linear-gradient(
+    90deg,
+    white,
+    #8b5cff,
+    #00d9ff,
+    white
+  );
   background-size: 300%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -300,8 +349,15 @@ nav {
 }
 
 @keyframes gradientText {
-  from { background-position: 0%; }
-  to { background-position: 300%; }
+
+  from {
+    background-position: 0%;
+  }
+
+  to {
+    background-position: 300%;
+  }
+
 }
 
 .hero p {
@@ -329,7 +385,9 @@ nav {
   box-shadow: 0 15px 40px rgba(80,90,255,.4);
 }
 
-/* CONTENT */
+/* =========================
+   CONTENT
+========================= */
 
 .container {
   width: min(1000px, 92%);
@@ -346,7 +404,9 @@ nav {
   box-shadow: 0 20px 60px rgba(0,0,0,.25);
 }
 
-.card h2 { margin-bottom: 10px; }
+.card h2 {
+  margin-bottom: 10px;
+}
 
 .description {
   color: #999;
@@ -354,7 +414,9 @@ nav {
   margin-bottom: 20px;
 }
 
-/* PROMPT */
+/* =========================
+   IMAGE PROMPT
+========================= */
 
 textarea {
   width: 100%;
@@ -374,7 +436,9 @@ textarea:focus {
   box-shadow: 0 0 25px rgba(128,92,255,.2);
 }
 
-/* GENERATE */
+/* =========================
+   IMAGE GENERATE
+========================= */
 
 .generateButton {
   width: 100%;
@@ -400,7 +464,9 @@ textarea:focus {
   cursor: wait;
 }
 
-/* STATUS */
+/* =========================
+   STATUS
+========================= */
 
 #status {
   text-align: center;
@@ -409,7 +475,9 @@ textarea:focus {
   min-height: 25px;
 }
 
-/* IMAGE */
+/* =========================
+   IMAGE RESULT
+========================= */
 
 #result {
   display: none;
@@ -437,7 +505,267 @@ textarea:focus {
   font-weight: bold;
 }
 
-/* TOOLS */
+/* =========================
+   AI ASSISTANT
+========================= */
+
+.aiHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.aiTitleArea {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+}
+
+.aiLogo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,#743cff,#00bfff);
+  font-size: 23px;
+  box-shadow: 0 10px 35px rgba(0,191,255,.2);
+}
+
+.aiOnline {
+  margin-top: 4px;
+  color: #63e6a5;
+  font-size: 12px;
+}
+
+.clearChatButton {
+  padding: 9px 13px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.05);
+  color: #aaa;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.clearChatButton:hover {
+  color: white;
+  background: rgba(255,255,255,.1);
+}
+
+.aiMessages {
+  height: 470px;
+  overflow-y: auto;
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 20px;
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(255,255,255,.08);
+  scroll-behavior: smooth;
+}
+
+.aiWelcome {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.045);
+}
+
+.aiAvatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: linear-gradient(135deg,#743cff,#00bfff);
+  font-size: 21px;
+}
+
+.aiWelcome p {
+  margin-top: 5px;
+  color: #999;
+  line-height: 1.5;
+}
+
+.aiMessage {
+  display: flex;
+  margin: 14px 0;
+  animation: messageIn .25s ease;
+}
+
+@keyframes messageIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+.aiMessage.user {
+  justify-content: flex-end;
+}
+
+.aiBubble {
+  max-width: 80%;
+  padding: 13px 16px;
+  border-radius: 18px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.aiMessage.user .aiBubble {
+  background: linear-gradient(135deg,#743cff,#4c8dff);
+  border-bottom-right-radius: 5px;
+}
+
+.aiMessage.assistant .aiBubble {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.07);
+  border-bottom-left-radius: 5px;
+}
+
+.aiInputArea {
+  display: flex;
+  align-items: flex-end;
+  gap: 9px;
+  margin-top: 15px;
+}
+
+.aiInput {
+  flex: 1;
+  min-height: 52px;
+  max-height: 180px;
+  resize: none;
+  margin: 0;
+  padding: 15px 17px;
+  border-radius: 17px;
+}
+
+.voiceButton,
+.aiSendButton {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  transition: .25s;
+}
+
+.voiceButton {
+  background: rgba(255,255,255,.08);
+  color: white;
+}
+
+.voiceButton.listening {
+  background: #ff3d81;
+  animation: pulseMic 1s infinite;
+}
+
+@keyframes pulseMic {
+
+  0%,100% {
+    box-shadow: 0 0 0 0 rgba(255,61,129,.3);
+  }
+
+  50% {
+    box-shadow: 0 0 0 12px rgba(255,61,129,0);
+  }
+
+}
+
+.aiSendButton {
+  background: linear-gradient(135deg,#743cff,#00bfff);
+  color: white;
+  font-size: 22px;
+}
+
+.voiceButton:hover,
+.aiSendButton:hover {
+  transform: translateY(-3px);
+}
+
+.aiSendButton:disabled {
+  opacity: .5;
+  cursor: wait;
+  transform: none;
+}
+
+.aiHint {
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+  margin-top: 9px;
+}
+
+.aiTyping {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.aiTyping span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #aaa;
+  animation: typing 1s infinite;
+}
+
+.aiTyping span:nth-child(2) {
+  animation-delay: .15s;
+}
+
+.aiTyping span:nth-child(3) {
+  animation-delay: .3s;
+}
+
+@keyframes typing {
+
+  0%,60%,100% {
+    opacity: .25;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+
+}
+
+.speakButton {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(255,255,255,.05);
+  color: #aaa;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.speakButton:hover {
+  color: white;
+}
+
+/* =========================
+   TOOLS
+========================= */
 
 .tools {
   display: grid;
@@ -453,9 +781,13 @@ textarea:focus {
   transition: .3s;
 }
 
-.tool:hover { transform: translateY(-5px); }
+.tool:hover {
+  transform: translateY(-5px);
+}
 
-.tool h3 { margin-bottom: 10px; }
+.tool h3 {
+  margin-bottom: 10px;
+}
 
 .tool p {
   color: #999;
@@ -463,7 +795,9 @@ textarea:focus {
   line-height: 1.5;
 }
 
-/* AD AREA */
+/* =========================
+   AD
+========================= */
 
 .adBox {
   min-height: 100px;
@@ -476,7 +810,9 @@ textarea:focus {
   background: rgba(255,255,255,.025);
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 footer {
   text-align: center;
@@ -484,7 +820,9 @@ footer {
   padding: 50px 20px;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:700px) {
 
@@ -500,15 +838,50 @@ footer {
     justify-content: flex-end;
   }
 
+  .creditArea {
+    order: 1;
+  }
+
   .tools {
     grid-template-columns: 1fr;
   }
 
-  .card { padding: 22px; }
+  .card {
+    padding: 22px;
+  }
 
-  .logo { font-size: 20px; }
+  .logo {
+    font-size: 20px;
+  }
 
-  .userEmail { max-width: 130px; }
+  .userEmail {
+    max-width: 130px;
+  }
+
+  .aiMessages {
+    height: 55vh;
+    min-height: 350px;
+    padding: 12px;
+  }
+
+  .aiBubble {
+    max-width: 88%;
+  }
+
+  .voiceButton,
+  .aiSendButton {
+    width: 48px;
+    height: 48px;
+  }
+
+  .aiHeader {
+    align-items: center;
+  }
+
+  .aiLogo {
+    width: 42px;
+    height: 42px;
+  }
 
 }
 
@@ -518,7 +891,9 @@ footer {
 
 <body>
 
-<!-- NAVIGATION -->
+<!-- =========================
+     NAVIGATION
+========================= -->
 
 <nav>
 
@@ -572,7 +947,10 @@ footer {
 
 </nav>
 
-<!-- AUTH MODAL -->
+
+<!-- =========================
+     AUTH MODAL
+========================= -->
 
 <div
   id="authOverlay"
@@ -637,7 +1015,10 @@ footer {
 
 </div>
 
-<!-- HERO -->
+
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero">
 
@@ -654,7 +1035,7 @@ footer {
     <p>
       Unleash your imagination with AI.
       <br>
-      Create amazing images from your ideas.
+      Create amazing images and talk with SUBHAN AI.
     </p>
 
     <button
@@ -668,11 +1049,18 @@ footer {
 
 </section>
 
+
 <main class="container">
 
-<!-- IMAGE GENERATOR -->
 
-<section class="card" id="generator">
+<!-- =========================
+     IMAGE GENERATOR
+========================= -->
+
+<section
+  class="card"
+  id="generator"
+>
 
   <h2>
     🖼️ AI Image Generator
@@ -717,7 +1105,119 @@ footer {
 
 </section>
 
-<!-- AD SPACE -->
+
+<!-- =========================
+     AI ASSISTANT
+========================= -->
+
+<section
+  class="card"
+  id="aiAssistant"
+>
+
+  <div class="aiHeader">
+
+    <div class="aiTitleArea">
+
+      <div class="aiLogo">
+        🤖
+      </div>
+
+      <div>
+
+        <h2>
+          SUBHAN AI Assistant
+        </h2>
+
+        <div class="aiOnline">
+          ● AI Assistant
+        </div>
+
+      </div>
+
+    </div>
+
+    <button
+      class="clearChatButton"
+      onclick="clearAIChat()"
+    >
+      🗑️ Clear
+    </button>
+
+  </div>
+
+  <p class="description">
+    Ask questions, brainstorm ideas, learn, code, or just talk.
+  </p>
+
+  <div
+    id="aiMessages"
+    class="aiMessages"
+  >
+
+    <div class="aiWelcome">
+
+      <div class="aiAvatar">
+        🤖
+      </div>
+
+      <div>
+
+        <strong>
+          SUBHAN AI
+        </strong>
+
+        <p>
+          Hey! 👋 I'm SUBHAN AI.
+          What would you like to talk about?
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="aiInputArea">
+
+    <textarea
+      id="aiInput"
+      class="aiInput"
+      rows="1"
+      placeholder="Message SUBHAN AI..."
+      onkeydown="handleAIKey(event)"
+    ></textarea>
+
+    <button
+      id="voiceButton"
+      class="voiceButton"
+      onclick="startVoiceInput()"
+      title="Voice input"
+    >
+      🎤
+    </button>
+
+    <button
+      id="aiSendButton"
+      class="aiSendButton"
+      onclick="sendAIMessage()"
+      title="Send"
+    >
+      ➤
+    </button>
+
+  </div>
+
+  <div class="aiHint">
+    Enter to send • Shift + Enter for a new line
+  </div>
+
+</section>
+
+
+<!-- =========================
+     AD SPACE
+========================= -->
 
 <section class="card">
 
@@ -736,7 +1236,10 @@ footer {
 
 </section>
 
-<!-- TOOLS -->
+
+<!-- =========================
+     TOOLS
+========================= -->
 
 <section class="card">
 
@@ -783,8 +1286,8 @@ footer {
       </h3>
 
       <p>
-        More intelligent AI tools will
-        be added in future updates.
+        Talk with SUBHAN AI using
+        natural language.
       </p>
 
     </div>
@@ -793,7 +1296,10 @@ footer {
 
 </section>
 
-<!-- ABOUT -->
+
+<!-- =========================
+     ABOUT
+========================= -->
 
 <section class="card">
 
@@ -810,7 +1316,10 @@ footer {
 
 </section>
 
-<!-- CONTACT -->
+
+<!-- =========================
+     CONTACT
+========================= -->
 
 <section class="card">
 
@@ -837,7 +1346,10 @@ footer {
 
 </section>
 
-<!-- PRIVACY -->
+
+<!-- =========================
+     PRIVACY
+========================= -->
 
 <section class="card">
 
@@ -866,7 +1378,10 @@ footer {
 
 </section>
 
-<!-- TERMS -->
+
+<!-- =========================
+     TERMS
+========================= -->
 
 <section class="card">
 
@@ -885,7 +1400,10 @@ footer {
 
 </section>
 
-<!-- VIDEO -->
+
+<!-- =========================
+     VIDEO
+========================= -->
 
 <section class="card">
 
@@ -909,6 +1427,7 @@ footer {
 
 </main>
 
+
 <footer>
 
   © 2026 SUBHAN AI
@@ -918,6 +1437,7 @@ footer {
   Built with AI ✨
 
 </footer>
+
 
 <script>
 
@@ -955,6 +1475,13 @@ let authMode = "login";
 
 
 /* ==========================================
+   AI CONVERSATION
+========================================== */
+
+let aiMessages = [];
+
+
+/* ==========================================
    AUTH MODAL
 ========================================== */
 
@@ -970,6 +1497,7 @@ function openAuthModal() {
 
 }
 
+
 function closeAuthModal() {
 
   document
@@ -977,6 +1505,7 @@ function closeAuthModal() {
     .classList.remove("show");
 
 }
+
 
 function toggleAuthMode() {
 
@@ -1173,7 +1702,7 @@ async function logout() {
 
 
 /* ==========================================
-   UPDATE AUTH UI
+   AUTH UI
 ========================================== */
 
 function updateAuthUI() {
@@ -1262,11 +1791,15 @@ supabaseClient.auth.onAuthStateChange(
     updateAuthUI();
 
     if (currentUser) {
+
       await loadCredits();
+
     } else {
+
       document
         .getElementById("credits")
         .textContent = "0";
+
     }
 
   }
@@ -1524,6 +2057,526 @@ async function generateImage() {
 
 
 /* ==========================================
+   AI CHAT
+========================================== */
+
+function addAIMessage(role, text) {
+
+  const messages =
+    document.getElementById("aiMessages");
+
+  const wrapper =
+    document.createElement("div");
+
+  wrapper.className =
+    "aiMessage " + role;
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "aiBubble";
+
+  bubble.textContent =
+    text;
+
+  wrapper.appendChild(bubble);
+
+  messages.appendChild(wrapper);
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+  return bubble;
+
+}
+
+
+/* ==========================================
+   TYPING INDICATOR
+========================================== */
+
+function addAITyping() {
+
+  const messages =
+    document.getElementById("aiMessages");
+
+  const wrapper =
+    document.createElement("div");
+
+  wrapper.className =
+    "aiMessage assistant";
+
+  wrapper.id =
+    "aiTypingMessage";
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "aiBubble";
+
+  bubble.innerHTML =
+    '<div class="aiTyping">' +
+      '<span></span>' +
+      '<span></span>' +
+      '<span></span>' +
+    '</div>';
+
+  wrapper.appendChild(bubble);
+
+  messages.appendChild(wrapper);
+
+  messages.scrollTop =
+    messages.scrollHeight;
+
+}
+
+
+/* ==========================================
+   REMOVE TYPING
+========================================== */
+
+function removeAITyping() {
+
+  const typing =
+    document.getElementById(
+      "aiTypingMessage"
+    );
+
+  if (typing) {
+    typing.remove();
+  }
+
+}
+
+
+/* ==========================================
+   SEND AI MESSAGE
+========================================== */
+
+async function sendAIMessage() {
+
+  const input =
+    document.getElementById("aiInput");
+
+  const sendButton =
+    document.getElementById("aiSendButton");
+
+  const text =
+    input.value.trim();
+
+  if (!text) {
+    return;
+  }
+
+  if (!currentUser) {
+
+    openAuthModal();
+
+    document
+      .getElementById("authStatus")
+      .textContent =
+      "🔐 Please log in to use SUBHAN AI Assistant.";
+
+    return;
+
+  }
+
+  addAIMessage(
+    "user",
+    text
+  );
+
+  aiMessages.push({
+    role: "user",
+    content: text
+  });
+
+  input.value = "";
+
+  input.style.height =
+    "52px";
+
+  sendButton.disabled =
+    true;
+
+  addAITyping();
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL + "/chat",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+
+            userId:
+              currentUser.id,
+
+            messages:
+              aiMessages
+
+          })
+
+        }
+      );
+
+    removeAITyping();
+
+    if (!response.ok) {
+
+      const errorText =
+        await response.text();
+
+      let errorData;
+
+      try {
+
+        errorData =
+          JSON.parse(errorText);
+
+      } catch {
+
+        errorData = null;
+
+      }
+
+      throw new Error(
+        errorData?.error ||
+        errorText ||
+        "AI request failed."
+      );
+
+    }
+
+    const data =
+      await response.json();
+
+    const answer =
+      data.reply ||
+      data.message ||
+      data.response;
+
+    if (!answer) {
+
+      throw new Error(
+        "The AI returned an empty response."
+      );
+
+    }
+
+    aiMessages.push({
+
+      role: "assistant",
+
+      content: answer
+
+    });
+
+    const bubble =
+      addAIMessage(
+        "assistant",
+        answer
+      );
+
+    addSpeakButton(
+      bubble,
+      answer
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    removeAITyping();
+
+    addAIMessage(
+      "assistant",
+      "❌ I couldn't connect to the AI right now. Please try again."
+    );
+
+  } finally {
+
+    sendButton.disabled =
+      false;
+
+    input.focus();
+
+  }
+
+}
+
+
+/* ==========================================
+   SPEAK BUTTON
+========================================== */
+
+function addSpeakButton(
+  bubble,
+  text
+) {
+
+  if (
+    !("speechSynthesis" in window)
+  ) {
+    return;
+  }
+
+  const button =
+    document.createElement("button");
+
+  button.className =
+    "speakButton";
+
+  button.textContent =
+    "🔊 Speak";
+
+  button.onclick =
+    function() {
+
+      speechSynthesis.cancel();
+
+      const speech =
+        new SpeechSynthesisUtterance(
+          text
+        );
+
+      speech.rate =
+        1;
+
+      speech.pitch =
+        1;
+
+      speechSynthesis.speak(
+        speech
+      );
+
+    };
+
+  bubble.appendChild(
+    document.createElement("br")
+  );
+
+  bubble.appendChild(button);
+
+}
+
+
+/* ==========================================
+   VOICE INPUT
+========================================== */
+
+let recognition = null;
+
+function startVoiceInput() {
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+
+    alert(
+      "Voice input is not supported by this browser."
+    );
+
+    return;
+
+  }
+
+  if (recognition) {
+
+    try {
+      recognition.stop();
+    } catch {}
+
+    recognition = null;
+
+    return;
+
+  }
+
+  recognition =
+    new SpeechRecognition();
+
+  recognition.lang =
+    "en-US";
+
+  recognition.interimResults =
+    true;
+
+  recognition.continuous =
+    false;
+
+  const button =
+    document.getElementById(
+      "voiceButton"
+    );
+
+  const input =
+    document.getElementById(
+      "aiInput"
+    );
+
+  button.classList.add(
+    "listening"
+  );
+
+  button.textContent =
+    "🔴";
+
+  recognition.onresult =
+    function(event) {
+
+      let transcript = "";
+
+      for (
+        let i = event.resultIndex;
+        i < event.results.length;
+        i++
+      ) {
+
+        transcript +=
+          event.results[i][0].transcript;
+
+      }
+
+      input.value =
+        transcript;
+
+      input.style.height =
+        "auto";
+
+      input.style.height =
+        Math.min(
+          input.scrollHeight,
+          180
+        ) + "px";
+
+    };
+
+  recognition.onerror =
+    function(error) {
+
+      console.error(
+        "Voice recognition error:",
+        error
+      );
+
+    };
+
+  recognition.onend =
+    function() {
+
+      button.classList.remove(
+        "listening"
+      );
+
+      button.textContent =
+        "🎤";
+
+      recognition = null;
+
+    };
+
+  recognition.start();
+
+}
+
+
+/* ==========================================
+   ENTER TO SEND
+========================================== */
+
+function handleAIKey(event) {
+
+  if (
+    event.key === "Enter" &&
+    !event.shiftKey
+  ) {
+
+    event.preventDefault();
+
+    sendAIMessage();
+
+  }
+
+}
+
+
+/* ==========================================
+   AUTO RESIZE AI INPUT
+========================================== */
+
+document
+  .getElementById("aiInput")
+  .addEventListener(
+    "input",
+    function() {
+
+      this.style.height =
+        "auto";
+
+      this.style.height =
+        Math.min(
+          this.scrollHeight,
+          180
+        ) + "px";
+
+    }
+  );
+
+
+/* ==========================================
+   CLEAR AI CHAT
+========================================== */
+
+function clearAIChat() {
+
+  aiMessages = [];
+
+  const messages =
+    document.getElementById(
+      "aiMessages"
+    );
+
+  messages.innerHTML = `
+
+    <div class="aiWelcome">
+
+      <div class="aiAvatar">
+        🤖
+      </div>
+
+      <div>
+
+        <strong>
+          SUBHAN AI
+        </strong>
+
+        <p>
+          Chat cleared! 👋
+          What would you like to talk about?
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ==========================================
    WATCH AD
 ========================================== */
 
@@ -1576,4 +2629,3 @@ loadAuthSession();
 
 </body>
 </html>
-
