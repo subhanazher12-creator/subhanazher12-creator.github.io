@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +14,7 @@
 <meta name="description"
       content="SUBHAN AI — Free Premium AI Image Generator. Create beautiful AI-generated images from your ideas.">
 
-<!-- Google AdSense — KEEP THIS -->
+<!-- Google AdSense -->
 <script async
   src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7988076392393976"
   crossorigin="anonymous"></script>
@@ -74,23 +75,13 @@ body::after {
 }
 
 @keyframes glow1 {
-  from {
-    transform: translate(0, 0);
-  }
-
-  to {
-    transform: translate(250px, 200px);
-  }
+  from { transform: translate(0, 0); }
+  to { transform: translate(250px, 200px); }
 }
 
 @keyframes glow2 {
-  from {
-    transform: translate(0, 0);
-  }
-
-  to {
-    transform: translate(-250px, -200px);
-  }
+  from { transform: translate(0, 0); }
+  to { transform: translate(-250px, -200px); }
 }
 
 
@@ -120,15 +111,8 @@ nav {
 }
 
 @keyframes waveLogo {
-
-  0%,100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-5px);
-  }
-
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 
@@ -325,15 +309,8 @@ nav {
 }
 
 @keyframes welcome {
-
-  0%,100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-7px);
-  }
-
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
 }
 
 .hero h1 {
@@ -347,27 +324,16 @@ nav {
     #00d9ff,
     white
   );
-
   background-size: 300%;
-
   -webkit-background-clip: text;
   background-clip: text;
-
   color: transparent;
-
   animation: gradientText 5s linear infinite;
 }
 
 @keyframes gradientText {
-
-  from {
-    background-position: 0%;
-  }
-
-  to {
-    background-position: 300%;
-  }
-
+  from { background-position: 0%; }
+  to { background-position: 300%; }
 }
 
 .hero p {
@@ -491,12 +457,7 @@ nav {
 }
 
 .chatMessage.user .chatBubble {
-  background: linear-gradient(
-    90deg,
-    #743cff,
-    #00aaff
-  );
-
+  background: linear-gradient(90deg, #743cff, #00aaff);
   color: white;
   border-bottom-right-radius: 5px;
 }
@@ -531,17 +492,14 @@ nav {
 }
 
 @keyframes chatDot {
-
   0%,100% {
     opacity: .3;
     transform: translateY(0);
   }
-
   50% {
     opacity: 1;
     transform: translateY(-4px);
   }
-
 }
 
 .chatInputArea {
@@ -566,12 +524,7 @@ nav {
   height: 50px;
   border: none;
   border-radius: 13px;
-  background: linear-gradient(
-    90deg,
-    #743cff,
-    #00bfff
-  );
-
+  background: linear-gradient(90deg, #743cff, #00bfff);
   color: white;
   font-size: 20px;
   cursor: pointer;
@@ -1017,7 +970,6 @@ footer {
 
     </div>
 
-
     <div class="chatInputArea">
 
       <textarea
@@ -1038,7 +990,6 @@ footer {
     </div>
 
   </div>
-
 
   <div class="chatControls">
 
@@ -1114,7 +1065,7 @@ footer {
 
 
 <!-- ==========================================
-     AD SPACE
+     REAL ADSENSE AD
 ========================================== -->
 
 <section class="card">
@@ -1129,7 +1080,18 @@ footer {
   </p>
 
   <div class="adBox">
-    Advertisement
+
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-7988076392393976"
+         data-ad-slot="9697127234"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
   </div>
 
 </section>
@@ -1374,7 +1336,6 @@ const API_URL =
 ========================================== */
 
 let currentUser = null;
-
 let authMode = "login";
 
 
@@ -1408,24 +1369,16 @@ function toggleAuthMode() {
       : "login";
 
   const title =
-    document.getElementById(
-      "authTitle"
-    );
+    document.getElementById("authTitle");
 
   const submit =
-    document.getElementById(
-      "authSubmit"
-    );
+    document.getElementById("authSubmit");
 
   const modeButton =
-    document.getElementById(
-      "authModeButton"
-    );
+    document.getElementById("authModeButton");
 
   const password =
-    document.getElementById(
-      "authPassword"
-    );
+    document.getElementById("authPassword");
 
 
   if (authMode === "signup") {
@@ -1621,19 +1574,13 @@ async function logout() {
 function updateAuthUI() {
 
   const loginButton =
-    document.getElementById(
-      "loginButton"
-    );
+    document.getElementById("loginButton");
 
   const logoutButton =
-    document.getElementById(
-      "logoutButton"
-    );
+    document.getElementById("logoutButton");
 
   const email =
-    document.getElementById(
-      "userEmail"
-    );
+    document.getElementById("userEmail");
 
 
   if (currentUser) {
@@ -2021,33 +1968,11 @@ async function generateImage() {
 
 
 /* ==========================================
-   REAL AI CHAT 🤖
+   REAL AI CHAT
 ========================================== */
-
-/*
-   IMPORTANT:
-
-   The Gemini API key is NOT stored here.
-
-   This website sends the message to:
-
-   Cloudflare Worker
-        ↓
-   /chat
-        ↓
-   Gemini API
-
-   Your GEMINI_API_KEY stays inside
-   Cloudflare Worker secrets.
-*/
 
 const AI_CHAT_URL =
   API_URL + "/chat";
-
-
-/* ==========================================
-   CHAT HISTORY
-========================================== */
 
 let chatHistory = [];
 
@@ -2056,64 +1981,40 @@ let chatHistory = [];
    ADD MESSAGE
 ========================================== */
 
-function addChatMessage(
-  message,
-  type
-) {
+function addChatMessage(message, type) {
 
   const messages =
-    document.getElementById(
-      "chatMessages"
-    );
-
+    document.getElementById("chatMessages");
 
   const welcome =
-    document.getElementById(
-      "chatWelcome"
-    );
+    document.getElementById("chatWelcome");
 
 
   if (welcome) {
-
     welcome.remove();
-
   }
 
 
   const wrapper =
-    document.createElement(
-      "div"
-    );
-
+    document.createElement("div");
 
   wrapper.className =
-    "chatMessage " +
-    type;
+    "chatMessage " + type;
 
 
   const bubble =
-    document.createElement(
-      "div"
-    );
-
+    document.createElement("div");
 
   bubble.className =
     "chatBubble";
-
 
   bubble.textContent =
     message;
 
 
-  wrapper.appendChild(
-    bubble
-  );
+  wrapper.appendChild(bubble);
 
-
-  messages.appendChild(
-    wrapper
-  );
-
+  messages.appendChild(wrapper);
 
   messages.scrollTop =
     messages.scrollHeight;
@@ -2131,15 +2032,11 @@ function addChatMessage(
 function showChatTyping() {
 
   const messages =
-    document.getElementById(
-      "chatMessages"
-    );
+    document.getElementById("chatMessages");
 
 
   const wrapper =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
 
   wrapper.id =
@@ -2161,10 +2058,7 @@ function showChatTyping() {
   `;
 
 
-  messages.appendChild(
-    wrapper
-  );
-
+  messages.appendChild(wrapper);
 
   messages.scrollTop =
     messages.scrollHeight;
@@ -2185,9 +2079,7 @@ function removeChatTyping() {
 
 
   if (typing) {
-
     typing.remove();
-
   }
 
 }
@@ -2200,37 +2092,25 @@ function removeChatTyping() {
 async function sendAIMessage() {
 
   const input =
-    document.getElementById(
-      "aiChatInput"
-    );
-
+    document.getElementById("aiChatInput");
 
   const button =
-    document.getElementById(
-      "aiSendButton"
-    );
-
+    document.getElementById("aiSendButton");
 
   const message =
     input.value.trim();
 
 
   if (!message) {
-
     return;
-
   }
 
-
-  /* Add user's message */
 
   addChatMessage(
     message,
     "user"
   );
 
-
-  /* Save local history */
 
   chatHistory.push({
     role: "user",
@@ -2247,16 +2127,10 @@ async function sendAIMessage() {
 
   try {
 
-    /*
-       Send the user's message to
-       the Cloudflare Worker.
-    */
-
     const response =
       await fetch(
         AI_CHAT_URL,
         {
-
           method: "POST",
 
           headers: {
@@ -2271,28 +2145,13 @@ async function sendAIMessage() {
 
             message: message,
 
-            /*
-              Send previous conversation
-              history too.
-
-              The Worker can ignore this
-              if it only supports message.
-            */
-
             history:
               chatHistory.slice(-12)
 
           })
-
         }
       );
 
-
-    /*
-       Always read the response as text first.
-       This prevents the frontend from crashing
-       if Cloudflare returns a non-JSON error.
-    */
 
     const responseText =
       await response.text();
@@ -2330,17 +2189,10 @@ async function sendAIMessage() {
 
 
       if (data?.error) {
-
         errorMessage =
           data.error;
-
       }
 
-
-      /*
-         Show useful information when
-         Cloudflare/Gemini returns an error.
-      */
 
       if (
         data?.details &&
@@ -2361,14 +2213,6 @@ async function sendAIMessage() {
     }
 
 
-    /*
-       Cloudflare should return:
-
-       {
-         "reply": "AI response..."
-       }
-    */
-
     const reply =
       data?.reply;
 
@@ -2388,15 +2232,11 @@ async function sendAIMessage() {
     }
 
 
-    /* Save AI response */
-
     chatHistory.push({
       role: "assistant",
       content: reply
     });
 
-
-    /* Show AI response */
 
     addChatMessage(
       reply,
@@ -2414,12 +2254,6 @@ async function sendAIMessage() {
 
     removeChatTyping();
 
-
-    /*
-       Show the actual connection error
-       instead of hiding everything behind
-       a generic message.
-    */
 
     addChatMessage(
       "❌ " +
@@ -2567,3 +2401,4 @@ loadAuthSession();
 </body>
 
 </html>
+```
