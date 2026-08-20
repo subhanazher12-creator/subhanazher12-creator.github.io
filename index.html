@@ -2021,12 +2021,40 @@ async function generateImage() {
 
 
 /* ==========================================
-   AI CHAT 🤖
+   REAL AI CHAT 🤖
 ========================================== */
+
+/*
+   IMPORTANT:
+
+   The Gemini API key is NOT stored here.
+
+   This website sends the message to:
+
+   Cloudflare Worker
+        ↓
+   /chat
+        ↓
+   Gemini API
+
+   Your GEMINI_API_KEY stays inside
+   Cloudflare Worker secrets.
+*/
 
 const AI_CHAT_URL =
   API_URL + "/chat";
 
+
+/* ==========================================
+   CHAT HISTORY
+========================================== */
+
+let chatHistory = [];
+
+
+/* ==========================================
+   ADD MESSAGE
+========================================== */
 
 function addChatMessage(
   message,
@@ -2096,6 +2124,10 @@ function addChatMessage(
 }
 
 
+/* ==========================================
+   TYPING
+========================================== */
+
 function showChatTyping() {
 
   const messages =
@@ -2140,6 +2172,10 @@ function showChatTyping() {
 }
 
 
+/* ==========================================
+   REMOVE TYPING
+========================================== */
+
 function removeChatTyping() {
 
   const typing =
@@ -2156,6 +2192,10 @@ function removeChatTyping() {
 
 }
 
+
+/* ==========================================
+   SEND REAL AI MESSAGE
+========================================== */
 
 async function sendAIMessage() {
 
@@ -2182,22 +2222,35 @@ async function sendAIMessage() {
   }
 
 
+  /* Add user's message */
+
   addChatMessage(
     message,
     "user"
   );
 
 
+  /* Save local history */
+
+  chatHistory.push({
+    role: "user",
+    content: message
+  });
+
+
   input.value = "";
 
-
   button.disabled = true;
-
 
   showChatTyping();
 
 
   try {
+
+    /*
+       Send the user's message to
+       the Cloudflare Worker.
+    */
 
     const response =
       await fetch(
@@ -2208,19 +2261,56 @@ async function sendAIMessage() {
 
           headers: {
             "Content-Type":
+              "application/json",
+
+            "Accept":
               "application/json"
           },
 
           body: JSON.stringify({
-            message: message
+
+            message: message,
+
+            /*
+              Send previous conversation
+              history too.
+
+              The Worker can ignore this
+              if it only supports message.
+            */
+
+            history:
+              chatHistory.slice(-12)
+
           })
 
         }
       );
 
 
-    const data =
-      await response.json();
+    /*
+       Always read the response as text first.
+       This prevents the frontend from crashing
+       if Cloudflare returns a non-JSON error.
+    */
+
+    const responseText =
+      await response.text();
+
+
+    let data = null;
+
+
+    try {
+
+      data =
+        JSON.parse(responseText);
+
+    } catch {
+
+      data = null;
+
+    }
 
 
     removeChatTyping();
@@ -2228,25 +2318,88 @@ async function sendAIMessage() {
 
     if (!response.ok) {
 
+      console.error(
+        "Cloudflare /chat error:",
+        response.status,
+        responseText
+      );
+
+
+      let errorMessage =
+        "AI request failed.";
+
+
+      if (data?.error) {
+
+        errorMessage =
+          data.error;
+
+      }
+
+
+      /*
+         Show useful information when
+         Cloudflare/Gemini returns an error.
+      */
+
+      if (
+        data?.details &&
+        typeof data.details === "string"
+      ) {
+
+        errorMessage +=
+          "\n" +
+          data.details;
+
+      }
+
+
       throw new Error(
-        data?.error ||
-        "AI request failed"
+        errorMessage
       );
 
     }
 
 
-    if (!data.reply) {
+    /*
+       Cloudflare should return:
+
+       {
+         "reply": "AI response..."
+       }
+    */
+
+    const reply =
+      data?.reply;
+
+
+    if (!reply) {
+
+      console.error(
+        "Invalid AI response:",
+        responseText
+      );
+
 
       throw new Error(
-        "AI returned no response"
+        "AI returned no response."
       );
 
     }
 
+
+    /* Save AI response */
+
+    chatHistory.push({
+      role: "assistant",
+      content: reply
+    });
+
+
+    /* Show AI response */
 
     addChatMessage(
-      data.reply,
+      reply,
       "ai"
     );
 
@@ -2262,8 +2415,18 @@ async function sendAIMessage() {
     removeChatTyping();
 
 
+    /*
+       Show the actual connection error
+       instead of hiding everything behind
+       a generic message.
+    */
+
     addChatMessage(
-      "❌ Sorry, I couldn't connect to the AI right now. Please try again.",
+      "❌ " +
+      (
+        error.message ||
+        "Sorry, I couldn't connect to the AI right now. Please try again."
+      ),
       "ai"
     );
 
@@ -2285,6 +2448,9 @@ async function sendAIMessage() {
 ========================================== */
 
 function clearAIChat() {
+
+  chatHistory = [];
+
 
   const messages =
     document.getElementById(
