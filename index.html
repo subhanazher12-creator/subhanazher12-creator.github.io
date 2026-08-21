@@ -9,17 +9,17 @@
 <meta name="description"
 content="SUBHAN AI — A premium AI platform for conversation and image generation.">
 
-<!-- =========================
+<!-- =========================================================
      ADSENSE
-========================= -->
+========================================================= -->
 
 <script async
 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7988076392393976"
 crossorigin="anonymous"></script>
 
-<!-- =========================
+<!-- =========================================================
      SUPABASE
-========================= -->
+========================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -49,14 +49,14 @@ html{
 body{
   min-height:100vh;
   background:var(--bg);
-  color:white;
+  color:var(--text);
   font-family:Inter,Arial,Helvetica,sans-serif;
   overflow-x:hidden;
 }
 
-/* =========================
+/* =========================================================
    INTRO
-========================= */
+========================================================= */
 
 #intro{
   position:fixed;
@@ -151,9 +151,9 @@ body{
   }
 }
 
-/* =========================
+/* =========================================================
    BACKGROUND
-========================= */
+========================================================= */
 
 .ambient{
   position:fixed;
@@ -224,16 +224,23 @@ body{
   inset:0;
   z-index:-3;
   pointer-events:none;
+
   background-image:
     linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
     linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+
   background-size:70px 70px;
-  mask-image:linear-gradient(to bottom,black,transparent);
+
+  mask-image:linear-gradient(
+    to bottom,
+    black,
+    transparent
+  );
 }
 
-/* =========================
+/* =========================================================
    CURSOR
-========================= */
+========================================================= */
 
 .cursor-dot,
 .cursor-ring,
@@ -249,6 +256,7 @@ body{
   height:7px;
   border-radius:50%;
   background:white;
+
   box-shadow:
     0 0 10px #fff,
     0 0 25px #8b5cff;
@@ -259,6 +267,7 @@ body{
   height:32px;
   border:1px solid rgba(255,255,255,.7);
   border-radius:50%;
+
   transition:
     width .2s,
     height .2s,
@@ -270,11 +279,13 @@ body{
   width:180px;
   height:180px;
   border-radius:50%;
+
   background:radial-gradient(
     circle,
     rgba(102,76,255,.13),
     transparent 70%
   );
+
   filter:blur(8px);
   z-index:99997;
 }
@@ -286,9 +297,9 @@ body.cursor-hover .cursor-ring{
   background:rgba(128,92,255,.08);
 }
 
-/* =========================
+/* =========================================================
    NAV
-========================= */
+========================================================= */
 
 nav{
   position:fixed;
@@ -297,12 +308,16 @@ nav{
   right:0;
   height:74px;
   z-index:500;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   padding:0 5%;
+
   background:rgba(3,3,10,.62);
   backdrop-filter:blur(22px);
+
   border-bottom:1px solid rgba(255,255,255,.07);
 }
 
@@ -313,7 +328,12 @@ nav{
 }
 
 .logo span{
-  background:linear-gradient(90deg,#9a78ff,#00d9ff);
+  background:linear-gradient(
+    90deg,
+    #9a78ff,
+    #00d9ff
+  );
+
   -webkit-background-clip:text;
   color:transparent;
 }
@@ -357,17 +377,21 @@ nav{
   white-space:nowrap;
 }
 
-/* =========================
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
 .hero{
   min-height:100vh;
+
   display:flex;
   justify-content:center;
   align-items:center;
+
   text-align:center;
+
   padding:120px 20px 80px;
+
   position:relative;
 }
 
@@ -382,6 +406,7 @@ nav{
     transform:translateY(35px);
     filter:blur(8px);
   }
+
   to{
     opacity:1;
     transform:none;
@@ -393,9 +418,11 @@ nav{
   display:inline-flex;
   align-items:center;
   gap:10px;
+
   color:#a7a9bb;
   letter-spacing:8px;
   font-size:13px;
+
   margin-bottom:25px;
 }
 
@@ -404,18 +431,28 @@ nav{
   content:"";
   width:30px;
   height:1px;
-  background:linear-gradient(90deg,transparent,#8b5cff);
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #8b5cff
+  );
 }
 
 .welcome::after{
-  background:linear-gradient(90deg,#00c8ff,transparent);
+  background:linear-gradient(
+    90deg,
+    #00c8ff,
+    transparent
+  );
 }
 
 .hero h1{
   font-size:clamp(58px,11vw,145px);
   line-height:.9;
+
   font-weight:1000;
   letter-spacing:-8px;
+
   background:linear-gradient(
     100deg,
     #fff 10%,
@@ -423,16 +460,22 @@ nav{
     #00d9ff 65%,
     #fff 90%
   );
+
   background-size:300%;
+
   -webkit-background-clip:text;
   color:transparent;
+
   animation:gradientMove 7s linear infinite;
 }
 
 .hero-subtitle{
   margin:35px auto 0;
+
   max-width:700px;
+
   color:#989bad;
+
   font-size:18px;
   line-height:1.8;
 }
@@ -440,8 +483,11 @@ nav{
 .hero-actions{
   display:flex;
   justify-content:center;
+
   gap:14px;
+
   margin-top:38px;
+
   flex-wrap:wrap;
 }
 
@@ -449,16 +495,27 @@ nav{
 .secondary{
   padding:16px 25px;
   border-radius:15px;
+
   color:white;
   font-weight:bold;
   cursor:pointer;
+
   transition:.3s;
 }
 
 .primary{
   border:0;
-  background:linear-gradient(100deg,#713cff,#00aaff);
-  box-shadow:0 12px 40px rgba(86,72,255,.25);
+
+  background:
+    linear-gradient(
+      100deg,
+      #713cff,
+      #00aaff
+    );
+
+  box-shadow:
+    0 12px 40px
+    rgba(86,72,255,.25);
 }
 
 .secondary{
@@ -469,21 +526,37 @@ nav{
 .primary:hover,
 .secondary:hover{
   transform:translateY(-5px);
+
+  box-shadow:
+    0 18px 45px
+    rgba(82,72,255,.28);
 }
 
 .scroll-hint{
   position:absolute;
+
   bottom:30px;
   left:50%;
+
   transform:translateX(-50%);
+
   color:#55596e;
+
   font-size:11px;
   letter-spacing:3px;
+
+  animation:scrollHint 2s infinite;
 }
 
-/* =========================
-   CONTAINER
-========================= */
+@keyframes scrollHint{
+  50%{
+    transform:translate(-50%,8px);
+  }
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
 
 .container{
   width:min(1100px,92%);
@@ -492,17 +565,27 @@ nav{
 
 section.card{
   position:relative;
+
   margin:30px 0;
   padding:30px;
+
   border:1px solid var(--border);
   border-radius:26px;
+
   background:var(--panel);
+
   backdrop-filter:blur(24px);
+
   box-shadow:var(--shadow);
+
   overflow:hidden;
+
   opacity:0;
   transform:translateY(35px);
-  transition:opacity .8s,transform .8s;
+
+  transition:
+    opacity .8s,
+    transform .8s;
 }
 
 section.card.visible{
@@ -510,49 +593,88 @@ section.card.visible{
   transform:none;
 }
 
+section.card::before{
+  content:"";
+
+  position:absolute;
+
+  top:-100px;
+  left:20%;
+
+  width:300px;
+  height:200px;
+
+  background:#743cff;
+
+  opacity:.08;
+
+  filter:blur(80px);
+
+  pointer-events:none;
+}
+
 .card-title{
   display:flex;
   align-items:center;
+
   gap:12px;
+
   margin-bottom:8px;
+
   font-size:24px;
 }
 
 .description{
   color:var(--muted);
+
   line-height:1.7;
+
   margin-bottom:22px;
 }
 
-/* =========================
+/* =========================================================
    CHAT
-========================= */
+========================================================= */
 
 .ai-chat{
   height:590px;
+
   border:1px solid rgba(255,255,255,.09);
   border-radius:22px;
+
   overflow:hidden;
+
   background:rgba(0,0,0,.24);
+
   display:flex;
   flex-direction:column;
 }
 
 .chat-top{
   padding:16px 20px;
+
   display:flex;
   align-items:center;
+
   gap:12px;
-  border-bottom:1px solid rgba(255,255,255,.07);
-  background:rgba(255,255,255,.025);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.07);
+
+  background:
+    rgba(255,255,255,.025);
 }
 
 .ai-status{
   width:10px;
   height:10px;
+
   border-radius:50%;
+
   background:#4cff9b;
-  box-shadow:0 0 15px #4cff9b;
+
+  box-shadow:
+    0 0 15px #4cff9b;
 }
 
 .chat-top small{
@@ -561,24 +683,34 @@ section.card.visible{
 
 .chat-messages{
   flex:1;
+
   overflow-y:auto;
+
   padding:25px;
+
   display:flex;
   flex-direction:column;
+
   gap:15px;
 }
 
 .chat-welcome{
   margin:auto;
+
   text-align:center;
+
   color:#73778c;
+
   line-height:1.7;
 }
 
 .chat-welcome strong{
   display:block;
+
   color:white;
+
   font-size:28px;
+
   margin-bottom:10px;
 }
 
@@ -592,35 +724,56 @@ section.card.visible{
 
 .chat-bubble{
   max-width:80%;
+
   padding:14px 17px;
+
   border-radius:18px;
+
   line-height:1.6;
+
   white-space:pre-wrap;
 }
 
 .user .chat-bubble{
-  background:linear-gradient(100deg,#713cff,#008dff);
+  background:
+    linear-gradient(
+      100deg,
+      #713cff,
+      #008dff
+    );
+
   border-bottom-right-radius:5px;
 }
 
 .ai .chat-bubble{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.08);
+  background:
+    rgba(255,255,255,.06);
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
   border-bottom-left-radius:5px;
 }
 
 .chat-input{
   padding:14px;
+
   display:flex;
+
   gap:10px;
-  border-top:1px solid rgba(255,255,255,.07);
+
+  border-top:
+    1px solid rgba(255,255,255,.07);
 }
 
 #aiChatInput{
   flex:1;
+
   min-height:52px;
   max-height:140px;
+
   resize:none;
+
   margin:0;
 }
 
@@ -631,33 +784,104 @@ input{
 
 textarea{
   width:100%;
+
   padding:17px;
+
   border-radius:15px;
-  border:1px solid rgba(255,255,255,.1);
+
+  border:
+    1px solid rgba(255,255,255,.1);
+
   background:rgba(0,0,0,.3);
+
   color:white;
+
   font:inherit;
 }
 
 textarea:focus,
 input:focus{
   border-color:#795bff;
+
+  box-shadow:
+    0 0 25px
+    rgba(120,80,255,.15);
 }
 
 .send{
   width:55px;
   min-width:55px;
+
   border:0;
+
   border-radius:14px;
+
   color:white;
-  background:linear-gradient(100deg,#713cff,#00bfff);
+
+  background:
+    linear-gradient(
+      100deg,
+      #713cff,
+      #00bfff
+    );
+
   cursor:pointer;
+
   font-size:20px;
 }
 
-/* =========================
+.typing{
+  display:flex;
+  gap:5px;
+}
+
+.typing span{
+  width:7px;
+  height:7px;
+
+  background:#999;
+
+  border-radius:50%;
+
+  animation:typing 1s infinite;
+}
+
+.typing span:nth-child(2){
+  animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+  animation-delay:.3s;
+}
+
+@keyframes typing{
+  50%{
+    transform:translateY(-5px);
+    opacity:1;
+  }
+
+  0%,100%{
+    opacity:.3;
+  }
+}
+
+/* =========================================================
    IMAGE GENERATOR
-========================= */
+========================================================= */
+
+.generator-panel{
+  padding:5px;
+}
+
+.prompt-label{
+  color:#aaaec0;
+
+  font-size:13px;
+
+  margin-bottom:9px;
+
+  display:block;
+}
 
 #prompt{
   min-height:150px;
@@ -665,15 +889,39 @@ input:focus{
 
 .generate{
   width:100%;
+
   margin-top:13px;
+
   padding:17px;
+
   border:0;
+
   border-radius:15px;
-  background:linear-gradient(100deg,#713cff,#00aaff);
+
+  background:
+    linear-gradient(
+      100deg,
+      #713cff,
+      #00aaff
+    );
+
   color:white;
+
   font-size:16px;
+
   font-weight:bold;
+
   cursor:pointer;
+
+  transition:.3s;
+}
+
+.generate:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 15px 40px
+    rgba(80,90,255,.3);
 }
 
 .generate:disabled{
@@ -683,87 +931,162 @@ input:focus{
 
 #status{
   text-align:center;
+
   min-height:25px;
+
   margin-top:15px;
+
   color:#9699aa;
 }
 
 #result{
   display:none;
+
   margin-top:25px;
+
+  animation:resultIn .6s both;
+}
+
+@keyframes resultIn{
+  from{
+    opacity:0;
+    transform:scale(.97);
+  }
+
+  to{
+    opacity:1;
+    transform:none;
+  }
 }
 
 #generatedImage{
   width:100%;
+
   border-radius:20px;
+
   display:block;
+
+  box-shadow:
+    0 25px 70px
+    rgba(0,0,0,.5);
 }
 
 .download{
   display:inline-block;
+
   margin-top:17px;
+
   padding:12px 20px;
+
   background:white;
+
   color:black;
+
   border-radius:12px;
+
   text-decoration:none;
+
   font-weight:bold;
 }
 
-/* =========================
+/* =========================================================
    CREDITS
-========================= */
+========================================================= */
 
 .credit-big{
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
   padding:20px;
+
   margin-bottom:20px;
+
   border-radius:18px;
-  background:linear-gradient(
-    100deg,
-    rgba(125,75,255,.12),
-    rgba(0,200,255,.07)
-  );
-  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    linear-gradient(
+      100deg,
+      rgba(125,75,255,.12),
+      rgba(0,200,255,.07)
+    );
+
+  border:
+    1px solid rgba(255,255,255,.08);
 }
 
 .credit-number{
   font-size:34px;
+
   font-weight:1000;
+
   color:#ffd84d;
 }
 
 .watch{
   border:0;
+
   border-radius:13px;
+
   padding:12px 17px;
-  background:linear-gradient(100deg,#ff7a00,#ff3b83);
+
+  background:
+    linear-gradient(
+      100deg,
+      #ff7a00,
+      #ff3b83
+    );
+
   color:white;
+
   font-weight:bold;
+
   cursor:pointer;
 }
 
-/* =========================
+/* =========================================================
    TOOLS
-========================= */
+========================================================= */
 
 .tools{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:15px;
 }
 
 .tool{
   padding:25px;
+
   border-radius:20px;
-  background:rgba(255,255,255,.035);
-  border:1px solid rgba(255,255,255,.08);
+
+  background:
+    rgba(255,255,255,.035);
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  transition:.35s;
+}
+
+.tool:hover{
+  transform:translateY(-8px);
+
+  border-color:
+    rgba(128,92,255,.45);
+
+  box-shadow:
+    0 20px 50px
+    rgba(0,0,0,.25);
 }
 
 .tool-icon{
   font-size:30px;
+
   margin-bottom:17px;
 }
 
@@ -773,61 +1096,94 @@ input:focus{
 
 .tool p{
   color:#85899c;
+
   font-size:14px;
+
   line-height:1.6;
 }
 
-/* =========================
+/* =========================================================
    VIDEO
-========================= */
+========================================================= */
 
 .video-coming{
   text-align:center;
+
   padding:45px 20px;
 }
 
 .video-icon{
   font-size:55px;
+
   margin-bottom:15px;
+
+  filter:
+    drop-shadow(
+      0 0 20px #754cff
+    );
 }
 
 .badge{
   display:inline-block;
+
   margin-top:15px;
+
   padding:7px 12px;
+
   border-radius:30px;
-  background:rgba(128,92,255,.12);
-  border:1px solid rgba(128,92,255,.25);
+
+  background:
+    rgba(128,92,255,.12);
+
+  border:
+    1px solid rgba(128,92,255,.25);
+
   color:#a990ff;
+
   font-size:12px;
 }
 
-/* =========================
+/* =========================================================
    ADS
-========================= */
+========================================================= */
 
 .ad-box{
   min-height:110px;
+
   display:flex;
+
   align-items:center;
   justify-content:center;
+
   border-radius:17px;
+
+  background:
+    rgba(255,255,255,.02);
+
   overflow:hidden;
 }
 
-/* =========================
+/* =========================================================
    AUTH
-========================= */
+========================================================= */
 
 .auth-overlay{
   position:fixed;
+
   inset:0;
+
   z-index:9999;
+
   display:none;
+
   align-items:center;
   justify-content:center;
+
   padding:20px;
-  background:rgba(0,0,0,.78);
+
+  background:
+    rgba(0,0,0,.78);
+
   backdrop-filter:blur(14px);
 }
 
@@ -837,19 +1193,33 @@ input:focus{
 
 .auth-modal{
   width:min(440px,100%);
+
   padding:30px;
+
   border-radius:26px;
-  border:1px solid rgba(255,255,255,.13);
-  background:rgba(12,13,27,.92);
-  box-shadow:0 30px 100px rgba(0,0,0,.6);
+
+  border:
+    1px solid rgba(255,255,255,.13);
+
+  background:
+    rgba(12,13,27,.92);
+
+  box-shadow:
+    0 30px 100px
+    rgba(0,0,0,.6);
 }
 
 .close{
   float:right;
+
   background:none;
+
   border:0;
+
   color:#777;
+
   font-size:25px;
+
   cursor:pointer;
 }
 
@@ -859,71 +1229,109 @@ input:focus{
 
 .auth-desc{
   color:#85899c;
+
   line-height:1.6;
+
   margin-bottom:20px;
 }
 
 .auth-input{
   width:100%;
+
   padding:14px;
+
   margin-top:10px;
+
   border-radius:13px;
-  border:1px solid rgba(255,255,255,.1);
-  background:rgba(0,0,0,.3);
+
+  border:
+    1px solid rgba(255,255,255,.1);
+
+  background:
+    rgba(0,0,0,.3);
+
   color:white;
 }
 
 .auth-primary,
 .auth-secondary{
   width:100%;
+
   padding:14px;
+
   margin-top:13px;
+
   border-radius:13px;
+
   cursor:pointer;
+
   font-weight:bold;
 }
 
 .auth-primary{
   border:0;
-  background:linear-gradient(100deg,#713cff,#00bfff);
+
+  background:
+    linear-gradient(
+      100deg,
+      #713cff,
+      #00bfff
+    );
+
   color:white;
 }
 
 .auth-secondary{
-  border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.04);
+  border:
+    1px solid rgba(255,255,255,.1);
+
+  background:
+    rgba(255,255,255,.04);
+
   color:white;
 }
 
 .auth-status{
   color:#999;
+
   min-height:24px;
+
   margin-top:12px;
+
   font-size:13px;
 }
 
-/* =========================
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 footer{
   text-align:center;
+
   padding:70px 20px;
+
   color:#565a6d;
 }
 
 .footer-logo{
   color:white;
+
   font-weight:bold;
+
   letter-spacing:3px;
+
   margin-bottom:12px;
 }
 
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media(max-width:700px){
+
+  body{
+    cursor:auto;
+  }
 
   .cursor-dot,
   .cursor-ring,
@@ -933,7 +1341,9 @@ footer{
 
   nav{
     height:auto;
+
     min-height:68px;
+
     padding:12px 4%;
   }
 
@@ -945,14 +1355,21 @@ footer{
     display:none!important;
   }
 
-  .nav-button,
+  .nav-button{
+    padding:9px;
+
+    font-size:12px;
+  }
+
   .credit-box{
     padding:9px;
+
     font-size:12px;
   }
 
   .hero{
     min-height:90vh;
+
     padding-top:120px;
   }
 
@@ -966,6 +1383,7 @@ footer{
 
   section.card{
     padding:21px;
+
     border-radius:21px;
   }
 
@@ -983,7 +1401,9 @@ footer{
 
   .credit-big{
     flex-direction:column;
+
     align-items:flex-start;
+
     gap:15px;
   }
 
@@ -994,6 +1414,30 @@ footer{
   .orb{
     width:280px;
     height:280px;
+
+    filter:blur(90px);
+  }
+
+  .grid{
+    background-size:45px 45px;
+  }
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+
+    animation-duration:.01ms!important;
+
+    animation-iteration-count:1!important;
+
+    scroll-behavior:auto!important;
+
+    transition-duration:.01ms!important;
+
   }
 
 }
@@ -1003,30 +1447,51 @@ footer{
 
 <body>
 
-<!-- INTRO -->
+<!-- =========================================================
+     INTRO
+========================================================= -->
 
 <div id="intro">
+
   <div class="intro-content">
-    <div class="intro-small">WELCOME TO</div>
-    <div class="intro-title">SUBHAN AI</div>
+
+    <div class="intro-small">
+      WELCOME TO
+    </div>
+
+    <div class="intro-title">
+      SUBHAN AI
+    </div>
+
     <div class="intro-line"></div>
+
   </div>
+
 </div>
 
+<!-- BACKGROUND -->
+
 <div class="ambient">
+
   <div class="orb one"></div>
   <div class="orb two"></div>
   <div class="orb three"></div>
+
 </div>
 
 <div id="particles"></div>
+
 <div class="grid"></div>
+
+<!-- CURSOR -->
 
 <div class="cursor-glow"></div>
 <div class="cursor-ring"></div>
 <div class="cursor-dot"></div>
 
-<!-- NAV -->
+<!-- =========================================================
+     NAV
+========================================================= -->
 
 <nav>
 
@@ -1039,8 +1504,8 @@ footer{
     <span
       id="userEmail"
       class="user-email"
-      style="display:none">
-    </span>
+      style="display:none"
+    ></span>
 
     <div class="credit-box">
       🪙 <span id="credits">0</span>
@@ -1049,7 +1514,8 @@ footer{
     <button
       id="loginButton"
       class="nav-button"
-      onclick="openAuthModal()">
+      onclick="openAuthModal()"
+    >
       🔐 Login
     </button>
 
@@ -1057,7 +1523,8 @@ footer{
       id="logoutButton"
       class="nav-button"
       onclick="logout()"
-      style="display:none">
+      style="display:none"
+    >
       Logout
     </button>
 
@@ -1065,7 +1532,9 @@ footer{
 
 </nav>
 
-<!-- HERO -->
+<!-- =========================================================
+     HERO
+========================================================= -->
 
 <header class="hero">
 
@@ -1081,23 +1550,29 @@ footer{
     </h1>
 
     <p class="hero-subtitle">
+
       Imagine it. Ask it. Create it.
+
       <br>
+
       SUBHAN AI brings powerful artificial intelligence
       into one cinematic creative experience.
+
     </p>
 
     <div class="hero-actions">
 
       <button
         class="primary"
-        onclick="scrollToAssistant()">
+        onclick="scrollToAssistant()"
+      >
         🤖 Talk to SUBHAN AI
       </button>
 
       <button
         class="secondary"
-        onclick="scrollToGenerator()">
+        onclick="scrollToGenerator()"
+      >
         🖼️ Create an Image
       </button>
 
@@ -1113,7 +1588,9 @@ footer{
 
 <main class="container">
 
-<!-- AI ASSISTANT -->
+<!-- =========================================================
+     AI ASSISTANT
+========================================================= -->
 
 <section class="card" id="aiAssistant">
 
@@ -1122,9 +1599,11 @@ footer{
   </h2>
 
   <p class="description">
+
     Your intelligent creative companion.
     Ask questions, learn, brainstorm, plan,
     or simply talk.
+
   </p>
 
   <div class="ai-chat">
@@ -1134,22 +1613,32 @@ footer{
       <div class="ai-status"></div>
 
       <div>
+
         <strong>SUBHAN AI</strong>
+
         <br>
-        <small>AI Assistant • Online</small>
+
+        <small>
+          AI Assistant • Online
+        </small>
+
       </div>
 
     </div>
 
     <div
       id="chatMessages"
-      class="chat-messages">
+      class="chat-messages"
+    >
 
       <div
         id="chatWelcome"
-        class="chat-welcome">
+        class="chat-welcome"
+      >
 
-        <strong>✨ Hey! I'm SUBHAN AI</strong>
+        <strong>
+          ✨ Hey! I'm SUBHAN AI
+        </strong>
 
         Ask me anything and let's create
         something amazing.
@@ -1163,13 +1652,14 @@ footer{
       <textarea
         id="aiChatInput"
         placeholder="Message SUBHAN AI..."
-        aria-label="Message SUBHAN AI">
-      </textarea>
+        aria-label="Message SUBHAN AI"
+      ></textarea>
 
       <button
         id="aiSendButton"
         class="send"
-        onclick="sendAIMessage()">
+        onclick="sendAIMessage()"
+      >
         ➤
       </button>
 
@@ -1179,7 +1669,9 @@ footer{
 
 </section>
 
-<!-- IMAGE GENERATOR -->
+<!-- =========================================================
+     IMAGE GENERATOR
+========================================================= -->
 
 <section class="card" id="generator">
 
@@ -1188,8 +1680,11 @@ footer{
   </h2>
 
   <p class="description">
+
     Turn your imagination into an image.
-    Each generation costs <strong>10 credits</strong>.
+    Each generation costs
+    <strong>10 credits</strong>.
+
   </p>
 
   <div class="credit-big">
@@ -1201,58 +1696,71 @@ footer{
       </small>
 
       <div class="credit-number">
-        🪙 <span id="creditsBig">0</span>
+
+        🪙
+        <span id="creditsBig">0</span>
+
       </div>
 
     </div>
 
     <button
       class="watch"
-      onclick="watchAd()">
+      onclick="watchAd()"
+    >
       📺 Watch Ad +50 Credits
     </button>
 
   </div>
 
-  <label
-    class="prompt-label"
-    for="prompt"
-    style="color:#aaaec0;font-size:13px">
-    Describe what you want to create
-  </label>
+  <div class="generator-panel">
 
-  <textarea
-    id="prompt"
-    placeholder="Example: A gigantic purple dragon flying above a magical lake at sunset, cinematic lighting, ultra detailed...">
-  </textarea>
+    <label
+      class="prompt-label"
+      for="prompt"
+    >
+      Describe what you want to create
+    </label>
 
-  <button
-    id="generateButton"
-    class="generate"
-    onclick="generateImage()">
-    ✨ Generate Image — 10 Credits
-  </button>
+    <textarea
+      id="prompt"
+      placeholder="Example: A gigantic purple dragon flying above a magical lake at sunset, cinematic lighting, ultra detailed..."
+    ></textarea>
 
-  <div id="status"></div>
+    <button
+      id="generateButton"
+      class="generate"
+      onclick="generateImage()"
+    >
+      ✨ Generate Image — 10 Credits
+    </button>
 
-  <div id="result">
+    <div id="status"></div>
 
-    <img
-      id="generatedImage"
-      alt="SUBHAN AI generated image">
+    <div id="result">
 
-    <a
-      id="downloadButton"
-      class="download"
-      download="subhan-ai-image.jpg">
-      ⬇️ Download Image
-    </a>
+      <img
+        id="generatedImage"
+        alt="SUBHAN AI generated image"
+      >
+
+      <a
+        id="downloadButton"
+        class="download"
+        download="subhan-ai-image.jpg"
+      >
+        ⬇️ Download Image
+      </a>
+
+    </div>
 
   </div>
 
 </section>
 
-<!-- ADSENSE -->
+<!-- =========================================================
+     ADSENSE
+========================================================= -->
 
 <section class="card">
 
@@ -1261,8 +1769,10 @@ footer{
   </h2>
 
   <p class="description">
+
     Advertisements help us keep SUBHAN AI
     available and continue improving the platform.
+
   </p>
 
   <div class="ad-box">
@@ -1280,7 +1790,9 @@ footer{
 
 </section>
 
-<!-- TOOLS -->
+<!-- =========================================================
+     TOOLS
+========================================================= -->
 
 <section class="card">
 
@@ -1296,9 +1808,13 @@ footer{
 
     <div class="tool">
 
-      <div class="tool-icon">🤖</div>
+      <div class="tool-icon">
+        🤖
+      </div>
 
-      <h3>AI Assistant</h3>
+      <h3>
+        AI Assistant
+      </h3>
 
       <p>
         Chat with SUBHAN AI and turn ideas
@@ -1309,9 +1825,13 @@ footer{
 
     <div class="tool">
 
-      <div class="tool-icon">🖼️</div>
+      <div class="tool-icon">
+        🖼️
+      </div>
 
-      <h3>Image Generation</h3>
+      <h3>
+        Image Generation
+      </h3>
 
       <p>
         Transform your imagination into
@@ -1322,9 +1842,13 @@ footer{
 
     <div class="tool">
 
-      <div class="tool-icon">🎬</div>
+      <div class="tool-icon">
+        🎬
+      </div>
 
-      <h3>Video Generation</h3>
+      <h3>
+        Video Generation
+      </h3>
 
       <p>
         Cinematic AI video creation is
@@ -1337,7 +1861,9 @@ footer{
 
 </section>
 
-<!-- VIDEO -->
+<!-- =========================================================
+     VIDEO
+========================================================= -->
 
 <section class="card">
 
@@ -1352,11 +1878,15 @@ footer{
     </h2>
 
     <p class="description">
+
       Imagine turning your ideas into
       cinematic AI videos.
+
       <br>
+
       This feature is being prepared for
       a future SUBHAN AI update.
+
     </p>
 
     <span class="badge">
@@ -1367,7 +1897,9 @@ footer{
 
 </section>
 
-<!-- ABOUT -->
+<!-- =========================================================
+     ABOUT
+========================================================= -->
 
 <section class="card">
 
@@ -1376,14 +1908,18 @@ footer{
   </h2>
 
   <p class="description">
+
     SUBHAN AI is a creative artificial intelligence
     platform designed to help people turn their
     imagination into digital experiences.
+
   </p>
 
 </section>
 
-<!-- CONTACT -->
+<!-- =========================================================
+     CONTACT
+========================================================= -->
 
 <section class="card">
 
@@ -1398,9 +1934,11 @@ footer{
     <br><br>
 
     Email:
+
     <a
       href="mailto:subhanazher45@gmail.com"
-      style="color:#a990ff">
+      style="color:#a990ff"
+    >
       subhanazher45@gmail.com
     </a>
 
@@ -1408,7 +1946,9 @@ footer{
 
 </section>
 
-<!-- PRIVACY -->
+<!-- =========================================================
+     PRIVACY
+========================================================= -->
 
 <section class="card">
 
@@ -1417,15 +1957,19 @@ footer{
   </h2>
 
   <p class="description">
+
     SUBHAN AI may collect account information
     such as an email address when you create
     an account. Prompts may be sent to the
     relevant AI service to process your request.
+
   </p>
 
 </section>
 
-<!-- TERMS -->
+<!-- =========================================================
+     TERMS
+========================================================= -->
 
 <section class="card">
 
@@ -1434,14 +1978,20 @@ footer{
   </h2>
 
   <p class="description">
+
     By using SUBHAN AI, you agree to use the
     service responsibly and not attempt to
     abuse, attack, or bypass its security systems.
+
   </p>
 
 </section>
 
 </main>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
 
 <footer>
 
@@ -1459,17 +2009,21 @@ footer{
 
 </footer>
 
-<!-- AUTH -->
+<!-- =========================================================
+     AUTH MODAL
+========================================================= -->
 
 <div
   id="authOverlay"
-  class="auth-overlay">
+  class="auth-overlay"
+>
 
   <div class="auth-modal">
 
     <button
       class="close"
-      onclick="closeAuthModal()">
+      onclick="closeAuthModal()"
+    >
       ×
     </button>
 
@@ -1478,8 +2032,10 @@ footer{
     </h2>
 
     <p class="auth-desc">
+
       Login or create your SUBHAN AI account
       to access credits and AI generation.
+
     </p>
 
     <input
@@ -1487,33 +2043,37 @@ footer{
       class="auth-input"
       type="email"
       placeholder="Email address"
-      autocomplete="email">
+      autocomplete="email"
+    >
 
     <input
       id="authPassword"
       class="auth-input"
       type="password"
       placeholder="Password"
-      autocomplete="current-password">
+      autocomplete="current-password"
+    >
 
     <button
       id="authSubmit"
       class="auth-primary"
-      onclick="submitAuth()">
+      onclick="submitAuth()"
+    >
       Login
     </button>
 
     <button
       id="authModeButton"
       class="auth-secondary"
-      onclick="toggleAuthMode()">
+      onclick="toggleAuthMode()"
+    >
       Create a new account
     </button>
 
     <div
       id="authStatus"
-      class="auth-status">
-    </div>
+      class="auth-status"
+    ></div>
 
   </div>
 
@@ -1534,29 +2094,33 @@ const SUPABASE_PUBLISHABLE_KEY =
 const API_URL =
   "https://subhan-ai-api.subhanazher12.workers.dev";
 
+const AI_CHAT_URL =
+  API_URL + "/chat";
+
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
 
-
 /* =========================================================
    INTRO
 ========================================================= */
 
-window.addEventListener("load",()=>{
+window.addEventListener("load",function(){
 
-  setTimeout(()=>{
+  setTimeout(function(){
 
-    document
-      .getElementById("intro")
-      .classList.add("hide");
+    const intro =
+      document.getElementById("intro");
+
+    if(intro){
+      intro.classList.add("hide");
+    }
 
   },2500);
 
 });
-
 
 /* =========================================================
    PARTICLES
@@ -1570,112 +2134,234 @@ const particleCount =
 
 for(let i=0;i<particleCount;i++){
 
-  const p =
+  const particle =
     document.createElement("div");
 
-  p.style.position="absolute";
-  p.style.width=Math.random()*3+1+"px";
-  p.style.height=p.style.width;
-  p.style.borderRadius="50%";
-  p.style.background="rgba(150,130,255,.65)";
-  p.style.left=Math.random()*100+"%";
-  p.style.top=Math.random()*100+"%";
-  p.style.boxShadow=
+  particle.style.position="absolute";
+
+  particle.style.width =
+    Math.random()*3+1+"px";
+
+  particle.style.height =
+    particle.style.width;
+
+  particle.style.borderRadius="50%";
+
+  particle.style.background=
+    "rgba(150,130,255,.65)";
+
+  particle.style.left =
+    Math.random()*100+"%";
+
+  particle.style.top =
+    Math.random()*100+"%";
+
+  particle.style.boxShadow=
     "0 0 10px rgba(120,100,255,.6)";
 
-  particleContainer.appendChild(p);
+  particle.style.animation=
+    "floatParticle "+
+    (6+Math.random()*12)+
+    "s infinite ease-in-out";
+
+  particle.style.animationDelay=
+    Math.random()*5+"s";
+
+  particleContainer.appendChild(particle);
 
 }
 
+const particleStyle =
+document.createElement("style");
+
+particleStyle.textContent=
+`
+@keyframes floatParticle{
+
+  0%,100%{
+    transform:translate3d(0,0,0);
+    opacity:.2;
+  }
+
+  50%{
+    transform:translate3d(
+      30px,
+      -80px,
+      0
+    );
+    opacity:.9;
+  }
+
+}
+`;
+
+document.head.appendChild(
+  particleStyle
+);
 
 /* =========================================================
    CURSOR
 ========================================================= */
 
-if(!window.matchMedia("(pointer:coarse)").matches){
+const isTouchDevice =
+window.matchMedia(
+  "(pointer:coarse)"
+).matches;
+
+if(!isTouchDevice){
 
   const dot =
-    document.querySelector(".cursor-dot");
+    document.querySelector(
+      ".cursor-dot"
+    );
 
   const ring =
-    document.querySelector(".cursor-ring");
+    document.querySelector(
+      ".cursor-ring"
+    );
 
   const glow =
-    document.querySelector(".cursor-glow");
+    document.querySelector(
+      ".cursor-glow"
+    );
 
-  let mx=0,my=0;
-  let dx=0,dy=0;
-  let rx=0,ry=0;
-  let gx=0,gy=0;
+  let mouseX=0;
+  let mouseY=0;
 
-  document.addEventListener("mousemove",e=>{
+  let dotX=0;
+  let dotY=0;
 
-    mx=e.clientX;
-    my=e.clientY;
+  let ringX=0;
+  let ringY=0;
 
-  });
+  let glowX=0;
+  let glowY=0;
 
-  function animateCursor(){
+  document.addEventListener(
+    "mousemove",
+    function(e){
 
-    dx+=(mx-dx)*.35;
-    dy+=(my-dy)*.35;
+      mouseX=e.clientX;
+      mouseY=e.clientY;
 
-    rx+=(mx-rx)*.16;
-    ry+=(my-ry)*.16;
+    }
+  );
 
-    gx+=(mx-gx)*.07;
-    gy+=(my-gy)*.07;
+  function cursorAnimation(){
 
-    dot.style.left=dx+"px";
-    dot.style.top=dy+"px";
+    dotX +=
+      (mouseX-dotX)*.35;
 
-    ring.style.left=rx+"px";
-    ring.style.top=ry+"px";
+    dotY +=
+      (mouseY-dotY)*.35;
 
-    glow.style.left=gx+"px";
-    glow.style.top=gy+"px";
+    ringX +=
+      (mouseX-ringX)*.16;
+
+    ringY +=
+      (mouseY-ringY)*.16;
+
+    glowX +=
+      (mouseX-glowX)*.07;
+
+    glowY +=
+      (mouseY-glowY)*.07;
+
+    dot.style.left =
+      dotX+"px";
+
+    dot.style.top =
+      dotY+"px";
+
+    ring.style.left =
+      ringX+"px";
+
+    ring.style.top =
+      ringY+"px";
+
+    glow.style.left =
+      glowX+"px";
+
+    glow.style.top =
+      glowY+"px";
 
     requestAnimationFrame(
-      animateCursor
+      cursorAnimation
     );
 
   }
 
-  animateCursor();
+  cursorAnimation();
+
+  document
+    .querySelectorAll(
+      "button,a,textarea,input"
+    )
+    .forEach(function(element){
+
+      element.addEventListener(
+        "mouseenter",
+        function(){
+
+          document.body
+            .classList
+            .add("cursor-hover");
+
+        }
+      );
+
+      element.addEventListener(
+        "mouseleave",
+        function(){
+
+          document.body
+            .classList
+            .remove("cursor-hover");
+
+        }
+      );
+
+    });
 
 }
 
-
 /* =========================================================
-   SCROLL REVEAL
+   SCROLL REVEALS
 ========================================================= */
 
 const observer =
 new IntersectionObserver(
-  entries=>{
+  function(entries){
 
-    entries.forEach(entry=>{
+    entries.forEach(
+      function(entry){
 
-      if(entry.isIntersecting){
+        if(entry.isIntersecting){
 
-        entry.target
-          .classList
-          .add("visible");
+          entry.target
+            .classList
+            .add("visible");
+
+        }
 
       }
-
-    });
+    );
 
   },
-  {threshold:.12}
+  {
+    threshold:.12
+  }
 );
 
 document
-  .querySelectorAll("section.card")
-  .forEach(section=>{
-    observer.observe(section);
-  });
+  .querySelectorAll(
+    "section.card"
+  )
+  .forEach(function(section){
 
+    observer.observe(section);
+
+  });
 
 /* =========================================================
    AUTH
@@ -1684,23 +2370,25 @@ document
 let currentUser=null;
 let authMode="login";
 
-
 function openAuthModal(){
 
   document
     .getElementById("authOverlay")
-    .classList.add("show");
+    .classList
+    .add("show");
 
-  setTimeout(()=>{
+  setTimeout(
+    function(){
 
-    document
-      .getElementById("authEmail")
-      .focus();
+      document
+        .getElementById("authEmail")
+        .focus();
 
-  },100);
+    },
+    100
+  );
 
 }
-
 
 function closeAuthModal(){
 
@@ -1711,7 +2399,6 @@ function closeAuthModal(){
 
 }
 
-
 function toggleAuthMode(){
 
   authMode =
@@ -1720,64 +2407,77 @@ function toggleAuthMode(){
       : "login";
 
   const title =
-    document.getElementById("authTitle");
+    document.getElementById(
+      "authTitle"
+    );
 
   const submit =
-    document.getElementById("authSubmit");
+    document.getElementById(
+      "authSubmit"
+    );
 
   const mode =
-    document.getElementById("authModeButton");
+    document.getElementById(
+      "authModeButton"
+    );
 
   if(authMode==="signup"){
 
-    title.textContent=
+    title.textContent =
       "📝 Create Your Account";
 
-    submit.textContent=
+    submit.textContent =
       "Create Account";
 
-    mode.textContent=
+    mode.textContent =
       "Already have an account? Login";
 
   }else{
 
-    title.textContent=
+    title.textContent =
       "🔐 Welcome Back";
 
-    submit.textContent=
+    submit.textContent =
       "Login";
 
-    mode.textContent=
+    mode.textContent =
       "Create a new account";
 
   }
 
   document
-    .getElementById("authStatus")
+    .getElementById(
+      "authStatus"
+    )
     .textContent="";
 
 }
-
 
 async function submitAuth(){
 
   const email =
     document
-      .getElementById("authEmail")
+      .getElementById(
+        "authEmail"
+      )
       .value
       .trim();
 
   const password =
     document
-      .getElementById("authPassword")
+      .getElementById(
+        "authPassword"
+      )
       .value;
 
   const status =
-    document.getElementById("authStatus");
+    document.getElementById(
+      "authStatus"
+    );
 
   if(!email || !password){
 
-    status.textContent=
+    status.textContent =
       "⚠️ Enter your email and password.";
 
     return;
@@ -1786,14 +2486,14 @@ async function submitAuth(){
 
   if(password.length<6){
 
-    status.textContent=
+    status.textContent =
       "⚠️ Password must be at least 6 characters.";
 
     return;
 
   }
 
-  status.textContent=
+  status.textContent =
     authMode==="signup"
       ? "Creating your account..."
       : "Logging in...";
@@ -1805,37 +2505,51 @@ async function submitAuth(){
     if(authMode==="signup"){
 
       result =
-        await supabaseClient.auth.signUp({
-          email,
-          password
-        });
+        await supabaseClient
+          .auth
+          .signUp({
+            email:email,
+            password:password
+          });
 
     }else{
 
       result =
-        await supabaseClient.auth.signInWithPassword({
-          email,
-          password
-        });
+        await supabaseClient
+          .auth
+          .signInWithPassword({
+            email:email,
+            password:password
+          });
 
     }
 
-    if(result.error)
+    if(result.error){
       throw result.error;
+    }
 
     if(
       authMode==="signup" &&
       !result.data.session
     ){
 
-      status.textContent=
+      status.textContent =
         "✅ Account created! Check your email to confirm it.";
 
       return;
 
     }
 
-    status.textContent=
+    currentUser =
+      result.data.user || null;
+
+    updateAuthUI();
+
+    if(currentUser){
+      await loadCredits();
+    }
+
+    status.textContent =
       "✅ Success!";
 
     setTimeout(
@@ -1847,7 +2561,7 @@ async function submitAuth(){
 
     console.error(error);
 
-    status.textContent=
+    status.textContent =
       "❌ "+
       (
         error.message ||
@@ -1858,7 +2572,6 @@ async function submitAuth(){
 
 }
 
-
 /* =========================================================
    AUTH UI
 ========================================================= */
@@ -1866,13 +2579,19 @@ async function submitAuth(){
 function updateAuthUI(){
 
   const login =
-    document.getElementById("loginButton");
+    document.getElementById(
+      "loginButton"
+    );
 
   const logoutButton =
-    document.getElementById("logoutButton");
+    document.getElementById(
+      "logoutButton"
+    );
 
   const email =
-    document.getElementById("userEmail");
+    document.getElementById(
+      "userEmail"
+    );
 
   if(currentUser){
 
@@ -1904,32 +2623,26 @@ function updateAuthUI(){
 
 }
 
-
 /* =========================================================
    GET ACCESS TOKEN
 ========================================================= */
 
 async function getAccessToken(){
 
-  const {data,error} =
+  const result =
     await supabaseClient
       .auth
       .getSession();
 
-  if(error)
-    throw error;
-
   const session =
-    data?.session;
+    result.data.session;
 
-  if(!session?.access_token){
+  if(
+    !session ||
+    !session.access_token
+  ){
 
-    currentUser=null;
-    updateAuthUI();
-
-    throw new Error(
-      "Your login session expired. Please log in again."
-    );
+    return null;
 
   }
 
@@ -1937,56 +2650,22 @@ async function getAccessToken(){
 
 }
 
-
 /* =========================================================
    SESSION
 ========================================================= */
 
 async function loadAuthSession(){
 
-  const {data,error} =
-    await supabaseClient
-      .auth
-      .getSession();
+  try{
 
-  if(error){
-
-    console.error(
-      "Session error:",
-      error
-    );
-
-    currentUser=null;
-
-  }else{
+    const result =
+      await supabaseClient
+        .auth
+        .getSession();
 
     currentUser =
-      data?.session?.user || null;
-
-  }
-
-  updateAuthUI();
-
-  if(currentUser){
-
-    await loadCredits();
-
-  }else{
-
-    updateCredits(0);
-
-  }
-
-}
-
-
-supabaseClient
-.auth
-.onAuthStateChange(
-  async(_event,session)=>{
-
-    currentUser =
-      session?.user || null;
+      result.data.session?.user ||
+      null;
 
     updateAuthUI();
 
@@ -2000,9 +2679,50 @@ supabaseClient
 
     }
 
-  }
-);
+  }catch(error){
 
+    console.error(
+      "Session error:",
+      error
+    );
+
+    currentUser=null;
+
+    updateAuthUI();
+
+    updateCredits(0);
+
+  }
+
+}
+
+supabaseClient
+  .auth
+  .onAuthStateChange(
+    function(_event,session){
+
+      currentUser =
+        session?.user || null;
+
+      updateAuthUI();
+
+      if(currentUser){
+
+        setTimeout(
+          function(){
+            loadCredits();
+          },
+          0
+        );
+
+      }else{
+
+        updateCredits(0);
+
+      }
+
+    }
+  );
 
 /* =========================================================
    LOGOUT
@@ -2010,42 +2730,130 @@ supabaseClient
 
 async function logout(){
 
-  await supabaseClient
-    .auth
-    .signOut();
+  try{
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+  }catch(error){
+
+    console.error(
+      "Logout error:",
+      error
+    );
+
+  }
 
   currentUser=null;
 
   updateAuthUI();
+
   updateCredits(0);
 
 }
 
-
 /* =========================================================
-   CREDITS UI
+   CREDITS
 ========================================================= */
 
 function updateCredits(value){
 
   const top =
-    document.getElementById("credits");
+    document.getElementById(
+      "credits"
+    );
 
   const big =
-    document.getElementById("creditsBig");
+    document.getElementById(
+      "creditsBig"
+    );
 
-  top.textContent =
-    value === "∞"
-      ? "∞"
-      : Number(value)||0;
+  if(value === "∞"){
 
-  big.textContent =
-    value === "∞"
-      ? "∞"
-      : Number(value)||0;
+    top.textContent="∞";
+    big.textContent="∞";
+
+    return;
+
+  }
+
+  const target =
+    Number(value);
+
+  if(!Number.isFinite(target)){
+
+    top.textContent="0";
+    big.textContent="0";
+
+    return;
+
+  }
+
+  const old =
+    Number(big.textContent)||0;
+
+  if(old===target){
+
+    top.textContent=String(target);
+    big.textContent=String(target);
+
+    return;
+
+  }
+
+  const start=old;
+
+  const difference=
+    target-start;
+
+  const duration=500;
+
+  const startTime=
+    performance.now();
+
+  function animate(now){
+
+    const progress =
+      Math.min(
+        (now-startTime)/
+        duration,
+        1
+      );
+
+    const eased =
+      1-Math.pow(
+        1-progress,
+        3
+      );
+
+    const current =
+      Math.round(
+        start+
+        difference*eased
+      );
+
+    top.textContent=
+      String(current);
+
+    big.textContent=
+      String(current);
+
+    if(progress<1){
+
+      requestAnimationFrame(
+        animate
+      );
+
+    }
+
+  }
+
+  requestAnimationFrame(
+    animate
+  );
 
 }
-
 
 /* =========================================================
    LOAD CREDITS
@@ -2066,6 +2874,16 @@ async function loadCredits(){
     const token =
       await getAccessToken();
 
+    if(!token){
+
+      console.warn(
+        "No Supabase access token."
+      );
+
+      return;
+
+    }
+
     const response =
       await fetch(
         API_URL+
@@ -2075,12 +2893,15 @@ async function loadCredits(){
         ),
         {
           method:"GET",
+
           headers:{
             "Authorization":
               "Bearer "+token,
+
             "Accept":
               "application/json"
           },
+
           cache:"no-store"
         }
       );
@@ -2091,8 +2912,26 @@ async function loadCredits(){
     let data=null;
 
     try{
+
       data=JSON.parse(text);
-    }catch{}
+
+    }catch(error){
+
+      data=null;
+
+    }
+
+    if(
+      response.status===401
+    ){
+
+      console.warn(
+        "Supabase session rejected by Worker."
+      );
+
+      return;
+
+    }
 
     if(!response.ok){
 
@@ -2104,7 +2943,7 @@ async function loadCredits(){
     }
 
     updateCredits(
-      data.credits
+      data?.credits ?? 0
     );
 
   }catch(error){
@@ -2114,20 +2953,9 @@ async function loadCredits(){
       error
     );
 
-    if(
-      String(error.message)
-        .toLowerCase()
-        .includes("session")
-    ){
-
-      updateCredits(0);
-
-    }
-
   }
 
 }
-
 
 /* =========================================================
    IMAGE GENERATION
@@ -2140,8 +2968,10 @@ async function generateImage(){
     openAuthModal();
 
     document
-      .getElementById("authStatus")
-      .textContent=
+      .getElementById(
+        "authStatus"
+      )
+      .textContent =
       "🔐 Login before generating images.";
 
     return;
@@ -2150,7 +2980,9 @@ async function generateImage(){
 
   const prompt =
     document
-      .getElementById("prompt")
+      .getElementById(
+        "prompt"
+      )
       .value
       .trim();
 
@@ -2181,7 +3013,7 @@ async function generateImage(){
 
   if(!prompt){
 
-    status.textContent=
+    status.textContent =
       "⚠️ Describe the image first.";
 
     return;
@@ -2190,19 +3022,31 @@ async function generateImage(){
 
   button.disabled=true;
 
-  button.textContent=
+  button.textContent =
     "✨ Creating your image...";
 
-  status.textContent=
+  status.textContent =
     "AI is creating your image...";
 
-  result.style.display=
-    "none";
+  result.style.display="none";
 
   try{
 
+    /* =====================================================
+       IMPORTANT FIX:
+       GET SUPABASE ACCESS TOKEN
+    ===================================================== */
+
     const token =
       await getAccessToken();
+
+    if(!token){
+
+      throw new Error(
+        "Your login session expired. Please log in again."
+      );
+
+    }
 
     const response =
       await fetch(
@@ -2215,12 +3059,15 @@ async function generateImage(){
         ),
         {
           method:"GET",
+
           headers:{
             "Authorization":
               "Bearer "+token,
+
             "Accept":
               "image/*"
           },
+
           cache:"no-store"
         }
       );
@@ -2233,31 +3080,27 @@ async function generateImage(){
       let data=null;
 
       try{
+
         data=JSON.parse(text);
-      }catch{}
 
-      if(response.status===401){
+      }catch(error){
 
-        status.textContent=
-          "🔐 Your session expired. Please log in again.";
-
-        return;
+        data=null;
 
       }
 
-      if(response.status===403){
+      if(response.status===401){
 
-        status.textContent=
-          "❌ User verification failed.";
-
-        return;
+        throw new Error(
+          "Authentication failed. Please log out and log in again."
+        );
 
       }
 
       if(response.status===402){
 
-        status.textContent=
-          "❌ Not enough credits. You need 10 credits.";
+        status.textContent =
+          "❌ You need 10 credits to generate an image.";
 
         await loadCredits();
 
@@ -2265,8 +3108,26 @@ async function generateImage(){
 
       }
 
+      if(response.status===403){
+
+        throw new Error(
+          data?.error ||
+          "User verification failed."
+        );
+
+      }
+
+      if(response.status===429){
+
+        throw new Error(
+          "Too many requests. Please wait a moment."
+        );
+
+      }
+
       throw new Error(
         data?.error ||
+        data?.details ||
         text ||
         "Image generation failed."
       );
@@ -2276,19 +3137,27 @@ async function generateImage(){
     const blob =
       await response.blob();
 
+    if(
+      !blob ||
+      blob.size===0
+    ){
+
+      throw new Error(
+        "The image server returned an empty image."
+      );
+
+    }
+
     const imageURL =
       URL.createObjectURL(blob);
 
-    image.src=
-      imageURL;
+    image.src=imageURL;
 
-    download.href=
-      imageURL;
+    download.href=imageURL;
 
-    result.style.display=
-      "block";
+    result.style.display="block";
 
-    status.textContent=
+    status.textContent =
       "✅ Your image is ready!";
 
     const remaining =
@@ -2296,7 +3165,9 @@ async function generateImage(){
         "X-Credits-Remaining"
       );
 
-    if(remaining!==null){
+    if(
+      remaining !== null
+    ){
 
       updateCredits(
         remaining
@@ -2320,31 +3191,29 @@ async function generateImage(){
       error
     );
 
-    status.textContent=
+    status.textContent =
       "❌ "+
       (
         error.message ||
-        "Failed to generate image."
+        "Image generation failed."
       );
 
   }finally{
 
     button.disabled=false;
 
-    button.textContent=
+    button.textContent =
       "✨ Generate Image — 10 Credits";
 
   }
 
 }
 
-
 /* =========================================================
    AI CHAT
 ========================================================= */
 
 let chatHistory=[];
-
 
 function addChatMessage(
   message,
@@ -2361,22 +3230,25 @@ function addChatMessage(
       "chatWelcome"
     );
 
-  if(welcome)
+  if(welcome){
+
     welcome.remove();
+
+  }
 
   const wrapper =
     document.createElement("div");
 
-  wrapper.className=
+  wrapper.className =
     "chat-message "+type;
 
   const bubble =
     document.createElement("div");
 
-  bubble.className=
+  bubble.className =
     "chat-bubble";
 
-  bubble.textContent=
+  bubble.textContent =
     message;
 
   wrapper.appendChild(
@@ -2387,11 +3259,10 @@ function addChatMessage(
     wrapper
   );
 
-  messages.scrollTop=
+  messages.scrollTop =
     messages.scrollHeight;
 
 }
-
 
 function showTyping(){
 
@@ -2409,15 +3280,16 @@ function showTyping(){
   wrapper.className=
     "chat-message ai";
 
-  wrapper.innerHTML=`
-    <div class="chat-bubble">
-      <div style="display:flex;gap:5px">
-        <span>●</span>
-        <span>●</span>
-        <span>●</span>
-      </div>
-    </div>
-  `;
+  wrapper.innerHTML=
+`
+<div class="chat-bubble">
+  <div class="typing">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+`;
 
   messages.appendChild(
     wrapper
@@ -2428,7 +3300,6 @@ function showTyping(){
 
 }
 
-
 function removeTyping(){
 
   const typing =
@@ -2436,11 +3307,13 @@ function removeTyping(){
       "typingMessage"
     );
 
-  if(typing)
+  if(typing){
+
     typing.remove();
 
-}
+  }
 
+}
 
 async function sendAIMessage(){
 
@@ -2457,8 +3330,9 @@ async function sendAIMessage(){
   const message =
     input.value.trim();
 
-  if(!message)
+  if(!message){
     return;
+  }
 
   addChatMessage(
     message,
@@ -2471,6 +3345,7 @@ async function sendAIMessage(){
   });
 
   input.value="";
+
   button.disabled=true;
 
   showTyping();
@@ -2479,17 +3354,21 @@ async function sendAIMessage(){
 
     const response =
       await fetch(
-        API_URL+"/chat",
+        AI_CHAT_URL,
         {
           method:"POST",
+
           headers:{
             "Content-Type":
               "application/json",
+
             "Accept":
               "application/json"
           },
+
           body:JSON.stringify({
-            message,
+            message:message,
+
             history:
               chatHistory.slice(-12)
           })
@@ -2502,8 +3381,14 @@ async function sendAIMessage(){
     let data=null;
 
     try{
+
       data=JSON.parse(text);
-    }catch{}
+
+    }catch(error){
+
+      data=null;
+
+    }
 
     removeTyping();
 
@@ -2511,19 +3396,23 @@ async function sendAIMessage(){
 
       throw new Error(
         data?.error ||
+        data?.details ||
         text ||
         "AI request failed."
       );
 
     }
 
-    const reply=
+    const reply =
       data?.reply;
 
-    if(!reply)
+    if(!reply){
+
       throw new Error(
         "AI returned no response."
       );
+
+    }
 
     chatHistory.push({
       role:"assistant",
@@ -2558,14 +3447,17 @@ async function sendAIMessage(){
 
 }
 
-
-/* ENTER */
+/* =========================================================
+   ENTER TO SEND
+========================================================= */
 
 document
-  .getElementById("aiChatInput")
+  .getElementById(
+    "aiChatInput"
+  )
   .addEventListener(
     "keydown",
-    event=>{
+    function(event){
 
       if(
         event.key==="Enter" &&
@@ -2581,7 +3473,6 @@ document
     }
   );
 
-
 /* =========================================================
    REWARDED AD PLACEHOLDER
 ========================================================= */
@@ -2593,8 +3484,10 @@ function watchAd(){
     openAuthModal();
 
     document
-      .getElementById("authStatus")
-      .textContent=
+      .getElementById(
+        "authStatus"
+      )
+      .textContent =
       "🔐 Login before using rewarded features.";
 
     return;
@@ -2608,7 +3501,6 @@ function watchAd(){
 
 }
 
-
 /* =========================================================
    SCROLL
 ========================================================= */
@@ -2616,24 +3508,26 @@ function watchAd(){
 function scrollToAssistant(){
 
   document
-    .getElementById("aiAssistant")
+    .getElementById(
+      "aiAssistant"
+    )
     .scrollIntoView({
       behavior:"smooth"
     });
 
 }
-
 
 function scrollToGenerator(){
 
   document
-    .getElementById("generator")
+    .getElementById(
+      "generator"
+    )
     .scrollIntoView({
       behavior:"smooth"
     });
 
 }
-
 
 /* =========================================================
    START
