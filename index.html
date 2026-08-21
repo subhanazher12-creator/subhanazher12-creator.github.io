@@ -1,1673 +1,1313 @@
-```html
-<!DOCTYPE html>
-<html lang="en">
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Cache-Control": "no-store"
+};
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>SUBHAN AI — Free Premium AI Image Generator</title>
-
-<meta name="description"
-      content="SUBHAN AI — Free Premium AI Image Generator. Create beautiful AI-generated images from your ideas.">
-
-<!-- Google AdSense -->
-<script async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7988076392393976"
-  crossorigin="anonymous"></script>
-
-<!-- Supabase -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-/* ==========================================
-   GLOBAL
-========================================== */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #050510;
-  color: white;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  width: 500px;
-  height: 500px;
-  background: #743cff;
-  filter: blur(180px);
-  opacity: .25;
-  top: -200px;
-  left: -200px;
-  z-index: -2;
-  animation: glow1 8s infinite alternate;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  width: 500px;
-  height: 500px;
-  background: #00bfff;
-  filter: blur(180px);
-  opacity: .18;
-  bottom: -200px;
-  right: -200px;
-  z-index: -2;
-  animation: glow2 10s infinite alternate;
-}
-
-@keyframes glow1 {
-  from { transform: translate(0, 0); }
-  to { transform: translate(250px, 200px); }
-}
-
-@keyframes glow2 {
-  from { transform: translate(0, 0); }
-  to { transform: translate(-250px, -200px); }
-}
+const IMAGE_COST = 10;
+const STARTING_CREDITS = 50;
 
 
 /* ==========================================
-   NAVIGATION
+   GEMINI
 ========================================== */
 
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  min-height: 75px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 7%;
-  background: rgba(5, 5, 16, .78);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
+const GEMINI_MODEL = "gemini-3.6-flash";
 
-.logo {
-  font-size: 24px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  animation: waveLogo 2s infinite ease-in-out;
-}
-
-@keyframes waveLogo {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
+const GEMINI_URL =
+  `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 
 /* ==========================================
-   ACCOUNT
+   MAIN WORKER
 ========================================== */
 
-.accountArea {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+export default {
 
-.authButton {
-  padding: 10px 15px;
-  border: 1px solid rgba(255,255,255,.15);
-  border-radius: 12px;
-  background: rgba(255,255,255,.07);
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-}
+  async fetch(request, env) {
 
-.authButton:hover {
-  transform: translateY(-2px);
-  background: rgba(255,255,255,.12);
-}
+    /* ========================================
+       CORS
+    ======================================== */
 
-.userEmail {
-  color: #aaa;
-  font-size: 13px;
-  max-width: 180px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+    if (request.method === "OPTIONS") {
 
-
-/* ==========================================
-   CREDITS
-========================================== */
-
-.creditArea {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.credits {
-  padding: 9px 15px;
-  border-radius: 13px;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.15);
-  color: #ffd84d;
-  font-weight: bold;
-}
-
-.watchAd {
-  margin-top: 7px;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  background: linear-gradient(90deg, #ff7b00, #ff3d81);
-  transition: .25s;
-}
-
-.watchAd:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255,80,100,.3);
-}
-
-
-/* ==========================================
-   AUTH MODAL
-========================================== */
-
-.authOverlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(0,0,0,.75);
-  backdrop-filter: blur(10px);
-}
-
-.authOverlay.show {
-  display: flex;
-}
-
-.authModal {
-  width: min(430px, 100%);
-  padding: 28px;
-  border-radius: 24px;
-  background: #0d0d1b;
-  border: 1px solid rgba(255,255,255,.12);
-  box-shadow: 0 30px 100px rgba(0,0,0,.55);
-}
-
-.authModal h2 {
-  margin-bottom: 8px;
-}
-
-.authDescription {
-  color: #999;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.authInput {
-  width: 100%;
-  padding: 14px;
-  margin-top: 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,.12);
-  outline: none;
-  background: rgba(0,0,0,.35);
-  color: white;
-  font-size: 15px;
-}
-
-.authInput:focus {
-  border-color: #805cff;
-}
-
-.authPrimary {
-  width: 100%;
-  padding: 14px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 13px;
-  background: linear-gradient(90deg, #743cff, #00bfff);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.authSecondary {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 13px;
-  background: rgba(255,255,255,.05);
-  color: white;
-  cursor: pointer;
-}
-
-.authClose {
-  float: right;
-  border: none;
-  background: transparent;
-  color: #aaa;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.authStatus {
-  min-height: 24px;
-  margin-top: 12px;
-  color: #aaa;
-  font-size: 14px;
-}
-
-
-/* ==========================================
-   HERO
-========================================== */
-
-.hero {
-  min-height: 75vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 70px 20px;
-}
-
-.heroContent {
-  max-width: 900px;
-}
-
-.welcome {
-  color: #aaa;
-  letter-spacing: 7px;
-  font-size: 18px;
-  margin-bottom: 20px;
-  animation: welcome 2s infinite ease-in-out;
-}
-
-@keyframes welcome {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
-
-.hero h1 {
-  font-size: clamp(55px, 10vw, 120px);
-  font-weight: 1000;
-  letter-spacing: -5px;
-  background: linear-gradient(
-    90deg,
-    white,
-    #8b5cff,
-    #00d9ff,
-    white
-  );
-  background-size: 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradientText 5s linear infinite;
-}
-
-@keyframes gradientText {
-  from { background-position: 0%; }
-  to { background-position: 300%; }
-}
-
-.hero p {
-  color: #aaa;
-  margin-top: 25px;
-  font-size: 19px;
-  line-height: 1.6;
-}
-
-.startButton {
-  margin-top: 35px;
-  padding: 16px 30px;
-  border: none;
-  border-radius: 15px;
-  background: linear-gradient(90deg, #743cff, #00bfff);
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .3s;
-}
-
-.startButton:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(80,90,255,.4);
-}
-
-
-/* ==========================================
-   CONTENT
-========================================== */
-
-.container {
-  width: min(1000px, 92%);
-  margin: auto;
-}
-
-.card {
-  background: rgba(255,255,255,.055);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 25px;
-  padding: 30px;
-  margin-bottom: 25px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 20px 60px rgba(0,0,0,.25);
-}
-
-.card h2 {
-  margin-bottom: 10px;
-}
-
-.description {
-  color: #999;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-
-/* ==========================================
-   AI ASSISTANT
-========================================== */
-
-.aiChatCard {
-  margin-bottom: 25px;
-}
-
-.aiChat {
-  height: 540px;
-  display: flex;
-  flex-direction: column;
-  background: rgba(0,0,0,.25);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-.chatMessages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  scroll-behavior: smooth;
-}
-
-.chatWelcome {
-  text-align: center;
-  margin: auto;
-  color: #888;
-  line-height: 1.6;
-}
-
-.chatWelcome strong {
-  display: block;
-  color: white;
-  font-size: 25px;
-  margin-bottom: 8px;
-}
-
-.chatMessage {
-  display: flex;
-  width: 100%;
-}
-
-.chatMessage.user {
-  justify-content: flex-end;
-}
-
-.chatMessage.ai {
-  justify-content: flex-start;
-}
-
-.chatBubble {
-  max-width: min(760px, 85%);
-  padding: 13px 16px;
-  border-radius: 18px;
-  line-height: 1.55;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-.chatMessage.user .chatBubble {
-  background: linear-gradient(90deg, #743cff, #00aaff);
-  color: white;
-  border-bottom-right-radius: 5px;
-}
-
-.chatMessage.ai .chatBubble {
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.08);
-  color: #eee;
-  border-bottom-left-radius: 5px;
-}
-
-.chatTyping {
-  display: inline-flex;
-  gap: 5px;
-  padding: 5px;
-}
-
-.chatTyping span {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #aaa;
-  animation: chatDot 1s infinite;
-}
-
-.chatTyping span:nth-child(2) {
-  animation-delay: .15s;
-}
-
-.chatTyping span:nth-child(3) {
-  animation-delay: .3s;
-}
-
-@keyframes chatDot {
-  0%,100% {
-    opacity: .3;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(-4px);
-  }
-}
-
-.chatInputArea {
-  display: flex;
-  gap: 10px;
-  padding: 14px;
-  border-top: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.025);
-}
-
-#aiChatInput {
-  flex: 1;
-  min-height: 50px;
-  max-height: 150px;
-  resize: none;
-  margin: 0;
-}
-
-.aiSendButton {
-  width: 55px;
-  min-width: 55px;
-  height: 50px;
-  border: none;
-  border-radius: 13px;
-  background: linear-gradient(90deg, #743cff, #00bfff);
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.aiSendButton:disabled {
-  opacity: .5;
-  cursor: wait;
-}
-
-.chatControls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.clearChatButton {
-  padding: 8px 12px;
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: 10px;
-  background: rgba(255,255,255,.05);
-  color: #aaa;
-  cursor: pointer;
-}
-
-.clearChatButton:hover {
-  color: white;
-  background: rgba(255,255,255,.1);
-}
-
-
-/* ==========================================
-   PROMPT
-========================================== */
-
-textarea {
-  width: 100%;
-  min-height: 130px;
-  padding: 18px;
-  resize: vertical;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.12);
-  outline: none;
-  background: rgba(0,0,0,.35);
-  color: white;
-  font-size: 16px;
-}
-
-textarea:focus {
-  border-color: #805cff;
-  box-shadow: 0 0 25px rgba(128,92,255,.2);
-}
-
-
-/* ==========================================
-   GENERATE
-========================================== */
-
-.generateButton {
-  width: 100%;
-  margin-top: 15px;
-  padding: 17px;
-  border: none;
-  border-radius: 15px;
-  background: linear-gradient(90deg, #743cff, #00aaff);
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .3s;
-}
-
-.generateButton:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(80,90,255,.4);
-}
-
-.generateButton:disabled {
-  opacity: .5;
-  cursor: wait;
-}
-
-
-/* ==========================================
-   STATUS
-========================================== */
-
-#status {
-  text-align: center;
-  color: #aaa;
-  margin-top: 15px;
-  min-height: 25px;
-}
-
-
-/* ==========================================
-   IMAGE
-========================================== */
-
-#result {
-  display: none;
-  margin-top: 25px;
-  text-align: center;
-}
-
-#generatedImage {
-  width: 100%;
-  max-width: 900px;
-  border-radius: 20px;
-  display: block;
-  margin: auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,.5);
-}
-
-.downloadButton {
-  display: inline-block;
-  margin-top: 18px;
-  padding: 12px 20px;
-  border-radius: 12px;
-  background: white;
-  color: black;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-
-/* ==========================================
-   TOOLS
-========================================== */
-
-.tools {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
-.tool {
-  padding: 25px;
-  border-radius: 18px;
-  background: rgba(255,255,255,.045);
-  border: 1px solid rgba(255,255,255,.08);
-  transition: .3s;
-}
-
-.tool:hover {
-  transform: translateY(-5px);
-}
-
-.tool h3 {
-  margin-bottom: 10px;
-}
-
-.tool p {
-  color: #999;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-
-/* ==========================================
-   ADS
-========================================== */
-
-.adBox {
-  min-height: 100px;
-  margin: 25px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #666;
-  border-radius: 15px;
-  background: rgba(255,255,255,.025);
-}
-
-
-/* ==========================================
-   FOOTER
-========================================== */
-
-footer {
-  text-align: center;
-  color: #666;
-  padding: 50px 20px;
-}
-
-
-/* ==========================================
-   MOBILE
-========================================== */
-
-@media(max-width:700px) {
-
-  nav {
-    padding: 10px 5%;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .accountArea {
-    order: 2;
-    width: 100%;
-    justify-content: flex-end;
-  }
-
-  .tools {
-    grid-template-columns: 1fr;
-  }
-
-  .card {
-    padding: 22px;
-  }
-
-  .logo {
-    font-size: 20px;
-  }
-
-  .userEmail {
-    max-width: 130px;
-  }
-
-  .aiChat {
-    height: 600px;
-  }
-
-  .chatBubble {
-    max-width: 92%;
-  }
-
-  .chatInputArea {
-    align-items: flex-end;
-  }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-
-<!-- ==========================================
-     NAVIGATION
-========================================== -->
-
-<nav>
-
-  <div class="logo">
-    SUBHAN AI
-  </div>
-
-  <div class="accountArea">
-
-    <span
-      id="userEmail"
-      class="userEmail"
-      style="display:none;"
-    ></span>
-
-    <button
-      id="loginButton"
-      class="authButton"
-      onclick="openAuthModal()"
-    >
-      🔐 Login / Sign Up
-    </button>
-
-    <button
-      id="logoutButton"
-      class="authButton"
-      onclick="logout()"
-      style="display:none;"
-    >
-      Logout
-    </button>
-
-  </div>
-
-  <div class="creditArea">
-
-    <div class="credits">
-      🪙
-      <span id="credits">0</span>
-      Credits
-    </div>
-
-    <button
-      class="watchAd"
-      onclick="watchAd()"
-    >
-      📺 Watch Ad +50
-    </button>
-
-  </div>
-
-</nav>
-
-
-<!-- ==========================================
-     AUTH MODAL
-========================================== -->
-
-<div
-  id="authOverlay"
-  class="authOverlay"
->
-
-  <div class="authModal">
-
-    <button
-      class="authClose"
-      onclick="closeAuthModal()"
-    >
-      ×
-    </button>
-
-    <h2 id="authTitle">
-      🔐 Login to SUBHAN AI
-    </h2>
-
-    <p class="authDescription">
-      Create an account or log in to save your SUBHAN AI account and credits.
-    </p>
-
-    <input
-      id="authEmail"
-      class="authInput"
-      type="email"
-      autocomplete="email"
-      placeholder="Email address"
-    >
-
-    <input
-      id="authPassword"
-      class="authInput"
-      type="password"
-      autocomplete="current-password"
-      placeholder="Password"
-    >
-
-    <button
-      id="authSubmit"
-      class="authPrimary"
-      onclick="submitAuth()"
-    >
-      Login
-    </button>
-
-    <button
-      id="authModeButton"
-      class="authSecondary"
-      onclick="toggleAuthMode()"
-    >
-      Create a new account
-    </button>
-
-    <div
-      id="authStatus"
-      class="authStatus"
-    ></div>
-
-  </div>
-
-</div>
-
-
-<!-- ==========================================
-     HERO
-========================================== -->
-
-<section class="hero">
-
-  <div class="heroContent">
-
-    <div class="welcome">
-      WELCOME
-    </div>
-
-    <h1>
-      SUBHAN AI
-    </h1>
-
-    <p>
-      Unleash your imagination with AI.
-      <br>
-      Create amazing images and talk with AI.
-    </p>
-
-    <button
-      class="startButton"
-      onclick="scrollToAssistant()"
-    >
-      ✨ Enter SUBHAN AI
-    </button>
-
-  </div>
-
-</section>
-
-
-<main class="container">
-
-
-<!-- ==========================================
-     AI ASSISTANT
-========================================== -->
-
-<section
-  class="card aiChatCard"
-  id="aiAssistant"
->
-
-  <h2>
-    🤖 SUBHAN AI Assistant
-  </h2>
-
-  <p class="description">
-    Talk with SUBHAN AI. Ask questions,
-    learn, brainstorm ideas, or just have
-    a conversation.
-  </p>
-
-  <div class="aiChat">
-
-    <div
-      id="chatMessages"
-      class="chatMessages"
-    >
-
-      <div
-        id="chatWelcome"
-        class="chatWelcome"
-      >
-
-        <strong>
-          ✨ Hey! I'm SUBHAN AI
-        </strong>
-
-        Ask me anything.
-
-      </div>
-
-    </div>
-
-    <div class="chatInputArea">
-
-      <textarea
-        id="aiChatInput"
-        placeholder="Message SUBHAN AI..."
-        aria-label="Message SUBHAN AI"
-      ></textarea>
-
-      <button
-        id="aiSendButton"
-        class="aiSendButton"
-        onclick="sendAIMessage()"
-        aria-label="Send message"
-      >
-        ➤
-      </button>
-
-    </div>
-
-  </div>
-
-  <div class="chatControls">
-
-    <span
-      style="color:#666;font-size:12px;"
-    >
-      Powered by SUBHAN AI
-    </span>
-
-    <button
-      class="clearChatButton"
-      onclick="clearAIChat()"
-    >
-      🗑️ Clear
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     IMAGE GENERATOR
-========================================== -->
-
-<section
-  class="card"
-  id="generator"
->
-
-  <h2>
-    🖼️ AI Image Generator
-  </h2>
-
-  <p class="description">
-    Create an AI image for
-    <strong>10 credits</strong>.
-  </p>
-
-  <textarea
-    id="prompt"
-    placeholder="Example: A powerful purple dragon flying above a magical lake at sunset..."
-  ></textarea>
-
-  <button
-    class="generateButton"
-    id="generateButton"
-    onclick="generateImage()"
-  >
-    ✨ Generate Image — 10 Credits
-  </button>
-
-  <div id="status"></div>
-
-  <div id="result">
-
-    <img
-      id="generatedImage"
-      alt="SUBHAN AI generated image"
-    >
-
-    <a
-      id="downloadButton"
-      class="downloadButton"
-      download="subhan-ai-image.jpg"
-    >
-      ⬇️ Download Image
-    </a>
-
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     REAL ADSENSE AD
-========================================== -->
-
-<section class="card">
-
-  <h2>
-    📢 Support SUBHAN AI
-  </h2>
-
-  <p class="description">
-    Ads help us keep SUBHAN AI
-    available and improve the service.
-  </p>
-
-  <div class="adBox">
-
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-7988076392393976"
-         data-ad-slot="9697127234"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     TOOLS
-========================================== -->
-
-<section class="card">
-
-  <h2>
-    🚀 SUBHAN AI Tools
-  </h2>
-
-  <p class="description">
-    More creative AI tools are coming soon.
-  </p>
-
-  <div class="tools">
-
-    <div class="tool">
-
-      <h3>
-        🖼️ Image Generation
-      </h3>
-
-      <p>
-        Turn your text prompts into
-        beautiful AI-generated images.
-      </p>
-
-    </div>
-
-    <div class="tool">
-
-      <h3>
-        🎬 Video Generation
-      </h3>
-
-      <p>
-        AI video generation is coming
-        soon to SUBHAN AI.
-      </p>
-
-    </div>
-
-    <div class="tool">
-
-      <h3>
-        🤖 AI Assistant
-      </h3>
-
-      <p>
-        Talk naturally with SUBHAN AI
-        using the new AI assistant.
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ==========================================
-     ABOUT
-========================================== -->
-
-<section class="card">
-
-  <h2>
-    ℹ️ About SUBHAN AI
-  </h2>
-
-  <p class="description">
-    SUBHAN AI is a creative artificial
-    intelligence platform designed to
-    help people turn their imagination
-    into digital content.
-  </p>
-
-</section>
-
-
-<!-- ==========================================
-     CONTACT
-========================================== -->
-
-<section class="card">
-
-  <h2>
-    📧 Contact
-  </h2>
-
-  <p class="description">
-
-    Have a question or suggestion?
-
-    <br><br>
-
-    Email:
-
-    <a
-      href="mailto:subhanazher45@gmail.com"
-      style="color:#9b7cff;"
-    >
-      subhanazher45@gmail.com
-    </a>
-
-  </p>
-
-</section>
-
-
-<!-- ==========================================
-     PRIVACY
-========================================== -->
-
-<section class="card">
-
-  <h2>
-    🔒 Privacy Policy
-  </h2>
-
-  <p class="description">
-
-    SUBHAN AI may collect account information
-    such as an email address when you choose
-    to create an account.
-
-    <br><br>
-
-    Prompts entered into the image generator
-    are sent to the image-generation service
-    to process the requested image.
-
-    <br><br>
-
-    Please do not enter payment information
-    or other sensitive information into prompts.
-
-  </p>
-
-</section>
-
-
-<!-- ==========================================
-     TERMS
-========================================== -->
-
-<section class="card">
-
-  <h2>
-    📜 Terms of Service
-  </h2>
-
-  <p class="description">
-
-    By using SUBHAN AI, you agree to use
-    the service responsibly and not abuse,
-    attack, or attempt to bypass the
-    service's security systems.
-
-  </p>
-
-</section>
-
-
-<!-- ==========================================
-     VIDEO
-========================================== -->
-
-<section class="card">
-
-  <h2>
-    🎬 Video Generation
-  </h2>
-
-  <p class="description">
-
-    Video generation is currently
-    under development.
-
-    <br><br>
-
-    It will be added to SUBHAN AI
-    in a future update.
-
-  </p>
-
-</section>
-
-
-</main>
-
-
-<!-- ==========================================
-     FOOTER
-========================================== -->
-
-<footer>
-
-  © 2026 SUBHAN AI
-
-  <br><br>
-
-  Built with AI ✨
-
-</footer>
-
-
-<script>
-
-/* ==========================================
-   SUPABASE
-========================================== */
-
-const SUPABASE_URL =
-  "https://fgopdorpckdtmuublonc.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_lfIQKtq0JAoHdxoYfUN5zg_cdiRDFdO";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
-
-
-/* ==========================================
-   CLOUDFLARE WORKER
-========================================== */
-
-const API_URL =
-  "https://subhan-ai-api.subhanazher12.workers.dev";
-
-
-/* ==========================================
-   AUTH
-========================================== */
-
-let currentUser = null;
-let authMode = "login";
-
-
-function openAuthModal() {
-
-  document
-    .getElementById("authOverlay")
-    .classList.add("show");
-
-  document
-    .getElementById("authEmail")
-    .focus();
-
-}
-
-
-function closeAuthModal() {
-
-  document
-    .getElementById("authOverlay")
-    .classList.remove("show");
-
-}
-
-
-function toggleAuthMode() {
-
-  authMode =
-    authMode === "login"
-      ? "signup"
-      : "login";
-
-  const title =
-    document.getElementById("authTitle");
-
-  const submit =
-    document.getElementById("authSubmit");
-
-  const modeButton =
-    document.getElementById("authModeButton");
-
-  const password =
-    document.getElementById("authPassword");
-
-
-  if (authMode === "signup") {
-
-    title.textContent =
-      "📝 Create SUBHAN AI Account";
-
-    submit.textContent =
-      "Create Account";
-
-    modeButton.textContent =
-      "Already have an account? Login";
-
-    password.autocomplete =
-      "new-password";
-
-  } else {
-
-    title.textContent =
-      "🔐 Login to SUBHAN AI";
-
-    submit.textContent =
-      "Login";
-
-    modeButton.textContent =
-      "Create a new account";
-
-    password.autocomplete =
-      "current-password";
-
-  }
-
-  document
-    .getElementById("authStatus")
-    .textContent = "";
-
-}
-
-
-async function submitAuth() {
-
-  const email =
-    document
-      .getElementById("authEmail")
-      .value
-      .trim();
-
-  const password =
-    document
-      .getElementById("authPassword")
-      .value;
-
-  const status =
-    document
-      .getElementById("authStatus");
-
-
-  if (!email || !password) {
-
-    status.textContent =
-      "⚠️ Enter your email and password.";
-
-    return;
-
-  }
-
-
-  if (password.length < 6) {
-
-    status.textContent =
-      "⚠️ Password must be at least 6 characters.";
-
-    return;
-
-  }
-
-
-  status.textContent =
-    authMode === "signup"
-      ? "Creating your account..."
-      : "Logging in...";
-
-
-  try {
-
-    let result;
-
-
-    if (authMode === "signup") {
-
-      result =
-        await supabaseClient.auth.signUp({
-          email,
-          password
-        });
-
-    } else {
-
-      result =
-        await supabaseClient.auth.signInWithPassword({
-          email,
-          password
-        });
+      return new Response(null, {
+        status: 204,
+        headers: corsHeaders
+      });
 
     }
 
 
-    if (result.error) {
+    const url =
+      new URL(request.url);
 
-      throw result.error;
+
+    /* ========================================
+       HOME
+    ======================================== */
+
+    if (url.pathname === "/") {
+
+      return json({
+
+        status: "online",
+
+        service: "SUBHAN AI",
+
+        gemini:
+          !!env.GEMINI_API_KEY,
+
+        pollinations:
+          !!env.POLLINATIONS_API_KEY,
+
+        model:
+          GEMINI_MODEL,
+
+        creditsKV:
+          !!env.CREDITS
+
+      });
 
     }
 
 
-    if (authMode === "signup") {
+    /* ========================================
+       CREDITS
+    ======================================== */
 
-      if (!result.data.session) {
+    if (url.pathname === "/credits") {
 
-        status.textContent =
-          "✅ Account created. Check your email to confirm your account, then log in.";
+      const userId =
+        url.searchParams.get("userId");
 
-        return;
+
+      if (!userId) {
+
+        return json({
+          error: "Missing userId"
+        }, 400);
 
       }
 
-      status.textContent =
-        "✅ Account created!";
 
-    } else {
+      try {
 
-      status.textContent =
-        "✅ Login successful!";
+        const user =
+          await verifySupabaseUser(
+            request,
+            env
+          );
+
+
+        if (!user) {
+
+          return json({
+
+            error:
+              "Unauthorized. Please log in again."
+
+          }, 401);
+
+        }
+
+
+        if (user.id !== userId) {
+
+          return json({
+
+            error:
+              "User verification failed."
+
+          }, 403);
+
+        }
+
+
+        /*
+          ADMIN / OWNER ACCOUNT
+        */
+
+        if (
+          isUnlimitedUser(
+            user,
+            env
+          )
+        ) {
+
+          return json({
+
+            credits: "∞",
+
+            unlimited: true
+
+          });
+
+        }
+
+
+        const credits =
+          await getCredits(
+            env,
+            userId
+          );
+
+
+        return json({
+
+          credits:
+            credits,
+
+          unlimited:
+            false
+
+        });
+
+
+      } catch (error) {
+
+        console.error(
+          "Credits error:",
+          error
+        );
+
+
+        return json({
+
+          error:
+            "Could not load credits",
+
+          details:
+            error?.message ||
+            String(error)
+
+        }, 500);
+
+      }
 
     }
 
 
-    setTimeout(() => {
+    /* ========================================
+       IMAGE GENERATION
+    ======================================== */
 
-      closeAuthModal();
+    if (
+      url.pathname === "/generate-image"
+    ) {
 
-    }, 700);
+      if (
+        request.method !== "GET"
+      ) {
+
+        return json({
+
+          error:
+            "Use GET for /generate-image"
+
+        }, 405);
+
+      }
 
 
-  } catch (error) {
+      const prompt =
+        url.searchParams.get(
+          "prompt"
+        );
 
-    console.error(error);
 
-    status.textContent =
-      "❌ " +
-      (
-        error.message ||
-        "Authentication failed."
-      );
+      const userId =
+        url.searchParams.get(
+          "userId"
+        );
+
+
+      if (!prompt) {
+
+        return json({
+
+          error:
+            "Missing prompt"
+
+        }, 400);
+
+      }
+
+
+      if (!userId) {
+
+        return json({
+
+          error:
+            "Missing userId"
+
+        }, 400);
+
+      }
+
+
+      /* ====================================
+         VERIFY SUPABASE USER
+      ==================================== */
+
+      const user =
+        await verifySupabaseUser(
+          request,
+          env
+        );
+
+
+      if (!user) {
+
+        return json({
+
+          error:
+            "Unauthorized. Please log in again."
+
+        }, 401);
+
+      }
+
+
+      if (
+        user.id !== userId
+      ) {
+
+        return json({
+
+          error:
+            "User verification failed."
+
+        }, 403);
+
+      }
+
+
+      /* ====================================
+         IMAGE API
+      ==================================== */
+
+      const apiKey =
+        env.POLLINATIONS_API_KEY;
+
+
+      if (!apiKey) {
+
+        return json({
+
+          error:
+            "POLLINATIONS_API_KEY is not connected in Cloudflare"
+
+        }, 500);
+
+      }
+
+
+      /* ====================================
+         CHECK UNLIMITED ACCOUNT
+      ==================================== */
+
+      const unlimited =
+        isUnlimitedUser(
+          user,
+          env
+        );
+
+
+      let credits = null;
+
+
+      /*
+        Normal users use credits.
+
+        Owner account skips credit
+        checking completely.
+      */
+
+      if (!unlimited) {
+
+        credits =
+          await getCredits(
+            env,
+            userId
+          );
+
+
+        if (
+          credits < IMAGE_COST
+        ) {
+
+          return json({
+
+            error:
+              "Not enough credits",
+
+            credits:
+              credits,
+
+            required:
+              IMAGE_COST
+
+          }, 402);
+
+        }
+
+      }
+
+
+      /* ====================================
+         GENERATE IMAGE
+      ==================================== */
+
+      const imageURL =
+        "https://gen.pollinations.ai/image/" +
+        encodeURIComponent(prompt) +
+        "?model=flux";
+
+
+      try {
+
+        const response =
+          await fetch(
+
+            imageURL,
+
+            {
+
+              method:
+                "GET",
+
+              headers: {
+
+                "Authorization":
+                  "Bearer " +
+                  apiKey,
+
+                "Accept":
+                  "image/*"
+
+              }
+
+            }
+
+          );
+
+
+        if (!response.ok) {
+
+          const errorText =
+            await safeText(
+              response
+            );
+
+
+          return json({
+
+            error:
+              "Image generation failed",
+
+            status:
+              response.status,
+
+            details:
+              errorText
+
+          }, response.status);
+
+        }
+
+
+        /* ==================================
+           CREDIT DEDUCTION
+        ==================================
+
+           Owner:
+           NO deduction.
+
+           Normal user:
+           -10 credits.
+        */
+
+        let newCredits;
+
+
+        if (unlimited) {
+
+          newCredits =
+            "∞";
+
+        } else {
+
+          newCredits =
+            credits -
+            IMAGE_COST;
+
+
+          await env.CREDITS.put(
+
+            userId,
+
+            String(
+              newCredits
+            )
+
+          );
+
+        }
+
+
+        /* ==================================
+           RETURN IMAGE
+        ================================== */
+
+        return new Response(
+
+          response.body,
+
+          {
+
+            status:
+              200,
+
+            headers: {
+
+              ...corsHeaders,
+
+              "Content-Type":
+                response.headers.get(
+                  "Content-Type"
+                ) ||
+                "image/jpeg",
+
+              "X-Credits-Remaining":
+                String(
+                  newCredits
+                ),
+
+              "X-Unlimited":
+                unlimited
+                  ? "true"
+                  : "false",
+
+              "Cache-Control":
+                "no-store"
+
+            }
+
+          }
+
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Image generation error:",
+          error
+        );
+
+
+        return json({
+
+          error:
+            "Image generation request failed",
+
+          details:
+            error?.message ||
+            String(error)
+
+        }, 500);
+
+      }
+
+    }
+
+
+    /* ========================================
+       AI CHAT
+    ======================================== */
+
+    if (
+      url.pathname === "/chat"
+    ) {
+
+      if (
+        request.method !== "POST"
+      ) {
+
+        return json({
+
+          error:
+            "Use POST for /chat"
+
+        }, 405);
+
+      }
+
+
+      if (
+        !env.GEMINI_API_KEY
+      ) {
+
+        return json({
+
+          error:
+            "GEMINI_API_KEY is not connected in Cloudflare"
+
+        }, 500);
+
+      }
+
+
+      try {
+
+        const body =
+          await request.json();
+
+
+        const message =
+          typeof body.message === "string"
+            ? body.message.trim()
+            : "";
+
+
+        if (!message) {
+
+          return json({
+
+            error:
+              "Missing message"
+
+          }, 400);
+
+        }
+
+
+        if (
+          message.length > 12000
+        ) {
+
+          return json({
+
+            error:
+              "Message is too long. Please use a shorter message."
+
+          }, 400);
+
+        }
+
+
+        const history =
+          Array.isArray(
+            body.history
+          )
+            ? body.history
+            : [];
+
+
+        const recentHistory =
+          history
+            .slice(-12)
+            .filter(
+
+              item =>
+
+                item &&
+
+                typeof item.content ===
+                  "string" &&
+
+                (
+                  item.role === "user" ||
+                  item.role === "assistant"
+                )
+
+            );
+
+
+        const contents = [];
+
+
+        for (
+          const item of recentHistory
+        ) {
+
+          contents.push({
+
+            role:
+              item.role === "assistant"
+                ? "model"
+                : "user",
+
+            parts: [
+
+              {
+                text:
+                  item.content
+              }
+
+            ]
+
+          });
+
+        }
+
+
+        const lastMessage =
+          contents[
+            contents.length - 1
+          ];
+
+
+        if (
+
+          !lastMessage ||
+
+          lastMessage.role !== "user" ||
+
+          lastMessage.parts?.[0]?.text !==
+            message
+
+        ) {
+
+          contents.push({
+
+            role:
+              "user",
+
+            parts: [
+
+              {
+                text:
+                  message
+              }
+
+            ]
+
+          });
+
+        }
+
+
+        /* ==================================
+           GEMINI
+        ================================== */
+
+        const result =
+          await callGeminiWithRetry(
+
+            env.GEMINI_API_KEY,
+
+            contents
+
+          );
+
+
+        if (!result.ok) {
+
+          console.error(
+            "Gemini final error:",
+            result
+          );
+
+
+          return json({
+
+            error:
+              "Gemini API error",
+
+            status:
+              result.status,
+
+            model:
+              GEMINI_MODEL,
+
+            details:
+              result.details
+
+          }, result.status || 502);
+
+        }
+
+
+        const data =
+          result.data;
+
+
+        const text =
+          data?.candidates?.[0]
+            ?.content
+            ?.parts
+            ?.map(
+              part =>
+                part?.text || ""
+            )
+            ?.join("")
+            ?.trim();
+
+
+        if (!text) {
+
+          return json({
+
+            error:
+              "Gemini returned no text",
+
+            model:
+              GEMINI_MODEL,
+
+            details:
+              data
+
+          }, 502);
+
+        }
+
+
+        return json({
+
+          reply:
+            text,
+
+          model:
+            GEMINI_MODEL
+
+        });
+
+
+      } catch (error) {
+
+        console.error(
+          "SUBHAN AI Gemini error:",
+          error
+        );
+
+
+        return json({
+
+          error:
+            "AI connection failed",
+
+          details:
+            error?.message ||
+            String(error),
+
+          model:
+            GEMINI_MODEL
+
+        }, 500);
+
+      }
+
+    }
+
+
+    /* ========================================
+       UNKNOWN ENDPOINT
+    ======================================== */
+
+    return json({
+
+      error:
+        "SUBHAN AI endpoint not found",
+
+      path:
+        url.pathname
+
+    }, 404);
 
   }
 
-}
+};
 
 
 /* ==========================================
-   LOGOUT
+   SUPABASE USER VERIFICATION
 ========================================== */
 
-async function logout() {
+async function verifySupabaseUser(
+  request,
+  env
+) {
 
-  const { error } =
-    await supabaseClient.auth.signOut();
-
-
-  if (error) {
-
-    console.error(error);
-
-    return;
-
-  }
-
-
-  currentUser = null;
-
-  updateAuthUI();
-
-
-  document
-    .getElementById("credits")
-    .textContent = "0";
-
-}
-
-
-/* ==========================================
-   AUTH UI
-========================================== */
-
-function updateAuthUI() {
-
-  const loginButton =
-    document.getElementById("loginButton");
-
-  const logoutButton =
-    document.getElementById("logoutButton");
-
-  const email =
-    document.getElementById("userEmail");
-
-
-  if (currentUser) {
-
-    loginButton.style.display =
-      "none";
-
-    logoutButton.style.display =
-      "inline-block";
-
-    email.style.display =
-      "inline-block";
-
-    email.textContent =
-      currentUser.email || "";
-
-  } else {
-
-    loginButton.style.display =
-      "inline-block";
-
-    logoutButton.style.display =
-      "none";
-
-    email.style.display =
-      "none";
-
-    email.textContent =
-      "";
-
-  }
-
-}
-
-
-/* ==========================================
-   AUTHORIZATION TOKEN
-========================================== */
-
-/*
-  IMPORTANT:
-  Cloudflare now verifies the real Supabase
-  access token.
-
-  This function gets the current session
-  token and prepares the Authorization header.
-*/
-
-async function getAuthHeaders() {
-
-  const { data, error } =
-    await supabaseClient.auth.getSession();
-
-
-  if (error) {
-
-    console.error(
-      "Could not get Supabase session:",
-      error
+  const authorization =
+    request.headers.get(
+      "Authorization"
     );
 
+
+  if (
+    !authorization ||
+    !authorization.startsWith(
+      "Bearer "
+    )
+  ) {
+
     return null;
 
   }
 
 
-  const session =
-    data?.session;
+  const token =
+    authorization
+      .slice(7)
+      .trim();
 
 
-  if (!session?.access_token) {
+  if (!token) {
 
     return null;
+
+  }
+
+
+  if (
+    !env.SUPABASE_URL ||
+    !env.SUPABASE_SERVICE_ROLE_KEY
+  ) {
+
+    throw new Error(
+
+      "SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is missing in Cloudflare."
+
+    );
+
+  }
+
+
+  const response =
+    await fetch(
+
+      env.SUPABASE_URL +
+      "/auth/v1/user",
+
+      {
+
+        method:
+          "GET",
+
+        headers: {
+
+          "Authorization":
+            "Bearer " +
+            token,
+
+          "apikey":
+            env.SUPABASE_SERVICE_ROLE_KEY,
+
+          "Accept":
+            "application/json"
+
+        }
+
+      }
+
+    );
+
+
+  if (!response.ok) {
+
+    const text =
+      await safeText(
+        response
+      );
+
+
+    console.error(
+
+      "Supabase verification failed:",
+
+      response.status,
+
+      text
+
+    );
+
+
+    return null;
+
+  }
+
+
+  const user =
+    await response.json();
+
+
+  if (
+    !user ||
+    !user.id
+  ) {
+
+    return null;
+
+  }
+
+
+  return user;
+
+}
+
+
+/* ==========================================
+   UNLIMITED ACCOUNT
+========================================== */
+
+function isUnlimitedUser(
+  user,
+  env
+) {
+
+  const email =
+    String(
+      user?.email || ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  const adminEmail =
+    String(
+      env.ADMIN_EMAIL || ""
+    )
+    .trim()
+    .toLowerCase();
+
+
+  /*
+    Cloudflare ADMIN_EMAIL is used
+    instead of hard-coding your email.
+  */
+
+  return (
+
+    adminEmail !== "" &&
+
+    email === adminEmail
+
+  );
+
+}
+
+
+/* ==========================================
+   GEMINI RETRY
+========================================== */
+
+async function callGeminiWithRetry(
+  apiKey,
+  contents
+) {
+
+  const maxAttempts =
+    3;
+
+
+  let lastStatus =
+    502;
+
+
+  let lastDetails =
+    null;
+
+
+  for (
+    let attempt = 1;
+    attempt <= maxAttempts;
+    attempt++
+  ) {
+
+    let controller =
+      null;
+
+
+    let timeout =
+      null;
+
+
+    try {
+
+      controller =
+        new AbortController();
+
+
+      timeout =
+        setTimeout(
+
+          () =>
+            controller.abort(),
+
+          20000
+
+        );
+
+
+      const response =
+        await fetch(
+
+          GEMINI_URL,
+
+          {
+
+            method:
+              "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/json",
+
+              "x-goog-api-key":
+                apiKey
+
+            },
+
+            body:
+              JSON.stringify({
+
+                contents:
+                  contents,
+
+                generationConfig: {
+
+                  maxOutputTokens:
+                    1024
+
+                }
+
+              }),
+
+            signal:
+              controller.signal
+
+          }
+
+        );
+
+
+      clearTimeout(
+        timeout
+      );
+
+
+      const responseText =
+        await safeText(
+          response
+        );
+
+
+      let data =
+        null;
+
+
+      try {
+
+        data =
+          responseText
+            ? JSON.parse(
+                responseText
+              )
+            : null;
+
+      } catch {
+
+        data = {
+
+          raw:
+            responseText
+
+        };
+
+      }
+
+
+      if (
+        response.ok
+      ) {
+
+        return {
+
+          ok:
+            true,
+
+          status:
+            200,
+
+          data:
+            data
+
+        };
+
+      }
+
+
+      lastStatus =
+        response.status;
+
+
+      lastDetails =
+        data;
+
+
+      console.error(
+
+        `Gemini attempt ${attempt} failed:`,
+
+        response.status,
+
+        data
+
+      );
+
+
+      /*
+        Permanent errors
+      */
+
+      if (
+
+        response.status === 400 ||
+
+        response.status === 401 ||
+
+        response.status === 403 ||
+
+        response.status === 404
+
+      ) {
+
+        return {
+
+          ok:
+            false,
+
+          status:
+            response.status,
+
+          details:
+            data
+
+        };
+
+      }
+
+
+      /*
+        Retry temporary errors
+      */
+
+      if (
+
+        response.status === 429 ||
+
+        response.status >= 500
+
+      ) {
+
+        if (
+          attempt < maxAttempts
+        ) {
+
+          const delay =
+            800 *
+            Math.pow(
+              2,
+              attempt - 1
+            );
+
+
+          await sleep(
+            delay
+          );
+
+
+          continue;
+
+        }
+
+      }
+
+
+      return {
+
+        ok:
+          false,
+
+        status:
+          response.status,
+
+        details:
+          data
+
+      };
+
+
+    } catch (error) {
+
+      if (timeout) {
+
+        clearTimeout(
+          timeout
+        );
+
+      }
+
+
+      lastDetails = {
+
+        message:
+          error?.message ||
+          String(error)
+
+      };
+
+
+      console.error(
+
+        `Gemini network attempt ${attempt} failed:`,
+
+        error
+
+      );
+
+
+      if (
+        attempt < maxAttempts
+      ) {
+
+        const delay =
+          800 *
+          Math.pow(
+            2,
+            attempt - 1
+          );
+
+
+        await sleep(
+          delay
+        );
+
+
+        continue;
+
+      }
+
+    }
 
   }
 
 
   return {
 
-    "Authorization":
-      "Bearer " +
-      session.access_token,
+    ok:
+      false,
 
-    "Accept":
-      "application/json"
+    status:
+      lastStatus,
+
+    details:
+      lastDetails
 
   };
 
@@ -1675,900 +1315,117 @@ async function getAuthHeaders() {
 
 
 /* ==========================================
-   LOAD SESSION
+   GET CREDITS
 ========================================== */
 
-async function loadAuthSession() {
-
-  const { data } =
-    await supabaseClient.auth.getSession();
-
-
-  currentUser =
-    data.session?.user || null;
-
-
-  updateAuthUI();
-
-
-  if (currentUser) {
-
-    await loadCredits();
-
-  } else {
-
-    document
-      .getElementById("credits")
-      .textContent = "0";
-
-  }
-
-}
-
-
-/* ==========================================
-   AUTH CHANGES
-========================================== */
-
-supabaseClient.auth.onAuthStateChange(
-  async (_event, session) => {
-
-    currentUser =
-      session?.user || null;
-
-    updateAuthUI();
-
-
-    if (currentUser) {
-
-      await loadCredits();
-
-    } else {
-
-      document
-        .getElementById("credits")
-        .textContent = "0";
-
-    }
-
-  }
-);
-
-
-/* ==========================================
-   USER ID
-========================================== */
-
-function getUserId() {
-
-  if (!currentUser) {
-
-    return null;
-
-  }
-
-  return currentUser.id;
-
-}
-
-
-/* ==========================================
-   LOAD CREDITS
-========================================== */
-
-async function loadCredits() {
-
-  const userId =
-    getUserId();
-
-
-  if (!userId) {
-
-    document
-      .getElementById("credits")
-      .textContent = "0";
-
-    return;
-
-  }
-
-
-  try {
-
-    const authHeaders =
-      await getAuthHeaders();
-
-
-    if (!authHeaders) {
-
-      console.error(
-        "No Supabase access token available."
-      );
-
-      return;
-
-    }
-
-
-    const response =
-      await fetch(
-
-        API_URL +
-        "/credits?userId=" +
-        encodeURIComponent(userId),
-
-        {
-
-          method:
-            "GET",
-
-          headers:
-            authHeaders
-
-        }
-
-      );
-
-
-    const responseText =
-      await response.text();
-
-
-    let data = null;
-
-
-    try {
-
-      data =
-        JSON.parse(
-          responseText
-        );
-
-    } catch {
-
-      data = null;
-
-    }
-
-
-    if (!response.ok) {
-
-      console.error(
-
-        "Credits error:",
-
-        response.status,
-
-        responseText
-
-      );
-
-
-      return;
-
-    }
-
-
-    if (
-      data?.unlimited
-    ) {
-
-      document
-        .getElementById("credits")
-        .textContent = "∞";
-
-      return;
-
-    }
-
-
-    document
-      .getElementById("credits")
-      .textContent =
-      data?.credits ?? 0;
-
-
-  } catch (error) {
-
-    console.error(
-      "Could not load credits:",
-      error
-    );
-
-  }
-
-}
-
-
-/* ==========================================
-   IMAGE GENERATION
-========================================== */
-
-async function generateImage() {
-
-  if (!currentUser) {
-
-    openAuthModal();
-
-    document
-      .getElementById("authStatus")
-      .textContent =
-      "🔐 Please log in or create an account before generating.";
-
-    return;
-
-  }
-
-
-  const prompt =
-    document
-      .getElementById("prompt")
-      .value
-      .trim();
-
-
-  const button =
-    document
-      .getElementById("generateButton");
-
-
-  const status =
-    document
-      .getElementById("status");
-
-
-  const result =
-    document
-      .getElementById("result");
-
-
-  const image =
-    document
-      .getElementById("generatedImage");
-
-
-  const download =
-    document
-      .getElementById("downloadButton");
-
-
-  if (!prompt) {
-
-    status.textContent =
-      "⚠️ Please enter a prompt first.";
-
-    return;
-
-  }
-
-
-  const userId =
-    getUserId();
-
-
-  if (!userId) {
-
-    status.textContent =
-      "❌ Please log in first.";
-
-    return;
-
-  }
-
-
-  const authHeaders =
-    await getAuthHeaders();
-
-
-  if (!authHeaders) {
-
-    status.textContent =
-      "❌ Your login session expired. Please log in again.";
-
-    return;
-
-  }
-
-
-  button.disabled = true;
-
-  button.textContent =
-    "✨ Creating...";
-
-  status.textContent =
-    "Generating your image...";
-
-  result.style.display =
-    "none";
-
-
-  try {
-
-    const url =
-      API_URL +
-      "/generate-image?prompt=" +
-      encodeURIComponent(prompt) +
-      "&userId=" +
-      encodeURIComponent(userId);
-
-
-    const response =
-      await fetch(
-
-        url,
-
-        {
-
-          method:
-            "GET",
-
-          headers:
-            authHeaders
-
-        }
-
-      );
-
-
-    if (!response.ok) {
-
-      const errorText =
-        await response.text();
-
-
-      let errorData;
-
-
-      try {
-
-        errorData =
-          JSON.parse(
-            errorText
-          );
-
-      } catch {
-
-        errorData = null;
-
-      }
-
-
-      if (
-        response.status === 401
-      ) {
-
-        status.textContent =
-          "❌ Your login session expired. Please log in again.";
-
-        return;
-
-      }
-
-
-      if (
-        response.status === 402
-      ) {
-
-        status.textContent =
-          "❌ Not enough credits. You need 10 credits.";
-
-        return;
-
-      }
-
-
-      throw new Error(
-
-        errorData?.error ||
-
-        errorText ||
-
-        "Image generation failed"
-
-      );
-
-    }
-
-
-    const blob =
-      await response.blob();
-
-
-    const imageURL =
-      URL.createObjectURL(
-        blob
-      );
-
-
-    image.src =
-      imageURL;
-
-
-    download.href =
-      imageURL;
-
-
-    result.style.display =
-      "block";
-
-
-    const remaining =
-      response.headers.get(
-        "X-Credits-Remaining"
-      );
-
-
-    if (
-      remaining !== null
-    ) {
-
-      document
-        .getElementById("credits")
-        .textContent =
-        remaining;
-
-    } else {
-
-      await loadCredits();
-
-    }
-
-
-    if (
-      remaining === "∞"
-    ) {
-
-      status.textContent =
-        "✅ Image generated! Unlimited account — no credits used.";
-
-    } else {
-
-      status.textContent =
-        "✅ Image generated! 10 credits used.";
-
-    }
-
-
-    result.scrollIntoView({
-
-      behavior:
-        "smooth",
-
-      block:
-        "center"
-
-    });
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    status.textContent =
-      "❌ " +
-      error.message;
-
-
-  } finally {
-
-    button.disabled =
-      false;
-
-    button.textContent =
-      "✨ Generate Image — 10 Credits";
-
-  }
-
-}
-
-
-/* ==========================================
-   REAL AI CHAT
-========================================== */
-
-const AI_CHAT_URL =
-  API_URL + "/chat";
-
-let chatHistory = [];
-
-
-/* ==========================================
-   ADD MESSAGE
-========================================== */
-
-function addChatMessage(
-  message,
-  type
+async function getCredits(
+  env,
+  userId
 ) {
 
-  const messages =
-    document.getElementById(
-      "chatMessages"
-    );
-
-  const welcome =
-    document.getElementById(
-      "chatWelcome"
+  const savedCredits =
+    await env.CREDITS.get(
+      userId
     );
 
 
-  if (welcome) {
+  if (
+    savedCredits === null
+  ) {
 
-    welcome.remove();
+    await env.CREDITS.put(
+
+      userId,
+
+      String(
+        STARTING_CREDITS
+      )
+
+    );
+
+
+    return STARTING_CREDITS;
 
   }
 
 
-  const wrapper =
-    document.createElement(
-      "div"
+  const credits =
+    Number(
+      savedCredits
     );
 
 
-  wrapper.className =
-    "chatMessage " +
-    type;
+  if (
+
+    !Number.isFinite(
+      credits
+    ) ||
+
+    credits < 0
+
+  ) {
+
+    return 0;
+
+  }
 
 
-  const bubble =
-    document.createElement(
-      "div"
-    );
-
-
-  bubble.className =
-    "chatBubble";
-
-
-  bubble.textContent =
-    message;
-
-
-  wrapper.appendChild(
-    bubble
-  );
-
-
-  messages.appendChild(
-    wrapper
-  );
-
-
-  messages.scrollTop =
-    messages.scrollHeight;
-
-
-  return bubble;
+  return credits;
 
 }
 
 
 /* ==========================================
-   TYPING
+   JSON
 ========================================== */
 
-function showChatTyping() {
+function json(
+  data,
+  status = 200
+) {
 
-  const messages =
-    document.getElementById(
-      "chatMessages"
-    );
+  return new Response(
 
+    JSON.stringify(
+      data
+    ),
 
-  const wrapper =
-    document.createElement(
-      "div"
-    );
+    {
 
+      status:
+        status,
 
-  wrapper.id =
-    "chatTypingMessage";
+      headers: {
 
+        ...corsHeaders,
 
-  wrapper.className =
-    "chatMessage ai";
+        "Content-Type":
+          "application/json"
 
+      }
 
-  wrapper.innerHTML = `
-    <div class="chatBubble">
-      <div class="chatTyping">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-  `;
+    }
 
-
-  messages.appendChild(
-    wrapper
   );
-
-
-  messages.scrollTop =
-    messages.scrollHeight;
 
 }
 
 
 /* ==========================================
-   REMOVE TYPING
+   SAFE TEXT
 ========================================== */
 
-function removeChatTyping() {
-
-  const typing =
-    document.getElementById(
-      "chatTypingMessage"
-    );
-
-
-  if (typing) {
-
-    typing.remove();
-
-  }
-
-}
-
-
-/* ==========================================
-   SEND REAL AI MESSAGE
-========================================== */
-
-async function sendAIMessage() {
-
-  const input =
-    document.getElementById(
-      "aiChatInput"
-    );
-
-
-  const button =
-    document.getElementById(
-      "aiSendButton"
-    );
-
-
-  const message =
-    input.value.trim();
-
-
-  if (!message) {
-
-    return;
-
-  }
-
-
-  addChatMessage(
-    message,
-    "user"
-  );
-
-
-  chatHistory.push({
-
-    role:
-      "user",
-
-    content:
-      message
-
-  });
-
-
-  input.value =
-    "";
-
-  button.disabled =
-    true;
-
-
-  showChatTyping();
-
+async function safeText(
+  response
+) {
 
   try {
 
-    const authHeaders =
-      await getAuthHeaders();
+    return await response.text();
 
+  } catch {
 
-    if (!authHeaders) {
-
-      throw new Error(
-        "Your login session expired. Please log in again."
-      );
-
-    }
-
-
-    const response =
-      await fetch(
-
-        AI_CHAT_URL,
-
-        {
-
-          method:
-            "POST",
-
-          headers: {
-
-            ...authHeaders,
-
-            "Content-Type":
-              "application/json"
-
-          },
-
-          body:
-            JSON.stringify({
-
-              message:
-                message,
-
-              history:
-                chatHistory.slice(-12)
-
-            })
-
-        }
-
-      );
-
-
-    const responseText =
-      await response.text();
-
-
-    let data =
-      null;
-
-
-    try {
-
-      data =
-        JSON.parse(
-          responseText
-        );
-
-    } catch {
-
-      data =
-        null;
-
-    }
-
-
-    removeChatTyping();
-
-
-    if (!response.ok) {
-
-      console.error(
-
-        "Cloudflare /chat error:",
-
-        response.status,
-
-        responseText
-
-      );
-
-
-      let errorMessage =
-        "AI request failed.";
-
-
-      if (
-        data?.error
-      ) {
-
-        errorMessage =
-          data.error;
-
-      }
-
-
-      if (
-
-        data?.details &&
-
-        typeof data.details ===
-          "string"
-
-      ) {
-
-        errorMessage +=
-          "\n" +
-          data.details;
-
-      }
-
-
-      throw new Error(
-        errorMessage
-      );
-
-    }
-
-
-    const reply =
-      data?.reply;
-
-
-    if (!reply) {
-
-      console.error(
-
-        "Invalid AI response:",
-
-        responseText
-
-      );
-
-
-      throw new Error(
-        "AI returned no response."
-      );
-
-    }
-
-
-    chatHistory.push({
-
-      role:
-        "assistant",
-
-      content:
-        reply
-
-    });
-
-
-    addChatMessage(
-      reply,
-      "ai"
-    );
-
-
-  } catch (error) {
-
-    console.error(
-
-      "SUBHAN AI error:",
-
-      error
-
-    );
-
-
-    removeChatTyping();
-
-
-    addChatMessage(
-
-      "❌ " +
-      (
-
-        error.message ||
-
-        "Sorry, I couldn't connect to the AI right now. Please try again."
-
-      ),
-
-      "ai"
-
-    );
-
-
-  } finally {
-
-    button.disabled =
-      false;
-
-    input.focus();
+    return "";
 
   }
 
@@ -2576,155 +1433,25 @@ async function sendAIMessage() {
 
 
 /* ==========================================
-   CLEAR CHAT
+   SLEEP
 ========================================== */
 
-function clearAIChat() {
+function sleep(
+  milliseconds
+) {
 
-  chatHistory =
-    [];
+  return new Promise(
 
+    resolve =>
 
-  const messages =
-    document.getElementById(
-      "chatMessages"
-    );
+      setTimeout(
 
+        resolve,
 
-  messages.innerHTML = `
+        milliseconds
 
-    <div
-      id="chatWelcome"
-      class="chatWelcome"
-    >
-
-      <strong>
-        ✨ Hey! I'm SUBHAN AI
-      </strong>
-
-      Ask me anything.
-
-    </div>
-
-  `;
-
-}
-
-
-/* ==========================================
-   ENTER TO SEND
-========================================== */
-
-document
-  .getElementById(
-    "aiChatInput"
-  )
-  ?.addEventListener(
-
-    "keydown",
-
-    function(event) {
-
-      if (
-
-        event.key ===
-          "Enter" &&
-
-        !event.shiftKey
-
-      ) {
-
-        event.preventDefault();
-
-        sendAIMessage();
-
-      }
-
-    }
-
-  );
-
-
-/* ==========================================
-   WATCH AD
-========================================== */
-
-function watchAd() {
-
-  if (!currentUser) {
-
-    openAuthModal();
-
-    document
-      .getElementById(
-        "authStatus"
       )
-      .textContent =
-      "🔐 Please log in before using rewarded features.";
-
-    return;
-
-  }
-
-
-  alert(
-
-    "📺 Rewarded ads are not connected yet.\n\n" +
-
-    "The real rewarded-ad system will be connected " +
-
-    "after the appropriate rewarded-ad setup is ready."
 
   );
 
 }
-
-
-/* ==========================================
-   SCROLL
-========================================== */
-
-function scrollToGenerator() {
-
-  document
-    .getElementById(
-      "generator"
-    )
-    .scrollIntoView({
-
-      behavior:
-        "smooth"
-
-    });
-
-}
-
-
-function scrollToAssistant() {
-
-  document
-    .getElementById(
-      "aiAssistant"
-    )
-    .scrollIntoView({
-
-      behavior:
-        "smooth"
-
-    });
-
-}
-
-
-/* ==========================================
-   START
-========================================== */
-
-loadAuthSession();
-
-</script>
-
-</body>
-
-</html>
-```
