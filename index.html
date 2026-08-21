@@ -9,25 +9,21 @@
 <meta name="description"
 content="SUBHAN AI — A premium AI platform for conversation and image generation.">
 
-<!-- =========================================================
-     GOOGLE ADSENSE
-========================================================= -->
+<!-- =========================
+     ADSENSE
+========================= -->
 
 <script async
 src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7988076392393976"
 crossorigin="anonymous"></script>
 
-<!-- =========================================================
+<!-- =========================
      SUPABASE
-========================================================= -->
+========================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
-/* =========================================================
-   VARIABLES
-========================================================= */
 
 :root{
   --bg:#04040b;
@@ -37,13 +33,8 @@ crossorigin="anonymous"></script>
   --muted:#8d91a7;
   --purple:#805cff;
   --blue:#00c8ff;
-  --pink:#b34cff;
   --shadow:0 25px 90px rgba(0,0,0,.45);
 }
-
-/* =========================================================
-   RESET
-========================================================= */
 
 *{
   margin:0;
@@ -58,14 +49,14 @@ html{
 body{
   min-height:100vh;
   background:var(--bg);
-  color:var(--text);
+  color:white;
   font-family:Inter,Arial,Helvetica,sans-serif;
   overflow-x:hidden;
 }
 
-/* =========================================================
+/* =========================
    INTRO
-========================================================= */
+========================= */
 
 #intro{
   position:fixed;
@@ -138,7 +129,6 @@ body{
     transform:scale(.85);
     filter:blur(12px);
   }
-
   to{
     opacity:1;
     transform:scale(1);
@@ -156,15 +146,14 @@ body{
   from{
     background-position:0;
   }
-
   to{
     background-position:300%;
   }
 }
 
-/* =========================================================
+/* =========================
    BACKGROUND
-========================================================= */
+========================= */
 
 .ambient{
   position:fixed;
@@ -242,9 +231,9 @@ body{
   mask-image:linear-gradient(to bottom,black,transparent);
 }
 
-/* =========================================================
+/* =========================
    CURSOR
-========================================================= */
+========================= */
 
 .cursor-dot,
 .cursor-ring,
@@ -297,9 +286,9 @@ body.cursor-hover .cursor-ring{
   background:rgba(128,92,255,.08);
 }
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+/* =========================
+   NAV
+========================= */
 
 nav{
   position:fixed;
@@ -368,9 +357,9 @@ nav{
   white-space:nowrap;
 }
 
-/* =========================================================
+/* =========================
    HERO
-========================================================= */
+========================= */
 
 .hero{
   min-height:100vh;
@@ -393,7 +382,6 @@ nav{
     transform:translateY(35px);
     filter:blur(8px);
   }
-
   to{
     opacity:1;
     transform:none;
@@ -439,7 +427,6 @@ nav{
   -webkit-background-clip:text;
   color:transparent;
   animation:gradientMove 7s linear infinite;
-  text-shadow:0 0 60px rgba(100,80,255,.15);
 }
 
 .hero-subtitle{
@@ -482,7 +469,6 @@ nav{
 .primary:hover,
 .secondary:hover{
   transform:translateY(-5px);
-  box-shadow:0 18px 45px rgba(82,72,255,.28);
 }
 
 .scroll-hint{
@@ -493,18 +479,11 @@ nav{
   color:#55596e;
   font-size:11px;
   letter-spacing:3px;
-  animation:scrollHint 2s infinite;
 }
 
-@keyframes scrollHint{
-  50%{
-    transform:translate(-50%,8px);
-  }
-}
-
-/* =========================================================
-   MAIN
-========================================================= */
+/* =========================
+   CONTAINER
+========================= */
 
 .container{
   width:min(1100px,92%);
@@ -531,19 +510,6 @@ section.card.visible{
   transform:none;
 }
 
-section.card::before{
-  content:"";
-  position:absolute;
-  top:-100px;
-  left:20%;
-  width:300px;
-  height:200px;
-  background:#743cff;
-  opacity:.08;
-  filter:blur(80px);
-  pointer-events:none;
-}
-
 .card-title{
   display:flex;
   align-items:center;
@@ -558,9 +524,9 @@ section.card::before{
   margin-bottom:22px;
 }
 
-/* =========================================================
-   AI CHAT
-========================================================= */
+/* =========================
+   CHAT
+========================= */
 
 .ai-chat{
   height:590px;
@@ -676,7 +642,6 @@ textarea{
 textarea:focus,
 input:focus{
   border-color:#795bff;
-  box-shadow:0 0 25px rgba(120,80,255,.15);
 }
 
 .send{
@@ -690,52 +655,9 @@ input:focus{
   font-size:20px;
 }
 
-.typing{
-  display:flex;
-  gap:5px;
-}
-
-.typing span{
-  width:7px;
-  height:7px;
-  background:#999;
-  border-radius:50%;
-  animation:typing 1s infinite;
-}
-
-.typing span:nth-child(2){
-  animation-delay:.15s;
-}
-
-.typing span:nth-child(3){
-  animation-delay:.3s;
-}
-
-@keyframes typing{
-  50%{
-    transform:translateY(-5px);
-    opacity:1;
-  }
-
-  0%,100%{
-    opacity:.3;
-  }
-}
-
-/* =========================================================
+/* =========================
    IMAGE GENERATOR
-========================================================= */
-
-.generator-panel{
-  padding:5px;
-}
-
-.prompt-label{
-  color:#aaaec0;
-  font-size:13px;
-  margin-bottom:9px;
-  display:block;
-}
+========================= */
 
 #prompt{
   min-height:150px;
@@ -752,12 +674,6 @@ input:focus{
   font-size:16px;
   font-weight:bold;
   cursor:pointer;
-  transition:.3s;
-}
-
-.generate:hover{
-  transform:translateY(-3px);
-  box-shadow:0 15px 40px rgba(80,90,255,.3);
 }
 
 .generate:disabled{
@@ -775,26 +691,12 @@ input:focus{
 #result{
   display:none;
   margin-top:25px;
-  animation:resultIn .6s both;
-}
-
-@keyframes resultIn{
-  from{
-    opacity:0;
-    transform:scale(.97);
-  }
-
-  to{
-    opacity:1;
-    transform:none;
-  }
 }
 
 #generatedImage{
   width:100%;
   border-radius:20px;
   display:block;
-  box-shadow:0 25px 70px rgba(0,0,0,.5);
 }
 
 .download{
@@ -808,9 +710,9 @@ input:focus{
   font-weight:bold;
 }
 
-/* =========================================================
+/* =========================
    CREDITS
-========================================================= */
+========================= */
 
 .credit-big{
   display:flex;
@@ -841,16 +743,11 @@ input:focus{
   color:white;
   font-weight:bold;
   cursor:pointer;
-  transition:.3s;
 }
 
-.watch:hover{
-  transform:translateY(-3px);
-}
-
-/* =========================================================
+/* =========================
    TOOLS
-========================================================= */
+========================= */
 
 .tools{
   display:grid;
@@ -863,13 +760,6 @@ input:focus{
   border-radius:20px;
   background:rgba(255,255,255,.035);
   border:1px solid rgba(255,255,255,.08);
-  transition:.35s;
-}
-
-.tool:hover{
-  transform:translateY(-8px);
-  border-color:rgba(128,92,255,.45);
-  box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
 
 .tool-icon{
@@ -887,9 +777,9 @@ input:focus{
   line-height:1.6;
 }
 
-/* =========================================================
+/* =========================
    VIDEO
-========================================================= */
+========================= */
 
 .video-coming{
   text-align:center;
@@ -899,7 +789,6 @@ input:focus{
 .video-icon{
   font-size:55px;
   margin-bottom:15px;
-  filter:drop-shadow(0 0 20px #754cff);
 }
 
 .badge{
@@ -913,9 +802,9 @@ input:focus{
   font-size:12px;
 }
 
-/* =========================================================
+/* =========================
    ADS
-========================================================= */
+========================= */
 
 .ad-box{
   min-height:110px;
@@ -923,13 +812,12 @@ input:focus{
   align-items:center;
   justify-content:center;
   border-radius:17px;
-  background:rgba(255,255,255,.02);
   overflow:hidden;
 }
 
-/* =========================================================
+/* =========================
    AUTH
-========================================================= */
+========================= */
 
 .auth-overlay{
   position:fixed;
@@ -954,19 +842,6 @@ input:focus{
   border:1px solid rgba(255,255,255,.13);
   background:rgba(12,13,27,.92);
   box-shadow:0 30px 100px rgba(0,0,0,.6);
-  animation:modalIn .4s both;
-}
-
-@keyframes modalIn{
-  from{
-    opacity:0;
-    transform:translateY(20px) scale(.96);
-  }
-
-  to{
-    opacity:1;
-    transform:none;
-  }
 }
 
 .close{
@@ -1027,9 +902,9 @@ input:focus{
   font-size:13px;
 }
 
-/* =========================================================
+/* =========================
    FOOTER
-========================================================= */
+========================= */
 
 footer{
   text-align:center;
@@ -1044,15 +919,11 @@ footer{
   margin-bottom:12px;
 }
 
-/* =========================================================
+/* =========================
    MOBILE
-========================================================= */
+========================= */
 
 @media(max-width:700px){
-
-  body{
-    cursor:auto;
-  }
 
   .cursor-dot,
   .cursor-ring,
@@ -1074,11 +945,7 @@ footer{
     display:none!important;
   }
 
-  .nav-button{
-    padding:9px;
-    font-size:12px;
-  }
-
+  .nav-button,
   .credit-box{
     padding:9px;
     font-size:12px;
@@ -1127,28 +994,8 @@ footer{
   .orb{
     width:280px;
     height:280px;
-    filter:blur(90px);
   }
 
-  .grid{
-    background-size:45px 45px;
-  }
-}
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media(prefers-reduced-motion:reduce){
-
-  *,
-  *::before,
-  *::after{
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    scroll-behavior:auto!important;
-    transition-duration:.01ms!important;
-  }
 }
 
 </style>
@@ -1156,54 +1003,30 @@ footer{
 
 <body>
 
-<!-- =========================================================
-     INTRO
-========================================================= -->
+<!-- INTRO -->
 
 <div id="intro">
-
   <div class="intro-content">
-
-    <div class="intro-small">
-      WELCOME TO
-    </div>
-
-    <div class="intro-title">
-      SUBHAN AI
-    </div>
-
+    <div class="intro-small">WELCOME TO</div>
+    <div class="intro-title">SUBHAN AI</div>
     <div class="intro-line"></div>
-
   </div>
-
 </div>
 
-<!-- =========================================================
-     BACKGROUND
-========================================================= -->
-
 <div class="ambient">
-
   <div class="orb one"></div>
   <div class="orb two"></div>
   <div class="orb three"></div>
-
 </div>
 
 <div id="particles"></div>
 <div class="grid"></div>
 
-<!-- =========================================================
-     CURSOR
-========================================================= -->
-
 <div class="cursor-glow"></div>
 <div class="cursor-ring"></div>
 <div class="cursor-dot"></div>
 
-<!-- =========================================================
-     NAVIGATION
-========================================================= -->
+<!-- NAV -->
 
 <nav>
 
@@ -1216,8 +1039,8 @@ footer{
     <span
       id="userEmail"
       class="user-email"
-      style="display:none"
-    ></span>
+      style="display:none">
+    </span>
 
     <div class="credit-box">
       🪙 <span id="credits">0</span>
@@ -1226,8 +1049,7 @@ footer{
     <button
       id="loginButton"
       class="nav-button"
-      onclick="openAuthModal()"
-    >
+      onclick="openAuthModal()">
       🔐 Login
     </button>
 
@@ -1235,8 +1057,7 @@ footer{
       id="logoutButton"
       class="nav-button"
       onclick="logout()"
-      style="display:none"
-    >
+      style="display:none">
       Logout
     </button>
 
@@ -1244,9 +1065,7 @@ footer{
 
 </nav>
 
-<!-- =========================================================
-     HERO
-========================================================= -->
+<!-- HERO -->
 
 <header class="hero">
 
@@ -1262,29 +1081,23 @@ footer{
     </h1>
 
     <p class="hero-subtitle">
-
       Imagine it. Ask it. Create it.
-
       <br>
-
       SUBHAN AI brings powerful artificial intelligence
       into one cinematic creative experience.
-
     </p>
 
     <div class="hero-actions">
 
       <button
         class="primary"
-        onclick="scrollToAssistant()"
-      >
+        onclick="scrollToAssistant()">
         🤖 Talk to SUBHAN AI
       </button>
 
       <button
         class="secondary"
-        onclick="scrollToGenerator()"
-      >
+        onclick="scrollToGenerator()">
         🖼️ Create an Image
       </button>
 
@@ -1298,15 +1111,9 @@ footer{
 
 </header>
 
-<!-- =========================================================
-     MAIN
-========================================================= -->
-
 <main class="container">
 
-<!-- =========================================================
-     AI ASSISTANT
-========================================================= -->
+<!-- AI ASSISTANT -->
 
 <section class="card" id="aiAssistant">
 
@@ -1315,11 +1122,9 @@ footer{
   </h2>
 
   <p class="description">
-
     Your intelligent creative companion.
     Ask questions, learn, brainstorm, plan,
     or simply talk.
-
   </p>
 
   <div class="ai-chat">
@@ -1329,32 +1134,22 @@ footer{
       <div class="ai-status"></div>
 
       <div>
-
         <strong>SUBHAN AI</strong>
-
         <br>
-
-        <small>
-          AI Assistant • Online
-        </small>
-
+        <small>AI Assistant • Online</small>
       </div>
 
     </div>
 
     <div
       id="chatMessages"
-      class="chat-messages"
-    >
+      class="chat-messages">
 
       <div
         id="chatWelcome"
-        class="chat-welcome"
-      >
+        class="chat-welcome">
 
-        <strong>
-          ✨ Hey! I'm SUBHAN AI
-        </strong>
+        <strong>✨ Hey! I'm SUBHAN AI</strong>
 
         Ask me anything and let's create
         something amazing.
@@ -1368,14 +1163,13 @@ footer{
       <textarea
         id="aiChatInput"
         placeholder="Message SUBHAN AI..."
-        aria-label="Message SUBHAN AI"
-      ></textarea>
+        aria-label="Message SUBHAN AI">
+      </textarea>
 
       <button
         id="aiSendButton"
         class="send"
-        onclick="sendAIMessage()"
-      >
+        onclick="sendAIMessage()">
         ➤
       </button>
 
@@ -1385,9 +1179,7 @@ footer{
 
 </section>
 
-<!-- =========================================================
-     IMAGE GENERATOR
-========================================================= -->
+<!-- IMAGE GENERATOR -->
 
 <section class="card" id="generator">
 
@@ -1396,11 +1188,8 @@ footer{
   </h2>
 
   <p class="description">
-
     Turn your imagination into an image.
-    Each generation costs
-    <strong>10 credits</strong>.
-
+    Each generation costs <strong>10 credits</strong>.
   </p>
 
   <div class="credit-big">
@@ -1412,71 +1201,58 @@ footer{
       </small>
 
       <div class="credit-number">
-
-        🪙
-        <span id="creditsBig">0</span>
-
+        🪙 <span id="creditsBig">0</span>
       </div>
 
     </div>
 
     <button
       class="watch"
-      onclick="watchAd()"
-    >
+      onclick="watchAd()">
       📺 Watch Ad +50 Credits
     </button>
 
   </div>
 
-  <div class="generator-panel">
+  <label
+    class="prompt-label"
+    for="prompt"
+    style="color:#aaaec0;font-size:13px">
+    Describe what you want to create
+  </label>
 
-    <label
-      class="prompt-label"
-      for="prompt"
-    >
-      Describe what you want to create
-    </label>
+  <textarea
+    id="prompt"
+    placeholder="Example: A gigantic purple dragon flying above a magical lake at sunset, cinematic lighting, ultra detailed...">
+  </textarea>
 
-    <textarea
-      id="prompt"
-      placeholder="Example: A gigantic purple dragon flying above a magical lake at sunset, cinematic lighting, ultra detailed..."
-    ></textarea>
+  <button
+    id="generateButton"
+    class="generate"
+    onclick="generateImage()">
+    ✨ Generate Image — 10 Credits
+  </button>
 
-    <button
-      id="generateButton"
-      class="generate"
-      onclick="generateImage()"
-    >
-      ✨ Generate Image — 10 Credits
-    </button>
+  <div id="status"></div>
 
-    <div id="status"></div>
+  <div id="result">
 
-    <div id="result">
+    <img
+      id="generatedImage"
+      alt="SUBHAN AI generated image">
 
-      <img
-        id="generatedImage"
-        alt="SUBHAN AI generated image"
-      >
-
-      <a
-        id="downloadButton"
-        class="download"
-        download="subhan-ai-image.jpg"
-      >
-        ⬇️ Download Image
-      </a>
-
-    </div>
+    <a
+      id="downloadButton"
+      class="download"
+      download="subhan-ai-image.jpg">
+      ⬇️ Download Image
+    </a>
 
   </div>
 
 </section>
 
-<!-- =========================================================
-     ADSENSE
-========================================================= -->
+<!-- ADSENSE -->
 
 <section class="card">
 
@@ -1485,10 +1261,8 @@ footer{
   </h2>
 
   <p class="description">
-
     Advertisements help us keep SUBHAN AI
     available and continue improving the platform.
-
   </p>
 
   <div class="ad-box">
@@ -1506,9 +1280,7 @@ footer{
 
 </section>
 
-<!-- =========================================================
-     TOOLS
-========================================================= -->
+<!-- TOOLS -->
 
 <section class="card">
 
@@ -1524,13 +1296,9 @@ footer{
 
     <div class="tool">
 
-      <div class="tool-icon">
-        🤖
-      </div>
+      <div class="tool-icon">🤖</div>
 
-      <h3>
-        AI Assistant
-      </h3>
+      <h3>AI Assistant</h3>
 
       <p>
         Chat with SUBHAN AI and turn ideas
@@ -1541,13 +1309,9 @@ footer{
 
     <div class="tool">
 
-      <div class="tool-icon">
-        🖼️
-      </div>
+      <div class="tool-icon">🖼️</div>
 
-      <h3>
-        Image Generation
-      </h3>
+      <h3>Image Generation</h3>
 
       <p>
         Transform your imagination into
@@ -1558,13 +1322,9 @@ footer{
 
     <div class="tool">
 
-      <div class="tool-icon">
-        🎬
-      </div>
+      <div class="tool-icon">🎬</div>
 
-      <h3>
-        Video Generation
-      </h3>
+      <h3>Video Generation</h3>
 
       <p>
         Cinematic AI video creation is
@@ -1577,9 +1337,7 @@ footer{
 
 </section>
 
-<!-- =========================================================
-     VIDEO
-========================================================= -->
+<!-- VIDEO -->
 
 <section class="card">
 
@@ -1594,15 +1352,11 @@ footer{
     </h2>
 
     <p class="description">
-
       Imagine turning your ideas into
       cinematic AI videos.
-
       <br>
-
       This feature is being prepared for
       a future SUBHAN AI update.
-
     </p>
 
     <span class="badge">
@@ -1613,9 +1367,7 @@ footer{
 
 </section>
 
-<!-- =========================================================
-     ABOUT
-========================================================= -->
+<!-- ABOUT -->
 
 <section class="card">
 
@@ -1624,18 +1376,14 @@ footer{
   </h2>
 
   <p class="description">
-
     SUBHAN AI is a creative artificial intelligence
     platform designed to help people turn their
     imagination into digital experiences.
-
   </p>
 
 </section>
 
-<!-- =========================================================
-     CONTACT
-========================================================= -->
+<!-- CONTACT -->
 
 <section class="card">
 
@@ -1650,11 +1398,9 @@ footer{
     <br><br>
 
     Email:
-
     <a
       href="mailto:subhanazher45@gmail.com"
-      style="color:#a990ff"
-    >
+      style="color:#a990ff">
       subhanazher45@gmail.com
     </a>
 
@@ -1662,9 +1408,7 @@ footer{
 
 </section>
 
-<!-- =========================================================
-     PRIVACY
-========================================================= -->
+<!-- PRIVACY -->
 
 <section class="card">
 
@@ -1673,19 +1417,15 @@ footer{
   </h2>
 
   <p class="description">
-
     SUBHAN AI may collect account information
     such as an email address when you create
     an account. Prompts may be sent to the
     relevant AI service to process your request.
-
   </p>
 
 </section>
 
-<!-- =========================================================
-     TERMS
-========================================================= -->
+<!-- TERMS -->
 
 <section class="card">
 
@@ -1694,20 +1434,14 @@ footer{
   </h2>
 
   <p class="description">
-
     By using SUBHAN AI, you agree to use the
     service responsibly and not attempt to
     abuse, attack, or bypass its security systems.
-
   </p>
 
 </section>
 
 </main>
-
-<!-- =========================================================
-     FOOTER
-========================================================= -->
 
 <footer>
 
@@ -1725,21 +1459,17 @@ footer{
 
 </footer>
 
-<!-- =========================================================
-     AUTH MODAL
-========================================================= -->
+<!-- AUTH -->
 
 <div
   id="authOverlay"
-  class="auth-overlay"
->
+  class="auth-overlay">
 
   <div class="auth-modal">
 
     <button
       class="close"
-      onclick="closeAuthModal()"
-    >
+      onclick="closeAuthModal()">
       ×
     </button>
 
@@ -1748,10 +1478,8 @@ footer{
     </h2>
 
     <p class="auth-desc">
-
       Login or create your SUBHAN AI account
       to access credits and AI generation.
-
     </p>
 
     <input
@@ -1759,37 +1487,33 @@ footer{
       class="auth-input"
       type="email"
       placeholder="Email address"
-      autocomplete="email"
-    >
+      autocomplete="email">
 
     <input
       id="authPassword"
       class="auth-input"
       type="password"
       placeholder="Password"
-      autocomplete="current-password"
-    >
+      autocomplete="current-password">
 
     <button
       id="authSubmit"
       class="auth-primary"
-      onclick="submitAuth()"
-    >
+      onclick="submitAuth()">
       Login
     </button>
 
     <button
       id="authModeButton"
       class="auth-secondary"
-      onclick="toggleAuthMode()"
-    >
+      onclick="toggleAuthMode()">
       Create a new account
     </button>
 
     <div
       id="authStatus"
-      class="auth-status"
-    ></div>
+      class="auth-status">
+    </div>
 
   </div>
 
@@ -1798,7 +1522,7 @@ footer{
 <script>
 
 /* =========================================================
-   CONFIGURATION
+   CONFIG
 ========================================================= */
 
 const SUPABASE_URL =
@@ -1810,14 +1534,6 @@ const SUPABASE_PUBLISHABLE_KEY =
 const API_URL =
   "https://subhan-ai-api.subhanazher12.workers.dev";
 
-const AI_CHAT_URL =
-  API_URL + "/chat";
-
-
-/* =========================================================
-   SUPABASE CLIENT
-========================================================= */
-
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
@@ -1826,28 +1542,16 @@ const supabaseClient =
 
 
 /* =========================================================
-   GLOBAL STATE
-========================================================= */
-
-let currentUser = null;
-let authMode = "login";
-let chatHistory = [];
-
-
-/* =========================================================
    INTRO
 ========================================================= */
 
-window.addEventListener("load", () => {
+window.addEventListener("load",()=>{
 
-  setTimeout(() => {
+  setTimeout(()=>{
 
-    const intro =
-      document.getElementById("intro");
-
-    if(intro){
-      intro.classList.add("hide");
-    }
+    document
+      .getElementById("intro")
+      .classList.add("hide");
 
   },2500);
 
@@ -1866,259 +1570,131 @@ const particleCount =
 
 for(let i=0;i<particleCount;i++){
 
-  const particle =
+  const p =
     document.createElement("div");
 
-  particle.style.position="absolute";
-
-  particle.style.width =
-    Math.random()*3+1+"px";
-
-  particle.style.height =
-    particle.style.width;
-
-  particle.style.borderRadius="50%";
-
-  particle.style.background =
-    "rgba(150,130,255,.65)";
-
-  particle.style.left =
-    Math.random()*100+"%";
-
-  particle.style.top =
-    Math.random()*100+"%";
-
-  particle.style.boxShadow =
+  p.style.position="absolute";
+  p.style.width=Math.random()*3+1+"px";
+  p.style.height=p.style.width;
+  p.style.borderRadius="50%";
+  p.style.background="rgba(150,130,255,.65)";
+  p.style.left=Math.random()*100+"%";
+  p.style.top=Math.random()*100+"%";
+  p.style.boxShadow=
     "0 0 10px rgba(120,100,255,.6)";
 
-  particle.style.animation =
-    `floatParticle ${
-      6+Math.random()*12
-    }s infinite ease-in-out`;
-
-  particle.style.animationDelay =
-    Math.random()*5+"s";
-
-  particleContainer.appendChild(
-    particle
-  );
+  particleContainer.appendChild(p);
 
 }
 
-const particleStyle =
-  document.createElement("style");
-
-particleStyle.textContent=`
-
-@keyframes floatParticle{
-
-  0%,100%{
-    transform:translate3d(0,0,0);
-    opacity:.2;
-  }
-
-  50%{
-    transform:translate3d(
-      ${Math.random()*100-50}px,
-      -${40+Math.random()*100}px,
-      0
-    );
-    opacity:.9;
-  }
-
-}`;
-
-document.head.appendChild(
-  particleStyle
-);
-
 
 /* =========================================================
-   CUSTOM CURSOR
+   CURSOR
 ========================================================= */
 
-const isTouchDevice =
-  window.matchMedia(
-    "(pointer:coarse)"
-  ).matches;
-
-if(!isTouchDevice){
+if(!window.matchMedia("(pointer:coarse)").matches){
 
   const dot =
-    document.querySelector(
-      ".cursor-dot"
-    );
+    document.querySelector(".cursor-dot");
 
   const ring =
-    document.querySelector(
-      ".cursor-ring"
-    );
+    document.querySelector(".cursor-ring");
 
   const glow =
-    document.querySelector(
-      ".cursor-glow"
-    );
+    document.querySelector(".cursor-glow");
 
-  let mouseX=0;
-  let mouseY=0;
+  let mx=0,my=0;
+  let dx=0,dy=0;
+  let rx=0,ry=0;
+  let gx=0,gy=0;
 
-  let dotX=0;
-  let dotY=0;
+  document.addEventListener("mousemove",e=>{
 
-  let ringX=0;
-  let ringY=0;
+    mx=e.clientX;
+    my=e.clientY;
 
-  let glowX=0;
-  let glowY=0;
+  });
 
-  document.addEventListener(
-    "mousemove",
-    event => {
+  function animateCursor(){
 
-      mouseX =
-        event.clientX;
+    dx+=(mx-dx)*.35;
+    dy+=(my-dy)*.35;
 
-      mouseY =
-        event.clientY;
+    rx+=(mx-rx)*.16;
+    ry+=(my-ry)*.16;
 
-    }
-  );
+    gx+=(mx-gx)*.07;
+    gy+=(my-gy)*.07;
 
-  function cursorAnimation(){
+    dot.style.left=dx+"px";
+    dot.style.top=dy+"px";
 
-    dotX +=
-      (mouseX-dotX)*.35;
+    ring.style.left=rx+"px";
+    ring.style.top=ry+"px";
 
-    dotY +=
-      (mouseY-dotY)*.35;
-
-    ringX +=
-      (mouseX-ringX)*.16;
-
-    ringY +=
-      (mouseY-ringY)*.16;
-
-    glowX +=
-      (mouseX-glowX)*.07;
-
-    glowY +=
-      (mouseY-glowY)*.07;
-
-    dot.style.left =
-      dotX+"px";
-
-    dot.style.top =
-      dotY+"px";
-
-    ring.style.left =
-      ringX+"px";
-
-    ring.style.top =
-      ringY+"px";
-
-    glow.style.left =
-      glowX+"px";
-
-    glow.style.top =
-      glowY+"px";
+    glow.style.left=gx+"px";
+    glow.style.top=gy+"px";
 
     requestAnimationFrame(
-      cursorAnimation
+      animateCursor
     );
 
   }
 
-  cursorAnimation();
-
-  document
-    .querySelectorAll(
-      "button,a,textarea,input"
-    )
-    .forEach(element => {
-
-      element.addEventListener(
-        "mouseenter",
-        () => {
-
-          document.body
-            .classList
-            .add("cursor-hover");
-
-        }
-      );
-
-      element.addEventListener(
-        "mouseleave",
-        () => {
-
-          document.body
-            .classList
-            .remove("cursor-hover");
-
-        }
-      );
-
-    });
+  animateCursor();
 
 }
 
 
 /* =========================================================
-   SCROLL REVEALS
+   SCROLL REVEAL
 ========================================================= */
 
 const observer =
-  new IntersectionObserver(
-    entries => {
+new IntersectionObserver(
+  entries=>{
 
-      entries.forEach(entry => {
+    entries.forEach(entry=>{
 
-        if(entry.isIntersecting){
+      if(entry.isIntersecting){
 
-          entry.target
-            .classList
-            .add("visible");
+        entry.target
+          .classList
+          .add("visible");
 
-        }
+      }
 
-      });
+    });
 
-    },
-    {
-      threshold:.12
-    }
-  );
+  },
+  {threshold:.12}
+);
 
 document
-  .querySelectorAll(
-    "section.card"
-  )
-  .forEach(section => {
-
+  .querySelectorAll("section.card")
+  .forEach(section=>{
     observer.observe(section);
-
   });
 
 
 /* =========================================================
-   AUTH MODAL
+   AUTH
 ========================================================= */
+
+let currentUser=null;
+let authMode="login";
+
 
 function openAuthModal(){
 
   document
-    .getElementById(
-      "authOverlay"
-    )
-    .classList
-    .add("show");
+    .getElementById("authOverlay")
+    .classList.add("show");
 
-  setTimeout(() => {
+  setTimeout(()=>{
 
     document
-      .getElementById(
-        "authEmail"
-      )
+      .getElementById("authEmail")
       .focus();
 
   },100);
@@ -2129,9 +1705,7 @@ function openAuthModal(){
 function closeAuthModal(){
 
   document
-    .getElementById(
-      "authOverlay"
-    )
+    .getElementById("authOverlay")
     .classList
     .remove("show");
 
@@ -2141,87 +1715,69 @@ function closeAuthModal(){
 function toggleAuthMode(){
 
   authMode =
-    authMode === "login"
+    authMode==="login"
       ? "signup"
       : "login";
 
   const title =
-    document.getElementById(
-      "authTitle"
-    );
+    document.getElementById("authTitle");
 
   const submit =
-    document.getElementById(
-      "authSubmit"
-    );
+    document.getElementById("authSubmit");
 
   const mode =
-    document.getElementById(
-      "authModeButton"
-    );
+    document.getElementById("authModeButton");
 
   if(authMode==="signup"){
 
-    title.textContent =
+    title.textContent=
       "📝 Create Your Account";
 
-    submit.textContent =
+    submit.textContent=
       "Create Account";
 
-    mode.textContent =
+    mode.textContent=
       "Already have an account? Login";
 
   }else{
 
-    title.textContent =
+    title.textContent=
       "🔐 Welcome Back";
 
-    submit.textContent =
+    submit.textContent=
       "Login";
 
-    mode.textContent =
+    mode.textContent=
       "Create a new account";
 
   }
 
   document
-    .getElementById(
-      "authStatus"
-    )
+    .getElementById("authStatus")
     .textContent="";
 
 }
 
 
-/* =========================================================
-   LOGIN / SIGNUP
-========================================================= */
-
 async function submitAuth(){
 
   const email =
     document
-      .getElementById(
-        "authEmail"
-      )
+      .getElementById("authEmail")
       .value
       .trim();
 
   const password =
     document
-      .getElementById(
-        "authPassword"
-      )
+      .getElementById("authPassword")
       .value;
 
   const status =
-    document.getElementById(
-      "authStatus"
-    );
+    document.getElementById("authStatus");
 
   if(!email || !password){
 
-    status.textContent =
+    status.textContent=
       "⚠️ Enter your email and password.";
 
     return;
@@ -2230,14 +1786,14 @@ async function submitAuth(){
 
   if(password.length<6){
 
-    status.textContent =
+    status.textContent=
       "⚠️ Password must be at least 6 characters.";
 
     return;
 
   }
 
-  status.textContent =
+  status.textContent=
     authMode==="signup"
       ? "Creating your account..."
       : "Logging in...";
@@ -2264,36 +1820,22 @@ async function submitAuth(){
 
     }
 
-    if(result.error){
+    if(result.error)
       throw result.error;
-    }
 
     if(
       authMode==="signup" &&
       !result.data.session
     ){
 
-      status.textContent =
+      status.textContent=
         "✅ Account created! Check your email to confirm it.";
 
       return;
 
     }
 
-    currentUser =
-      result.data.user ||
-      result.data.session?.user ||
-      null;
-
-    updateAuthUI();
-
-    if(currentUser){
-
-      await loadCredits();
-
-    }
-
-    status.textContent =
+    status.textContent=
       "✅ Success!";
 
     setTimeout(
@@ -2303,12 +1845,9 @@ async function submitAuth(){
 
   }catch(error){
 
-    console.error(
-      "Authentication error:",
-      error
-    );
+    console.error(error);
 
-    status.textContent =
+    status.textContent=
       "❌ "+
       (
         error.message ||
@@ -2327,47 +1866,39 @@ async function submitAuth(){
 function updateAuthUI(){
 
   const login =
-    document.getElementById(
-      "loginButton"
-    );
+    document.getElementById("loginButton");
 
   const logoutButton =
-    document.getElementById(
-      "logoutButton"
-    );
+    document.getElementById("logoutButton");
 
   const email =
-    document.getElementById(
-      "userEmail"
-    );
+    document.getElementById("userEmail");
 
   if(currentUser){
 
-    login.style.display =
-      "none";
+    login.style.display="none";
 
-    logoutButton.style.display =
+    logoutButton.style.display=
       "inline-block";
 
-    email.style.display =
+    email.style.display=
       "inline-block";
 
-    email.textContent =
+    email.textContent=
       currentUser.email || "";
 
   }else{
 
-    login.style.display =
+    login.style.display=
       "inline-block";
 
-    logoutButton.style.display =
+    logoutButton.style.display=
       "none";
 
-    email.style.display =
+    email.style.display=
       "none";
 
-    email.textContent =
-      "";
+    email.textContent="";
 
   }
 
@@ -2375,148 +1906,87 @@ function updateAuthUI(){
 
 
 /* =========================================================
-   GET VALID SUPABASE ACCESS TOKEN
+   GET ACCESS TOKEN
 ========================================================= */
 
-async function getValidAccessToken(){
+async function getAccessToken(){
 
-  try{
+  const {data,error} =
+    await supabaseClient
+      .auth
+      .getSession();
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .auth
-        .getSession();
+  if(error)
+    throw error;
 
-    if(error){
+  const session =
+    data?.session;
 
-      console.error(
-        "Session error:",
-        error
-      );
+  if(!session?.access_token){
 
-      return null;
-
-    }
-
-    let session =
-      data?.session;
-
-    /*
-      No session means the user is
-      genuinely logged out.
-    */
-
-    if(!session){
-
-      currentUser=null;
-      updateAuthUI();
-
-      return null;
-
-    }
-
-    /*
-      Supabase normally maintains the
-      session automatically.
-
-      The access token is what the
-      Cloudflare Worker needs.
-    */
-
-    if(!session.access_token){
-
-      /*
-        Try one explicit refresh.
-      */
-
-      const {
-        data:refreshData,
-        error:refreshError
-      } =
-        await supabaseClient
-          .auth
-          .refreshSession();
-
-      if(
-        refreshError ||
-        !refreshData?.session
-      ){
-
-        console.error(
-          "Could not refresh session:",
-          refreshError
-        );
-
-        currentUser=null;
-        updateAuthUI();
-
-        return null;
-
-      }
-
-      session =
-        refreshData.session;
-
-    }
-
-    currentUser =
-      session.user;
-
+    currentUser=null;
     updateAuthUI();
 
-    return session.access_token;
-
-  }catch(error){
-
-    console.error(
-      "Access token error:",
-      error
+    throw new Error(
+      "Your login session expired. Please log in again."
     );
 
-    return null;
-
   }
+
+  return session.access_token;
 
 }
 
 
 /* =========================================================
-   LOAD AUTH SESSION
+   SESSION
 ========================================================= */
 
 async function loadAuthSession(){
 
-  try{
+  const {data,error} =
+    await supabaseClient
+      .auth
+      .getSession();
 
-    const {
-      data,
+  if(error){
+
+    console.error(
+      "Session error:",
       error
-    } =
-      await supabaseClient
-        .auth
-        .getSession();
+    );
 
-    if(error){
+    currentUser=null;
 
-      console.error(
-        "Initial session error:",
-        error
-      );
-
-      currentUser=null;
-      updateAuthUI();
-      updateCredits(0);
-
-      return;
-
-    }
+  }else{
 
     currentUser =
-      data.session?.user ||
-      null;
+      data?.session?.user || null;
+
+  }
+
+  updateAuthUI();
+
+  if(currentUser){
+
+    await loadCredits();
+
+  }else{
+
+    updateCredits(0);
+
+  }
+
+}
+
+
+supabaseClient
+.auth
+.onAuthStateChange(
+  async(_event,session)=>{
+
+    currentUser =
+      session?.user || null;
 
     updateAuthUI();
 
@@ -2530,58 +2000,8 @@ async function loadAuthSession(){
 
     }
 
-  }catch(error){
-
-    console.error(
-      "Session loading error:",
-      error
-    );
-
-    currentUser=null;
-    updateAuthUI();
-    updateCredits(0);
-
   }
-
-}
-
-
-/* =========================================================
-   AUTH STATE CHANGE
-========================================================= */
-
-supabaseClient
-  .auth
-  .onAuthStateChange(
-    (_event,session) => {
-
-      currentUser =
-        session?.user ||
-        null;
-
-      updateAuthUI();
-
-      /*
-        Don't immediately perform another
-        auth operation inside the callback.
-      */
-
-      setTimeout(() => {
-
-        if(currentUser){
-
-          loadCredits();
-
-        }else{
-
-          updateCredits(0);
-
-        }
-
-      },0);
-
-    }
-  );
+);
 
 
 /* =========================================================
@@ -2590,127 +2010,39 @@ supabaseClient
 
 async function logout(){
 
-  try{
+  await supabaseClient
+    .auth
+    .signOut();
 
-    const {
-      error
-    } =
-      await supabaseClient
-        .auth
-        .signOut({
-          scope:"local"
-        });
+  currentUser=null;
 
-    if(error){
-
-      console.error(
-        "Logout error:",
-        error
-      );
-
-    }
-
-  }finally{
-
-    currentUser=null;
-
-    updateAuthUI();
-    updateCredits(0);
-
-  }
+  updateAuthUI();
+  updateCredits(0);
 
 }
 
 
 /* =========================================================
-   CREDIT DISPLAY
+   CREDITS UI
 ========================================================= */
 
 function updateCredits(value){
 
   const top =
-    document.getElementById(
-      "credits"
-    );
+    document.getElementById("credits");
 
   const big =
-    document.getElementById(
-      "creditsBig"
-    );
+    document.getElementById("creditsBig");
 
-  /*
-    Supports numeric credit values.
-  */
+  top.textContent =
+    value === "∞"
+      ? "∞"
+      : Number(value)||0;
 
-  const old =
-    Number(
-      big.textContent
-    ) || 0;
-
-  const target =
-    Number(value) || 0;
-
-  if(old===target){
-
-    top.textContent =
-      target;
-
-    big.textContent =
-      target;
-
-    return;
-
-  }
-
-  const start=old;
-  const difference=
-    target-start;
-
-  const duration=500;
-
-  const startTime=
-    performance.now();
-
-  function animate(now){
-
-    const progress =
-      Math.min(
-        (now-startTime) /
-        duration,
-        1
-      );
-
-    const eased =
-      1-Math.pow(
-        1-progress,
-        3
-      );
-
-    const current =
-      Math.round(
-        start+
-        difference*eased
-      );
-
-    top.textContent =
-      current;
-
-    big.textContent =
-      current;
-
-    if(progress<1){
-
-      requestAnimationFrame(
-        animate
-      );
-
-    }
-
-  }
-
-  requestAnimationFrame(
-    animate
-  );
+  big.textContent =
+    value === "∞"
+      ? "∞"
+      : Number(value)||0;
 
 }
 
@@ -2720,17 +2052,6 @@ function updateCredits(value){
 ========================================================= */
 
 async function loadCredits(){
-
-  const accessToken =
-    await getValidAccessToken();
-
-  if(!accessToken){
-
-    updateCredits(0);
-
-    return;
-
-  }
 
   if(!currentUser){
 
@@ -2742,6 +2063,9 @@ async function loadCredits(){
 
   try{
 
+    const token =
+      await getAccessToken();
+
     const response =
       await fetch(
         API_URL+
@@ -2751,16 +2075,12 @@ async function loadCredits(){
         ),
         {
           method:"GET",
-
           headers:{
             "Authorization":
-              "Bearer "+
-              accessToken,
-
+              "Bearer "+token,
             "Accept":
               "application/json"
           },
-
           cache:"no-store"
         }
       );
@@ -2771,148 +2091,38 @@ async function loadCredits(){
     let data=null;
 
     try{
-
-      data =
-        text
-          ? JSON.parse(text)
-          : null;
-
-    }catch{
-
-      data=null;
-
-    }
-
-    /*
-      If the access token has expired,
-      refresh the Supabase session once
-      and retry.
-    */
-
-    if(response.status===401){
-
-      console.warn(
-        "Worker rejected token. Refreshing Supabase session..."
-      );
-
-      const {
-        data:refreshData,
-        error:refreshError
-      } =
-        await supabaseClient
-          .auth
-          .refreshSession();
-
-      if(
-        !refreshError &&
-        refreshData?.session?.access_token
-      ){
-
-        currentUser =
-          refreshData.session.user;
-
-        updateAuthUI();
-
-        const newToken =
-          refreshData.session.access_token;
-
-        const retryResponse =
-          await fetch(
-            API_URL+
-            "/credits?userId="+
-            encodeURIComponent(
-              currentUser.id
-            ),
-            {
-              method:"GET",
-
-              headers:{
-                "Authorization":
-                  "Bearer "+
-                  newToken,
-
-                "Accept":
-                  "application/json"
-              },
-
-              cache:"no-store"
-            }
-          );
-
-        const retryText =
-          await retryResponse.text();
-
-        let retryData=null;
-
-        try{
-
-          retryData =
-            retryText
-              ? JSON.parse(
-                  retryText
-                )
-              : null;
-
-        }catch{
-
-          retryData=null;
-
-        }
-
-        if(retryResponse.ok){
-
-          updateCredits(
-            retryData?.credits ?? 0
-          );
-
-          return;
-
-        }
-
-        console.error(
-          "Credit retry failed:",
-          retryData
-        );
-
-      }
-
-      /*
-        Only show login if the actual
-        Supabase session is gone.
-      */
-
-      console.warn(
-        "Supabase session could not be refreshed."
-      );
-
-      currentUser=null;
-
-      updateAuthUI();
-      updateCredits(0);
-
-      return;
-
-    }
+      data=JSON.parse(text);
+    }catch{}
 
     if(!response.ok){
 
       throw new Error(
         data?.error ||
-        "Could not load credits"
+        "Could not load credits."
       );
 
     }
 
     updateCredits(
-      data?.credits ?? 0
+      data.credits
     );
 
   }catch(error){
 
     console.error(
-      "Credits loading error:",
+      "Credits error:",
       error
     );
+
+    if(
+      String(error.message)
+        .toLowerCase()
+        .includes("session")
+    ){
+
+      updateCredits(0);
+
+    }
 
   }
 
@@ -2925,24 +2135,14 @@ async function loadCredits(){
 
 async function generateImage(){
 
-  /*
-    Get a valid Supabase access token
-    BEFORE calling Cloudflare.
-  */
-
-  let accessToken =
-    await getValidAccessToken();
-
-  if(!accessToken){
+  if(!currentUser){
 
     openAuthModal();
 
     document
-      .getElementById(
-        "authStatus"
-      )
-      .textContent =
-        "🔐 Login before generating images.";
+      .getElementById("authStatus")
+      .textContent=
+      "🔐 Login before generating images.";
 
     return;
 
@@ -2950,9 +2150,7 @@ async function generateImage(){
 
   const prompt =
     document
-      .getElementById(
-        "prompt"
-      )
+      .getElementById("prompt")
       .value
       .trim();
 
@@ -2983,7 +2181,7 @@ async function generateImage(){
 
   if(!prompt){
 
-    status.textContent =
+    status.textContent=
       "⚠️ Describe the image first.";
 
     return;
@@ -2992,167 +2190,40 @@ async function generateImage(){
 
   button.disabled=true;
 
-  button.textContent =
+  button.textContent=
     "✨ Creating your image...";
 
-  status.textContent =
+  status.textContent=
     "AI is creating your image...";
 
-  result.style.display =
+  result.style.display=
     "none";
 
   try{
 
-    let response =
+    const token =
+      await getAccessToken();
+
+    const response =
       await fetch(
         API_URL+
         "/generate-image?prompt="+
-        encodeURIComponent(
-          prompt
-        )+
+        encodeURIComponent(prompt)+
         "&userId="+
         encodeURIComponent(
           currentUser.id
         ),
         {
           method:"GET",
-
           headers:{
             "Authorization":
-              "Bearer "+
-              accessToken,
-
+              "Bearer "+token,
             "Accept":
               "image/*"
           },
-
           cache:"no-store"
         }
       );
-
-    /*
-      TOKEN EXPIRED?
-      Refresh session and retry.
-    */
-
-    if(response.status===401){
-
-      console.warn(
-        "Image request received 401. Refreshing session..."
-      );
-
-      const {
-        data:refreshData,
-        error:refreshError
-      } =
-        await supabaseClient
-          .auth
-          .refreshSession();
-
-      if(
-        refreshError ||
-        !refreshData?.session?.access_token
-      ){
-
-        currentUser=null;
-
-        updateAuthUI();
-        updateCredits(0);
-
-        openAuthModal();
-
-        document
-          .getElementById(
-            "authStatus"
-          )
-          .textContent =
-            "🔐 Your session expired. Please log in again.";
-
-        return;
-
-      }
-
-      currentUser =
-        refreshData.session.user;
-
-      updateAuthUI();
-
-      accessToken =
-        refreshData.session.access_token;
-
-      response =
-        await fetch(
-          API_URL+
-          "/generate-image?prompt="+
-          encodeURIComponent(
-            prompt
-          )+
-          "&userId="+
-          encodeURIComponent(
-            currentUser.id
-          ),
-          {
-            method:"GET",
-
-            headers:{
-              "Authorization":
-                "Bearer "+
-                accessToken,
-
-              "Accept":
-                "image/*"
-            },
-
-            cache:"no-store"
-          }
-        );
-
-    }
-
-    /*
-      Not enough credits.
-    */
-
-    if(response.status===402){
-
-      const text =
-        await response.text();
-
-      let data=null;
-
-      try{
-
-        data =
-          text
-            ? JSON.parse(text)
-            : null;
-
-      }catch{
-
-        data=null;
-
-      }
-
-      if(
-        data?.credits !== undefined
-      ){
-
-        updateCredits(
-          data.credits
-        );
-
-      }
-
-      status.textContent =
-        "❌ You need 10 credits to generate an image.";
-
-      return;
-
-    }
-
-    /*
-      Other errors.
-    */
 
     if(!response.ok){
 
@@ -3162,15 +2233,35 @@ async function generateImage(){
       let data=null;
 
       try{
+        data=JSON.parse(text);
+      }catch{}
 
-        data =
-          text
-            ? JSON.parse(text)
-            : null;
+      if(response.status===401){
 
-      }catch{
+        status.textContent=
+          "🔐 Your session expired. Please log in again.";
 
-        data=null;
+        return;
+
+      }
+
+      if(response.status===403){
+
+        status.textContent=
+          "❌ User verification failed.";
+
+        return;
+
+      }
+
+      if(response.status===402){
+
+        status.textContent=
+          "❌ Not enough credits. You need 10 credits.";
+
+        await loadCredits();
+
+        return;
 
       }
 
@@ -3182,41 +2273,30 @@ async function generateImage(){
 
     }
 
-    /*
-      IMAGE SUCCESS
-    */
-
     const blob =
       await response.blob();
 
     const imageURL =
-      URL.createObjectURL(
-        blob
-      );
+      URL.createObjectURL(blob);
 
-    image.src =
+    image.src=
       imageURL;
 
-    download.href =
+    download.href=
       imageURL;
 
-    result.style.display =
+    result.style.display=
       "block";
 
-    status.textContent =
+    status.textContent=
       "✅ Your image is ready!";
-
-    /*
-      Worker sends remaining credits
-      through X-Credits-Remaining.
-    */
 
     const remaining =
       response.headers.get(
         "X-Credits-Remaining"
       );
 
-    if(remaining !== null){
+    if(remaining!==null){
 
       updateCredits(
         remaining
@@ -3240,18 +2320,18 @@ async function generateImage(){
       error
     );
 
-    status.textContent =
+    status.textContent=
       "❌ "+
       (
         error.message ||
-        "Image generation failed."
+        "Failed to generate image."
       );
 
   }finally{
 
     button.disabled=false;
 
-    button.textContent =
+    button.textContent=
       "✨ Generate Image — 10 Credits";
 
   }
@@ -3262,6 +2342,9 @@ async function generateImage(){
 /* =========================================================
    AI CHAT
 ========================================================= */
+
+let chatHistory=[];
+
 
 function addChatMessage(
   message,
@@ -3278,30 +2361,22 @@ function addChatMessage(
       "chatWelcome"
     );
 
-  if(welcome){
-
+  if(welcome)
     welcome.remove();
 
-  }
-
   const wrapper =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
-  wrapper.className =
-    "chat-message "+
-    type;
+  wrapper.className=
+    "chat-message "+type;
 
   const bubble =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
-  bubble.className =
+  bubble.className=
     "chat-bubble";
 
-  bubble.textContent =
+  bubble.textContent=
     message;
 
   wrapper.appendChild(
@@ -3312,7 +2387,7 @@ function addChatMessage(
     wrapper
   );
 
-  messages.scrollTop =
+  messages.scrollTop=
     messages.scrollHeight;
 
 }
@@ -3326,37 +2401,29 @@ function showTyping(){
     );
 
   const wrapper =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
-  wrapper.id =
+  wrapper.id=
     "typingMessage";
 
-  wrapper.className =
+  wrapper.className=
     "chat-message ai";
 
   wrapper.innerHTML=`
-
     <div class="chat-bubble">
-
-      <div class="typing">
-
-        <span></span>
-        <span></span>
-        <span></span>
-
+      <div style="display:flex;gap:5px">
+        <span>●</span>
+        <span>●</span>
+        <span>●</span>
       </div>
-
     </div>
-
   `;
 
   messages.appendChild(
     wrapper
   );
 
-  messages.scrollTop =
+  messages.scrollTop=
     messages.scrollHeight;
 
 }
@@ -3369,18 +2436,11 @@ function removeTyping(){
       "typingMessage"
     );
 
-  if(typing){
-
+  if(typing)
     typing.remove();
-
-  }
 
 }
 
-
-/* =========================================================
-   SEND AI MESSAGE
-========================================================= */
 
 async function sendAIMessage(){
 
@@ -3397,11 +2457,8 @@ async function sendAIMessage(){
   const message =
     input.value.trim();
 
-  if(!message){
-
+  if(!message)
     return;
-
-  }
 
   addChatMessage(
     message,
@@ -3414,7 +2471,6 @@ async function sendAIMessage(){
   });
 
   input.value="";
-
   button.disabled=true;
 
   showTyping();
@@ -3423,28 +2479,20 @@ async function sendAIMessage(){
 
     const response =
       await fetch(
-        AI_CHAT_URL,
+        API_URL+"/chat",
         {
           method:"POST",
-
           headers:{
             "Content-Type":
               "application/json",
-
             "Accept":
               "application/json"
           },
-
-          body:
-            JSON.stringify({
-
-              message,
-
-              history:
-                chatHistory
-                  .slice(-12)
-
-            })
+          body:JSON.stringify({
+            message,
+            history:
+              chatHistory.slice(-12)
+          })
         }
       );
 
@@ -3454,17 +2502,8 @@ async function sendAIMessage(){
     let data=null;
 
     try{
-
-      data =
-        text
-          ? JSON.parse(text)
-          : null;
-
-    }catch{
-
-      data=null;
-
-    }
+      data=JSON.parse(text);
+    }catch{}
 
     removeTyping();
 
@@ -3478,16 +2517,13 @@ async function sendAIMessage(){
 
     }
 
-    const reply =
+    const reply=
       data?.reply;
 
-    if(!reply){
-
+    if(!reply)
       throw new Error(
         "AI returned no response."
       );
-
-    }
 
     chatHistory.push({
       role:"assistant",
@@ -3523,17 +2559,13 @@ async function sendAIMessage(){
 }
 
 
-/* =========================================================
-   ENTER TO SEND
-========================================================= */
+/* ENTER */
 
 document
-  .getElementById(
-    "aiChatInput"
-  )
+  .getElementById("aiChatInput")
   .addEventListener(
     "keydown",
-    event => {
+    event=>{
 
       if(
         event.key==="Enter" &&
@@ -3561,27 +2593,13 @@ function watchAd(){
     openAuthModal();
 
     document
-      .getElementById(
-        "authStatus"
-      )
-      .textContent =
-        "🔐 Login before using rewarded features.";
+      .getElementById("authStatus")
+      .textContent=
+      "🔐 Login before using rewarded features.";
 
     return;
 
   }
-
-  /*
-    IMPORTANT:
-
-    This is still only a placeholder.
-
-    Do NOT add +50 credits from JavaScript.
-
-    When we build the real rewarded-ad system,
-    the Worker will verify the completed ad
-    before adding the 50 credits.
-  */
 
   alert(
     "📺 Rewarded ads are being prepared.\n\n"+
@@ -3592,15 +2610,13 @@ function watchAd(){
 
 
 /* =========================================================
-   SCROLL FUNCTIONS
+   SCROLL
 ========================================================= */
 
 function scrollToAssistant(){
 
   document
-    .getElementById(
-      "aiAssistant"
-    )
+    .getElementById("aiAssistant")
     .scrollIntoView({
       behavior:"smooth"
     });
@@ -3611,9 +2627,7 @@ function scrollToAssistant(){
 function scrollToGenerator(){
 
   document
-    .getElementById(
-      "generator"
-    )
+    .getElementById("generator")
     .scrollIntoView({
       behavior:"smooth"
     });
@@ -3622,7 +2636,7 @@ function scrollToGenerator(){
 
 
 /* =========================================================
-   START APPLICATION
+   START
 ========================================================= */
 
 loadAuthSession();
